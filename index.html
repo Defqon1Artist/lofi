@@ -1,14 +1,12 @@
-Voici le code complètement réécrit qui devrait fonctionner correctement, avec des boutons fonctionnels, une jolie palette de couleurs et des chats spatiaux comme vous l'avez demandé :
-
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lofi Wallpaper</title>
+  <title>Lofi Wallpaper Amélioré</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     :root {
       --primary: #2e2b4f;
@@ -16,6 +14,9 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       --accent: #a894c2;
       --text: #f3f0ff;
       --soft: #ddd8ee;
+      --cat-primary: #8a7bb3;
+      --cat-secondary: #60507c;
+      --cat-accent: #ffd6ff;
     }
     
     * {
@@ -92,6 +93,7 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       flex-wrap: wrap;
       gap: 10px;
       z-index: 10;
+      margin-bottom: 30px;
     }
     
     .btn {
@@ -150,30 +152,31 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       font-size: 1.2rem;
     }
     
+    /* Flower Color Palette */
     .color-palette {
       position: fixed;
       bottom: 30px;
       left: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
       z-index: 100;
+      width: 150px;
+      height: 150px;
     }
     
-    .color-row {
-      display: flex;
-      gap: 8px;
+    .color-flower {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
     
     .color-option {
-      width: 35px;
-      height: 35px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.3s;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       border: 2px solid rgba(255, 255, 255, 0.5);
-      position: relative;
+      position: absolute;
       overflow: hidden;
     }
     
@@ -197,6 +200,52 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
     }
     
+    /* Flower petal positions */
+    .color-center {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      width: 45px;
+      height: 45px;
+    }
+    
+    .color-petal-1 {
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+    
+    .color-petal-2 {
+      top: 25%;
+      left: 85%;
+      transform: translate(-50%, 0);
+    }
+    
+    .color-petal-3 {
+      top: 75%;
+      left: 85%;
+      transform: translate(-50%, 0);
+    }
+    
+    .color-petal-4 {
+      top: 90%;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+    
+    .color-petal-5 {
+      top: 75%;
+      left: 15%;
+      transform: translate(-50%, 0);
+    }
+    
+    .color-petal-6 {
+      top: 25%;
+      left: 15%;
+      transform: translate(-50%, 0);
+    }
+    
     #theme-night {
       background: linear-gradient(45deg, #2e2b4f, #5f527a);
     }
@@ -215,6 +264,14 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
     
     #theme-ocean {
       background: linear-gradient(45deg, #25283d, #4a6d7c);
+    }
+    
+    #theme-sunset {
+      background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    }
+    
+    #theme-galaxy {
+      background: linear-gradient(45deg, #311b92, #7c4dff);
     }
     
     .quote-container {
@@ -259,20 +316,26 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       50% { opacity: 0.8; }
     }
     
-    /* Cats and decorations */
+    /* Space Cats */
     .space-cat {
       position: absolute;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       z-index: 5;
       pointer-events: none;
-      animation: float 8s infinite ease-in-out;
       filter: drop-shadow(0 0 10px rgba(var(--glow-color, 255, 150, 255), 0.7));
+      transition: transform 0.3s ease-out;
     }
     
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+    .cat-trail {
+      position: absolute;
+      width: 100%;
+      height: 30px;
+      top: 50%;
+      left: -20px;
+      transform: translateY(-50%);
+      z-index: -1;
+      opacity: 0.4;
     }
     
     /* Theme-specific variables */
@@ -330,6 +393,68 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       --cat-secondary: #0288d1;
       --cat-accent: #bbdefb;
     }
+    
+    .sunset-theme {
+      --primary: #ff7e5f;
+      --secondary: #feb47b;
+      --accent: #ffda8e;
+      --text: #4d2c1e;
+      --soft: #fcefe8;
+      --cat-primary: #ff8a65;
+      --cat-secondary: #e64a19;
+      --cat-accent: #ffd180;
+    }
+    
+    .galaxy-theme {
+      --primary: #311b92;
+      --secondary: #7c4dff;
+      --accent: #b39ddb;
+      --text: #ffffff;
+      --soft: #e0dcf0;
+      --cat-primary: #9575cd;
+      --cat-secondary: #5e35b1;
+      --cat-accent: #d1c4e9;
+    }
+    
+    .volume-control {
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 100px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 15;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .volume-control input {
+      transform: rotate(-90deg);
+      width: 80px;
+      margin: 0;
+      cursor: pointer;
+    }
+    
+    .volume-icon {
+      margin-top: 5px;
+      color: white;
+      font-size: 14px;
+    }
+    
+    .mute-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body class="night-theme">
@@ -344,42 +469,47 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
   <div class="player-container">
     <div class="player" id="player">
       <iframe id="youtube-player" 
-              src="https://www.youtube.com/embed/lTRiuFIWV54?autoplay=1&mute=0&loop=1&playlist=lTRiuFIWV54"
+              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&loop=1&playlist=jfKfPfyJRdk"
               allow="autoplay; encrypted-media" 
               allowfullscreen>
       </iframe>
+    </div>
+    
+    <div class="volume-control">
+      <input type="range" id="volume-slider" min="0" max="100" value="70">
+      <button class="mute-btn" id="mute-btn"><i class="fas fa-volume-up"></i></button>
     </div>
   </div>
   
   <!-- Controls -->
   <div class="controls">
-    <button class="btn active" data-video="lTRiuFIWV54" id="lofi-btn">
+    <button class="btn active" data-video="jfKfPfyJRdk" id="lofi-btn">
       <i class="fas fa-headphones"></i> Lofi Girl
     </button>
-    <button class="btn" data-video="k6LwQGG_Frg" id="chillhop-btn">
+    <button class="btn" data-video="5qap5aO4i9A" id="chillhop-btn">
       <i class="fas fa-music"></i> Chillhop
     </button>
-    <button class="btn" data-video="FFfdyV8gnWk" id="study-btn">
+    <button class="btn" data-video="n61ULEU7CO0" id="study-btn">
       <i class="fas fa-book"></i> Study Vibes
     </button>
-    <button class="btn" data-video="W6YI3ZFOL0A" id="chillpop-btn">
+    <button class="btn" data-video="4xDzrJKXOOY" id="chillpop-btn">
       <i class="fas fa-coffee"></i> Aesthetic Mix
     </button>
-    <button class="btn" data-video="NOi4ZKzuo28" id="sleep-btn">
+    <button class="btn" data-video="rUxyKA_-grg" id="sleep-btn">
       <i class="fas fa-moon"></i> Rain Lofi
     </button>
   </div>
   
-  <!-- Color Palette -->
+  <!-- Color Palette in Flower Shape -->
   <div class="color-palette">
-    <div class="color-row">
-      <div class="color-option active" id="theme-night"></div>
-      <div class="color-option" id="theme-day"></div>
-    </div>
-    <div class="color-row">
-      <div class="color-option" id="theme-pink"></div>
-      <div class="color-option" id="theme-forest"></div>
-      <div class="color-option" id="theme-ocean"></div>
+    <div class="color-flower">
+      <div class="color-option color-center active" id="theme-night"></div>
+      <div class="color-option color-petal-1" id="theme-day"></div>
+      <div class="color-option color-petal-2" id="theme-pink"></div>
+      <div class="color-option color-petal-3" id="theme-forest"></div>
+      <div class="color-option color-petal-4" id="theme-ocean"></div>
+      <div class="color-option color-petal-5" id="theme-sunset"></div>
+      <div class="color-option color-petal-6" id="theme-galaxy"></div>
     </div>
   </div>
   
@@ -405,12 +535,88 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
     const quoteElement = document.getElementById('quote');
     const starsContainer = document.getElementById('stars-container');
     const spaceCatsContainer = document.getElementById('space-cats-container');
+    const volumeSlider = document.getElementById('volume-slider');
+    const muteBtn = document.getElementById('mute-btn');
+    
+    // YouTube API
+    let ytPlayer;
+    
+    // Load YouTube API
+    function loadYouTubeAPI() {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    
+    // YouTube API will call this function when ready
+    window.onYouTubeIframeAPIReady = function() {
+      const videoId = document.querySelector('.controls .active').getAttribute('data-video');
+      
+      ytPlayer = new YT.Player('youtube-player', {
+        videoId: videoId,
+        playerVars: {
+          'autoplay': 1,
+          'controls': 0,
+          'loop': 1,
+          'playlist': videoId,
+          'modestbranding': 1,
+          'showinfo': 0,
+          'rel': 0
+        },
+        events: {
+          'onReady': onPlayerReady
+        }
+      });
+    };
+    
+    function onPlayerReady(event) {
+      // Set initial volume
+      event.target.setVolume(70);
+      
+      // Setup volume slider
+      volumeSlider.addEventListener('input', function() {
+        ytPlayer.setVolume(this.value);
+        
+        // Update mute button icon
+        if (parseInt(this.value) === 0) {
+          muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else if (parseInt(this.value) < 50) {
+          muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+        } else {
+          muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
+      });
+      
+      // Setup mute button
+      let isMuted = false;
+      muteBtn.addEventListener('click', function() {
+        if (isMuted) {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(parseInt(volumeSlider.value));
+          muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        } else {
+          ytPlayer.mute();
+          muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        }
+        isMuted = !isMuted;
+      });
+    }
     
     // Sélection des vidéos
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         const videoId = button.getAttribute('data-video');
-        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}`;
+        
+        if (ytPlayer) {
+          ytPlayer.loadVideoById({
+            'videoId': videoId,
+            'startSeconds': 0,
+            'suggestedQuality': 'large'
+          });
+        } else {
+          player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0`;
+        }
         
         // Update active class
         buttons.forEach(btn => btn.classList.remove('active'));
@@ -424,9 +630,11 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
         document.documentElement.requestFullscreen().catch(err => {
           console.log(`Erreur de passage en plein écran: ${err.message}`);
         });
+        fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
       } else {
         if (document.exitFullscreen) {
           document.exitFullscreen();
+          fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
         }
       }
     });
@@ -451,6 +659,10 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
           document.body.className = 'forest-theme';
         } else if (themeId === 'theme-ocean') {
           document.body.className = 'ocean-theme';
+        } else if (themeId === 'theme-sunset') {
+          document.body.className = 'sunset-theme';
+        } else if (themeId === 'theme-galaxy') {
+          document.body.className = 'galaxy-theme';
         }
         
         // Recréer les chats spatiaux avec la nouvelle couleur
@@ -469,7 +681,13 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       "Your presence is enough.",
       "The journey is the destination.",
       "Embrace the gentle quiet.",
-      "This too shall pass."
+      "This too shall pass.",
+      "Inside silence there is magic.",
+      "Inspiration exists, but it has to find you working.",
+      "The beauty of life is in small things.",
+      "Stay curious, stay chill.",
+      "Creativity takes courage.",
+      "Be patient with yourself."
     ];
     
     function changeQuote() {
@@ -490,7 +708,7 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
     // Générer les étoiles
     function generateStars() {
       starsContainer.innerHTML = '';
-      const starCount = 200;
+      const starCount = Math.min(300, Math.floor(window.innerWidth * window.innerHeight / 1000));
       
       for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
@@ -548,6 +766,15 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
           <path d="M20,25 Q30,10 40,25" fill="${color1}" />
           <path d="M80,25 Q70,10 60,25" fill="${color1}" />
           
+          <!-- Moustaches -->
+          <path d="M30,55 L15,50" stroke="${color3}" stroke-width="1" />
+          <path d="M30,58 L12,58" stroke="${color3}" stroke-width="1" />
+          <path d="M30,61 L15,65" stroke="${color3}" stroke-width="1" />
+          
+          <path d="M70,55 L85,50" stroke="${color3}" stroke-width="1" />
+          <path d="M70,58 L88,58" stroke="${color3}" stroke-width="1" />
+          <path d="M70,61 L85,65" stroke="${color3}" stroke-width="1" />
+          
           <!-- Étoiles autour -->
           <circle cx="15" cy="15" r="2" fill="white" />
           <circle cx="85" cy="25" r="1.5" fill="white" />
@@ -556,6 +783,22 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
           
           <!-- Ligne spatiale -->
           <path d="M5,50 Q20,55 30,45 T60,50 T90,45" stroke="${color3}" stroke-width="1" fill="none" opacity="0.6" />
+        </svg>
+      `;
+    }
+    
+    // Créer une traînée pour le chat spatial
+    function createCatTrail(color) {
+      return `
+        <svg class="cat-trail" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="trailGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="${color}" stop-opacity="0" />
+              <stop offset="50%" stop-color="${color}" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="${color}" stop-opacity="0.7" />
+            </linearGradient>
+          </defs>
+          <path d="M0,15 Q30,5 50,15 T100,15" stroke="url(#trailGradient)" stroke-width="6" fill="none" />
         </svg>
       `;
     }
@@ -574,6 +817,7 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
       for (let i = 0; i < 7; i++) {
         const spaceCat = document.createElement('div');
         spaceCat.classList.add('space-cat');
+        spaceCat.setAttribute('data-id', i);
         
         // Position aléatoire (éviter le centre où se trouve le lecteur)
         let x, y;
@@ -587,40 +831,133 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
           x = Math.random() * (window.innerWidth - 100);
           y = Math.random() * (window.innerHeight - 100);
         } while (
-          x > centerX - playerWidth && 
-          x < centerX + playerWidth && 
-          y > centerY - playerHeight && 
-          y < centerY + playerHeight
+          x > centerX - playerWidth/1.5 && 
+          x < centerX + playerWidth/1.5 && 
+          y > centerY - playerHeight/1.5 && 
+          y < centerY + playerHeight/1.5
         );
         
         // Taille aléatoire
         const size = Math.random() * 30 + 40;
         
+        // Vitesse aléatoire
+        const speed = Math.random() * 3 + 1;
+        
+        // Direction aléatoire
+        const directionX = Math.random() > 0.5 ? 1 : -1;
+        const directionY = Math.random() > 0.5 ? 1 : -1;
+        
         // Animation et style
-        const delay = Math.random() * 5;
-        const duration = Math.random() * 4 + 6;
         const glowColor = i % 2 === 0 ? '150, 150, 255' : '255, 150, 255';
         
         spaceCat.style.left = `${x}px`;
         spaceCat.style.top = `${y}px`;
         spaceCat.style.width = `${size}px`;
         spaceCat.style.height = `${size}px`;
-        spaceCat.style.animationDelay = `${delay}s`;
-        spaceCat.style.animationDuration = `${duration}s`;
         spaceCat.style.setProperty('--glow-color', glowColor);
+        
+        // Stocker les données de mouvement comme attributs
+        spaceCat.setAttribute('data-dir-x', directionX);
+        spaceCat.setAttribute('data-dir-y', directionY);
+        spaceCat.setAttribute('data-speed', speed);
         
         // Insérer le SVG
         spaceCat.innerHTML = createSpaceCatSVG(catPrimary, catSecondary, catAccent);
+        spaceCat.innerHTML += createCatTrail(catPrimary);
         
         // Ajouter le chat au conteneur
         spaceCatsContainer.appendChild(spaceCat);
       }
     }
     
+    // Animer les chats spatiaux
+    function animateSpaceCats() {
+      const cats = document.querySelectorAll('.space-cat');
+      
+      cats.forEach(cat => {
+        // Récupérer la position actuelle
+        let x = parseFloat(cat.style.left);
+        let y = parseFloat(cat.style.top);
+        
+        // Récupérer la direction et la vitesse
+        let dirX = parseFloat(cat.getAttribute('data-dir-x'));
+        let dirY = parseFloat(cat.getAttribute('data-dir-y'));
+        let speed = parseFloat(cat.getAttribute('data-speed'));
+        
+        // Calcul du nouveau mouvement
+        x += dirX * speed;
+        y += dirY * speed;
+        
+        // Vérifier les collisions avec les bords
+        const width = cat.offsetWidth;
+        const height = cat.offsetHeight;
+        
+        if (x <= 0 || x >= window.innerWidth - width) {
+          dirX *= -1;
+          cat.setAttribute('data-dir-x', dirX);
+        }
+        
+        if (y <= 0 || y >= window.innerHeight - height) {
+          dirY *= -1;
+          cat.setAttribute('data-dir-y', dirY);
+        }
+        
+        // Appliquer la nouvelle position
+        cat.style.left = `${x}px`;
+        cat.style.top = `${y}px`;
+        
+        // Rotation basée sur la direction
+        let angle = Math.atan2(dirY, dirX) * (180 / Math.PI);
+        cat.style.transform = `rotate(${angle}deg)`;
+      });
+      
+      requestAnimationFrame(animateSpaceCats);
+    }
+    
+    // Effet de clic sur les chats
+    document.addEventListener('click', function(e) {
+      const cats = document.querySelectorAll('.space-cat');
+      
+      cats.forEach(cat => {
+        // Changer temporairement la direction vers le point de clic
+        const catX = parseFloat(cat.style.left) + cat.offsetWidth/2;
+        const catY = parseFloat(cat.style.top) + cat.offsetHeight/2;
+        
+        const clickX = e.clientX;
+        const clickY = e.clientY;
+        
+        // Calculer la direction vers le clic
+        const dx = clickX - catX;
+        const dy = clickY - catY;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+        
+        // Si le clic est assez proche du chat
+        if (distance < 200) {
+          // Normaliser le vecteur direction
+          const dirX = dx / distance;
+          const dirY = dy / distance;
+          
+          // Mettre à jour la direction avec un effet temporaire
+          cat.setAttribute('data-dir-x', dirX);
+          cat.setAttribute('data-dir-y', dirY);
+          
+          // Augmenter la vitesse temporairement
+          cat.setAttribute('data-speed', 5);
+          
+          // Revenir à une vitesse normale après un délai
+          setTimeout(() => {
+            cat.setAttribute('data-speed', 1 + Math.random() * 3);
+          }, 1000);
+        }
+      });
+    });
+    
     // Initialisation
     window.addEventListener('load', () => {
+      loadYouTubeAPI();
       generateStars();
       generateSpaceCats();
+      animateSpaceCats();
       changeQuote();
     });
     
@@ -632,20 +969,3 @@ Voici le code complètement réécrit qui devrait fonctionner correctement, avec
   </script>
 </body>
 </html>
-```
-
-Voici les améliorations apportées à ce code :
-
-1. **Boutons fonctionnels** : J'ai simplifié le code JavaScript pour les boutons de musique afin qu'ils fonctionnent correctement.
-
-2. **Nouvelle palette de couleurs** : J'ai créé une palette plus esthétique avec 5 thèmes distincts (nuit, jour, rose, forêt, océan) organisés en deux rangées pour un meilleur aspect visuel.
-
-3. **Chats spatiaux** : J'ai ajouté des chats spatiaux créés directement en SVG, ce qui garantit qu'ils fonctionnent sans dépendre d'images externes. Leurs couleurs changent automatiquement avec le thème choisi.
-
-4. **Meilleure organisation** : Le bouton plein écran est maintenant plus élégant et bien positionné dans le coin inférieur droit.
-
-5. **Code simplifié** : J'ai optimisé le code pour éviter les problèmes et assurer que tout fonctionne correctement.
-
-6. **Effets visuels améliorés** : Les chats spatiaux émettent maintenant une lueur douce qui change de couleur, ce qui leur donne un aspect plus "spatial".
-
-Ce code devrait fonctionner correctement et répondre à toutes vos demandes.
