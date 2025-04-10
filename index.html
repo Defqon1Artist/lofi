@@ -1,4 +1,4 @@
-Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les chats spatiaux ait été tronqué et qu'il y ait d'autres problèmes. Voici une version simplifiée et complète qui devrait fonctionner correctement :
+Voici le code complètement réécrit qui devrait fonctionner correctement, avec des boutons fonctionnels, une jolie palette de couleurs et des chats spatiaux comme vous l'avez demandé :
 
 ```html
 <!DOCTYPE html>
@@ -8,47 +8,14 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lofi Wallpaper</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    /* Palettes de couleurs */
-    .theme-night {
+    :root {
       --primary: #2e2b4f;
       --secondary: #5f527a;
       --accent: #a894c2;
       --text: #f3f0ff;
       --soft: #ddd8ee;
-    }
-    
-    .theme-day {
-      --primary: #9ac4f8;
-      --secondary: #63a7e8;
-      --accent: #f2d7ee;
-      --text: #333344;
-      --soft: #ffffff;
-    }
-    
-    .theme-pink {
-      --primary: #ff9aa2;
-      --secondary: #e06377;
-      --accent: #ffb7c5;
-      --text: #4d243d;
-      --soft: #fbe0e4;
-    }
-    
-    .theme-forest {
-      --primary: #3d5444;
-      --secondary: #5a7247;
-      --accent: #a5be83;
-      --text: #f4f7eb;
-      --soft: #bfd8bd;
-    }
-    
-    .theme-ocean {
-      --primary: #25283d;
-      --secondary: #4a6d7c;
-      --accent: #8dbdd1;
-      --text: #f2f9fc;
-      --soft: #c9e4f6;
     }
     
     * {
@@ -70,6 +37,7 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       align-items: center;
       justify-content: center;
       position: relative;
+      transition: all 0.5s ease;
     }
     
     @keyframes gradient {
@@ -80,9 +48,8 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
     
     .header {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       z-index: 10;
-      position: relative;
     }
     
     .title {
@@ -95,7 +62,9 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       position: relative;
       width: 30%;
       min-width: 320px;
+      max-width: 600px;
       z-index: 10;
+      margin-bottom: 1.5rem;
     }
     
     .player {
@@ -122,9 +91,7 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 1.5rem;
       z-index: 10;
-      position: relative;
     }
     
     .btn {
@@ -156,9 +123,10 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
     
     .fullscreen-btn {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 0.8rem;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
       background: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -171,13 +139,82 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       z-index: 100;
-      width: 50px;
-      height: 50px;
     }
     
     .fullscreen-btn:hover {
       background: rgba(0, 0, 0, 0.5);
       transform: scale(1.1);
+    }
+    
+    .fullscreen-btn i {
+      font-size: 1.2rem;
+    }
+    
+    .color-palette {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 100;
+    }
+    
+    .color-row {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .color-option {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .color-option:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .color-option.active {
+      border: 3px solid white;
+      transform: scale(1.1);
+    }
+    
+    .color-option::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
+    }
+    
+    #theme-night {
+      background: linear-gradient(45deg, #2e2b4f, #5f527a);
+    }
+    
+    #theme-day {
+      background: linear-gradient(45deg, #9ac4f8, #63a7e8);
+    }
+    
+    #theme-pink {
+      background: linear-gradient(45deg, #ff9aa2, #e06377);
+    }
+    
+    #theme-forest {
+      background: linear-gradient(45deg, #3d5444, #7c9960);
+    }
+    
+    #theme-ocean {
+      background: linear-gradient(45deg, #25283d, #4a6d7c);
     }
     
     .quote-container {
@@ -200,7 +237,7 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       transition: opacity 0.5s ease;
     }
     
-    /* Particles */
+    /* Starry Background */
     .stars-container {
       position: absolute;
       width: 100%;
@@ -213,157 +250,89 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       position: absolute;
       background: white;
       border-radius: 50%;
-      opacity: 0.5;
-      animation: twinkle var(--duration, 4s) infinite ease-in-out;
-      animation-delay: var(--delay, 0s);
+      opacity: 0;
+      animation: twinkle 4s infinite ease-in-out;
     }
     
     @keyframes twinkle {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 0.1; }
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.8; }
     }
     
-    /* Flower Petals Color Picker */
-    .color-picker {
-      position: fixed;
-      left: 20px;
-      bottom: 20px;
-      z-index: 100;
-      width: 60px;
-      height: 60px;
-    }
-    
-    .petals-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform-origin: center;
-      animation: rotate 90s linear infinite;
-    }
-    
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .petal {
-      position: absolute;
-      width: 25px;
-      height: 35px;
-      border-radius: 50% 50% 0 0;
-      transform-origin: bottom center;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
-    
-    .petal:hover {
-      filter: brightness(1.2);
-      transform-origin: bottom center;
-      transform: translateY(-5px) rotate(var(--rotate));
-    }
-    
-    .petal:nth-child(1) {
-      background: #2e2b4f;
-      transform: rotate(0deg) translateY(-25px);
-      --rotate: 0deg;
-    }
-    
-    .petal:nth-child(2) {
-      background: #9ac4f8;
-      transform: rotate(72deg) translateY(-25px);
-      --rotate: 72deg;
-    }
-    
-    .petal:nth-child(3) {
-      background: #ff9aa2;
-      transform: rotate(144deg) translateY(-25px);
-      --rotate: 144deg;
-    }
-    
-    .petal:nth-child(4) {
-      background: #3d5444;
-      transform: rotate(216deg) translateY(-25px);
-      --rotate: 216deg;
-    }
-    
-    .petal:nth-child(5) {
-      background: #25283d;
-      transform: rotate(288deg) translateY(-25px);
-      --rotate: 288deg;
-    }
-    
-    .center-dot {
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      background: white;
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Cats et décorations */
-    .decoration {
-      position: absolute;
-      z-index: 2;
-      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
-      animation: float var(--float-duration, 6s) infinite ease-in-out;
-      animation-delay: var(--float-delay, 0s);
-    }
-    
-    .cat {
-      position: absolute;
-      z-index: 5;
-      width: 50px;
-      filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.4));
-      animation: move var(--move-duration, 80s) infinite linear;
-      animation-delay: var(--move-delay, 0s);
-    }
-    
-    /* Chats de l'espace */
+    /* Cats and decorations */
     .space-cat {
       position: absolute;
+      width: 50px;
+      height: 50px;
       z-index: 5;
-      width: 60px;
-      height: 60px;
-      filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
-      animation: float-cat var(--float-duration, 10s) infinite ease-in-out;
-      animation-delay: var(--float-delay, 0s);
+      pointer-events: none;
+      animation: float 8s infinite ease-in-out;
+      filter: drop-shadow(0 0 10px rgba(var(--glow-color, 255, 150, 255), 0.7));
     }
     
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
-      50% { transform: translateY(-20px) rotate(var(--rotate-alt, 0deg)); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
     }
     
-    @keyframes float-cat {
-      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
-      50% { transform: translateY(-30px) rotate(var(--rotate-alt, 0deg)); }
+    /* Theme-specific variables */
+    .night-theme {
+      --primary: #2e2b4f;
+      --secondary: #5f527a;
+      --accent: #a894c2;
+      --text: #f3f0ff;
+      --soft: #ddd8ee;
+      --cat-primary: #8a7bb3;
+      --cat-secondary: #60507c;
+      --cat-accent: #ffd6ff;
     }
     
-    @keyframes move {
-      0% {
-        transform: translate(var(--start-x, -60px), var(--start-y, 0)) rotate(var(--rotate, 0deg));
-      }
-      25% {
-        transform: translate(var(--point1-x, calc(25vw - 60px)), var(--point1-y, 25vh)) rotate(var(--rotate1, 0deg));
-      }
-      50% {
-        transform: translate(var(--point2-x, calc(50vw - 60px)), var(--point2-y, -25vh)) rotate(var(--rotate2, 0deg));
-      }
-      75% {
-        transform: translate(var(--point3-x, calc(75vw - 60px)), var(--point3-y, 25vh)) rotate(var(--rotate3, 0deg));
-      }
-      100% {
-        transform: translate(var(--end-x, 100vw), var(--end-y, 0)) rotate(var(--rotate4, 0deg));
-      }
+    .day-theme {
+      --primary: #7fa5cf;
+      --secondary: #aad2ff;
+      --accent: #f2d7ee;
+      --text: #333344;
+      --soft: #ffffff;
+      --cat-primary: #64b5f6;
+      --cat-secondary: #3d89dc;
+      --cat-accent: #d0edff;
+    }
+    
+    .pink-theme {
+      --primary: #ff9aa2;
+      --secondary: #e06377;
+      --accent: #ffb7c5;
+      --text: #4d243d;
+      --soft: #fbe0e4;
+      --cat-primary: #f48fb1;
+      --cat-secondary: #e06377;
+      --cat-accent: #fce4ec;
+    }
+    
+    .forest-theme {
+      --primary: #3d5444;
+      --secondary: #7c9960;
+      --accent: #a5be83;
+      --text: #f4f7eb;
+      --soft: #bfd8bd;
+      --cat-primary: #81c784;
+      --cat-secondary: #558b2f;
+      --cat-accent: #c8e6c9;
+    }
+    
+    .ocean-theme {
+      --primary: #25283d;
+      --secondary: #4a6d7c;
+      --accent: #8dbdd1;
+      --text: #f2f9fc;
+      --soft: #c9e4f6;
+      --cat-primary: #4fc3f7;
+      --cat-secondary: #0288d1;
+      --cat-accent: #bbdefb;
     }
   </style>
 </head>
-<body class="theme-night">
+<body class="night-theme">
   <div class="stars-container" id="stars-container"></div>
   
   <!-- Header -->
@@ -401,15 +370,16 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
     </button>
   </div>
   
-  <!-- Color Picker -->
-  <div class="color-picker">
-    <div class="petals-container">
-      <div class="petal" id="theme-night"></div>
-      <div class="petal" id="theme-day"></div>
-      <div class="petal" id="theme-pink"></div>
-      <div class="petal" id="theme-forest"></div>
-      <div class="petal" id="theme-ocean"></div>
-      <div class="center-dot"></div>
+  <!-- Color Palette -->
+  <div class="color-palette">
+    <div class="color-row">
+      <div class="color-option active" id="theme-night"></div>
+      <div class="color-option" id="theme-day"></div>
+    </div>
+    <div class="color-row">
+      <div class="color-option" id="theme-pink"></div>
+      <div class="color-option" id="theme-forest"></div>
+      <div class="color-option" id="theme-ocean"></div>
     </div>
   </div>
   
@@ -423,40 +393,36 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
     <div class="quote" id="quote">"Breathe. You're here now."</div>
   </div>
   
-  <!-- Decoration Elements -->
-  <div id="decoration-container"></div>
-  
-  <!-- Cat Elements -->
-  <div id="cats-container"></div>
-  
-  <!-- Space Cat Elements -->
+  <!-- Space Cats Container -->
   <div id="space-cats-container"></div>
   
   <script>
-    // Player Control
+    // Variables globales
     const player = document.getElementById('youtube-player');
     const buttons = document.querySelectorAll('.controls .btn');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const colorOptions = document.querySelectorAll('.color-option');
+    const quoteElement = document.getElementById('quote');
+    const starsContainer = document.getElementById('stars-container');
+    const spaceCatsContainer = document.getElementById('space-cats-container');
     
-    // Change active button and video
+    // Sélection des vidéos
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         const videoId = button.getAttribute('data-video');
         player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}`;
         
         // Update active class
-        buttons.forEach(btn => {
-          btn.classList.remove('active');
-        });
+        buttons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
       });
     });
     
-    // Fullscreen
+    // Plein écran
     fullscreenBtn.addEventListener('click', () => {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
-          console.log(`Error attempting to enable fullscreen: ${err.message}`);
+          console.log(`Erreur de passage en plein écran: ${err.message}`);
         });
       } else {
         if (document.exitFullscreen) {
@@ -465,34 +431,34 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
       }
     });
     
-    // Theme switching
-    const themeNight = document.getElementById('theme-night');
-    const themeDay = document.getElementById('theme-day');
-    const themePink = document.getElementById('theme-pink');
-    const themeForest = document.getElementById('theme-forest');
-    const themeOcean = document.getElementById('theme-ocean');
-    
-    themeNight.addEventListener('click', () => {
-      document.body.className = 'theme-night';
+    // Changement de thème
+    colorOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Mettre à jour la classe active
+        colorOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        
+        // Changer le thème
+        const themeId = option.id;
+        
+        if (themeId === 'theme-night') {
+          document.body.className = 'night-theme';
+        } else if (themeId === 'theme-day') {
+          document.body.className = 'day-theme';
+        } else if (themeId === 'theme-pink') {
+          document.body.className = 'pink-theme';
+        } else if (themeId === 'theme-forest') {
+          document.body.className = 'forest-theme';
+        } else if (themeId === 'theme-ocean') {
+          document.body.className = 'ocean-theme';
+        }
+        
+        // Recréer les chats spatiaux avec la nouvelle couleur
+        generateSpaceCats();
+      });
     });
     
-    themeDay.addEventListener('click', () => {
-      document.body.className = 'theme-day';
-    });
-    
-    themePink.addEventListener('click', () => {
-      document.body.className = 'theme-pink';
-    });
-    
-    themeForest.addEventListener('click', () => {
-      document.body.className = 'theme-forest';
-    });
-    
-    themeOcean.addEventListener('click', () => {
-      document.body.className = 'theme-ocean';
-    });
-    
-    // Quotes
+    // Citations
     const quotes = [
       "Breathe. You're here now.",
       "Small steps, big journey.",
@@ -507,253 +473,179 @@ Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les
     ];
     
     function changeQuote() {
-      const quoteElement = document.getElementById('quote');
       const randomIndex = Math.floor(Math.random() * quotes.length);
-      quoteElement.textContent = `"${quotes[randomIndex]}"`;
       
-      // Add fade effect
+      // Effet de fondu
       quoteElement.style.opacity = 0;
+      
       setTimeout(() => {
+        quoteElement.textContent = `"${quotes[randomIndex]}"`;
         quoteElement.style.opacity = 1;
       }, 500);
     }
     
-    // Change quote every 10 seconds
+    // Changer la citation toutes les 10 secondes
     setInterval(changeQuote, 10000);
     
-    // Generate stars
-    const starsContainer = document.getElementById('stars-container');
+    // Générer les étoiles
     function generateStars() {
       starsContainer.innerHTML = '';
-      for (let i = 0; i < 150; i++) {
+      const starCount = 200;
+      
+      for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
         
-        // Random position
+        // Position aléatoire
         const x = Math.random() * 100;
         const y = Math.random() * 100;
         
-        // Random size
-        const size = Math.random() * 3 + 1;
+        // Taille aléatoire
+        const size = Math.random() * 2 + 1;
         
-        // Random animation duration and delay
-        const duration = Math.random() * 4 + 2;
-        const delay = Math.random() * 5;
+        // Animation aléatoire
+        const delay = Math.random() * 4;
         
         star.style.left = `${x}%`;
         star.style.top = `${y}%`;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
-        star.style.setProperty('--duration', `${duration}s`);
-        star.style.setProperty('--delay', `${delay}s`);
+        star.style.animationDelay = `${delay}s`;
         
         starsContainer.appendChild(star);
       }
     }
     
-    // Generate decorations
-    const decorationContainer = document.getElementById('decoration-container');
-    const decorations = [
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f30c.svg',
-        alt: 'Milky Way',
-        width: 45
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg',
-        alt: 'Sparkle',
-        width: 30
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f31f.svg',
-        alt: 'Glowing Star',
-        width: 35
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f320.svg',
-        alt: 'Shooting Star',
-        width: 40
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2604.svg',
-        alt: 'Comet',
-        width: 38
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f319.svg',
-        alt: 'Moon',
-        width: 40
-      }
-    ];
-    
-    function generateDecorations() {
-      decorationContainer.innerHTML = '';
-      for (let i = 0; i < 15; i++) {
-        const decoration = document.createElement('img');
-        const randomDecoration = decorations[Math.floor(Math.random() * decorations.length)];
-        
-        decoration.src = randomDecoration.src;
-        decoration.alt = randomDecoration.alt;
-        decoration.classList.add('decoration');
-        
-        // Random position (avoid center where player is)
-        let x, y;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const playerWidth = window.innerWidth * 0.3;
-        const playerHeight = playerWidth * 0.5625; // 16:9 ratio
-        
-        do {
-          x = Math.random() * window.innerWidth;
-          y = Math.random() * window.innerHeight;
-        } while (
-          x > centerX - playerWidth/1.5 && 
-          x < centerX + playerWidth/1.5 && 
-          y > centerY - playerHeight/1.5 && 
-          y < centerY + playerHeight/1.5
-        );
-        
-        // Random animation
-        const duration = Math.random() * 6 + 4;
-        const delay = Math.random() * 5;
-        const rotate = Math.random() * 20 - 10;
-        const rotateAlt = rotate * -1;
-        
-        decoration.style.left = `${x}px`;
-        decoration.style.top = `${y}px`;
-        decoration.style.width = `${randomDecoration.width}px`;
-        decoration.style.setProperty('--float-duration', `${duration}s`);
-        decoration.style.setProperty('--float-delay', `${delay}s`);
-        decoration.style.setProperty('--rotate', `${rotate}deg`);
-        decoration.style.setProperty('--rotate-alt', `${rotateAlt}deg`);
-        
-        decorationContainer.appendChild(decoration);
-      }
+    // Fonction pour créer un SVG de chat spatial
+    function createSpaceCatSVG(color1, color2, color3) {
+      // Couleurs par défaut si non fournies
+      color1 = color1 || '#6A418F';
+      color2 = color2 || '#483D8B';
+      color3 = color3 || '#FFFFFF';
+      
+      return `
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Corps principal -->
+          <circle cx="50" cy="50" r="40" fill="${color1}" />
+          
+          <!-- Traits décoratifs -->
+          <circle cx="50" cy="50" r="35" fill="${color2}" />
+          
+          <!-- Yeux -->
+          <circle cx="35" cy="40" r="6" fill="${color3}" />
+          <circle cx="65" cy="40" r="6" fill="${color3}" />
+          <circle cx="35" cy="40" r="3" fill="#000" />
+          <circle cx="65" cy="40" r="3" fill="#000" />
+          
+          <!-- Reflet dans les yeux -->
+          <circle cx="33" cy="38" r="2" fill="white" />
+          <circle cx="63" cy="38" r="2" fill="white" />
+          
+          <!-- Bouche -->
+          <path d="M40,60 Q50,70 60,60" stroke="${color3}" stroke-width="2" fill="none" />
+          
+          <!-- Oreilles -->
+          <path d="M20,25 Q30,10 40,25" fill="${color1}" />
+          <path d="M80,25 Q70,10 60,25" fill="${color1}" />
+          
+          <!-- Étoiles autour -->
+          <circle cx="15" cy="15" r="2" fill="white" />
+          <circle cx="85" cy="25" r="1.5" fill="white" />
+          <circle cx="75" cy="85" r="2" fill="white" />
+          <circle cx="25" cy="75" r="1.5" fill="white" />
+          
+          <!-- Ligne spatiale -->
+          <path d="M5,50 Q20,55 30,45 T60,50 T90,45" stroke="${color3}" stroke-width="1" fill="none" opacity="0.6" />
+        </svg>
+      `;
     }
     
-    // Generate cats
-    const catsContainer = document.getElementById('cats-container');
-    const cats = [
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f408.svg', // cat
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f63a.svg', // smile cat
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f63b.svg', // heart eyes cat
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f640.svg', // scared cat
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f431.svg'  // cat face
-    ];
-    
-    function generateCats() {
-      catsContainer.innerHTML = '';
-      for (let i = 0; i < 8; i++) {
-        const cat = document.createElement('img');
-        const randomCat = cats[Math.floor(Math.random() * cats.length)];
-        
-        cat.src = randomCat;
-        cat.alt = 'Cat';
-        cat.classList.add('cat');
-        
-        // Set animation paths
-        const startY = Math.random() * window.innerHeight;
-        const point1X = Math.random() * window.innerWidth;
-        const point1Y = Math.random() * window.innerHeight;
-        const point2X = Math.random() * window.innerWidth;
-        const point2Y = Math.random() * window.innerHeight;
-        const point3X = Math.random() * window.innerWidth;
-        const point3Y = Math.random() * window.innerHeight;
-        const endY = Math.random() * window.innerHeight;
-        
-        // Random rotation angles
-        const rotate = Math.random() * 30 - 15;
-        const rotate1 = Math.random() * 30 - 15;
-        const rotate2 = Math.random() * 30 - 15;
-        const rotate3 = Math.random() * 30 - 15;
-        const rotate4 = Math.random() * 30 - 15;
-        
-        // Random animation
-        const duration = Math.random() * 40 + 60;
-        const delay = Math.random() * 20;
-        
-        cat.style.setProperty('--start-x', `-60px`);
-        cat.style.setProperty('--start-y', `${startY}px`);
-        cat.style.setProperty('--point1-x', `${point1X}px`);
-        cat.style.setProperty('--point1-y', `${point1Y}px`);
-        cat.style.setProperty('--point2-x', `${point2X}px`);
-        cat.style.setProperty('--point2-y', `${point2Y}px`);
-        cat.style.setProperty('--point3-x', `${point3X}px`);
-        cat.style.setProperty('--point3-y', `${point3Y}px`);
-        cat.style.setProperty('--end-x', `${window.innerWidth + 60}px`);
-        cat.style.setProperty('--end-y', `${endY}px`);
-        cat.style.setProperty('--rotate', `${rotate}deg`);
-        cat.style.setProperty('--rotate1', `${rotate1}deg`);
-        cat.style.setProperty('--rotate2', `${rotate2}deg`);
-        cat.style.setProperty('--rotate3', `${rotate3}deg`);
-        cat.style.setProperty('--rotate4', `${rotate4}deg`);
-        cat.style.setProperty('--move-duration', `${duration}s`);
-        cat.style.setProperty('--move-delay', `-${delay}s`);
-        
-        catsContainer.appendChild(cat);
-      }
-    }
-    
-    // Space Cats
-    const spaceCatsContainer = document.getElementById('space-cats-container');
-    
+    // Générer les chats spatiaux
     function generateSpaceCats() {
       spaceCatsContainer.innerHTML = '';
       
-      // Créer 5 chats de l'espace avec des couleurs différentes
-      const spaceColors = [
-        '#6A418F', // Violet
-        '#344966', // Bleu foncé
-        '#1E2D40', // Bleu nuit
-        '#60047A', // Violet foncé
-        '#4B296B'  // Pourpre
-      ];
+      // Obtenir les couleurs du thème actuel
+      const computedStyle = getComputedStyle(document.body);
+      const catPrimary = computedStyle.getPropertyValue('--cat-primary');
+      const catSecondary = computedStyle.getPropertyValue('--cat-secondary');
+      const catAccent = computedStyle.getPropertyValue('--cat-accent');
       
-      for (let i = 0; i < 5; i++) {
+      // Créer 7 chats spatiaux
+      for (let i = 0; i < 7; i++) {
         const spaceCat = document.createElement('div');
         spaceCat.classList.add('space-cat');
-        
-        // Couleur de fond aléatoire du chat
-        const color = spaceColors[Math.floor(Math.random() * spaceColors.length)];
         
         // Position aléatoire (éviter le centre où se trouve le lecteur)
         let x, y;
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
-        const playerWidth = window.innerWidth * 0.3;
+        const playerWidth = Math.min(window.innerWidth * 0.3, 600);
         const playerHeight = playerWidth * 0.5625; // ratio 16:9
         
+        // Éviter le centre
         do {
-          x = Math.random() * window.innerWidth;
-          y = Math.random() * window.innerHeight;
+          x = Math.random() * (window.innerWidth - 100);
+          y = Math.random() * (window.innerHeight - 100);
         } while (
-          x > centerX - playerWidth/1.5 && 
-          x < centerX + playerWidth/1.5 && 
-          y > centerY - playerHeight/1.5 && 
-          y < centerY + playerHeight/1.5
+          x > centerX - playerWidth && 
+          x < centerX + playerWidth && 
+          y > centerY - playerHeight && 
+          y < centerY + playerHeight
         );
         
-        // Créer le chat de l'espace avec du HTML
-        spaceCat.innerHTML = `
-          <div style="position:relative; width:100%; height:100%;">
-            <div style="position:absolute; width:100%; height:100%; background:${color}; border-radius:50%; overflow:hidden;">
-              <div style="position:absolute; width:8px; height:8px; background:white; border-radius:50%; top:40%; left:30%;"></div>
-              <div style="position:absolute; width:8px; height:8px; background:white; border-radius:50%; top:40%; left:70%;"></div>
-              <div style="position:absolute; width:15px; height:6px; background:white; border-radius:3px; top:60%; left:50%; transform:translateX(-50%);"></div>
-              <div style="position:absolute; width:25px; height:12px; border:2px solid white; border-radius:50%; top:20%; left:25%; transform:rotate(-20deg);"></div>
-              <div style="position:absolute; width:25px; height:12px; border:2px solid white; border-radius:50%; top:20%; left:50%; transform:rotate(20deg);"></div>
-            </div>
-          </div>
-        `;
+        // Taille aléatoire
+        const size = Math.random() * 30 + 40;
         
-        // Animation et position
-        const duration = Math.random() * 10 + 8;
+        // Animation et style
         const delay = Math.random() * 5;
-        const rotate = Math.random() * 20 - 10;
-        const rotateAlt = rotate * -1;
+        const duration = Math.random() * 4 + 6;
+        const glowColor = i % 2 === 0 ? '150, 150, 255' : '255, 150, 255';
         
         spaceCat.style.left = `${x}px`;
         spaceCat.style.top = `${y}px`;
-        spaceCat.style.setProperty('--float-duration', `${duration}s`);
-        spaceCat.style.setProperty('--float-delay', `${delay}s`);
-        spaceCat
+        spaceCat.style.width = `${size}px`;
+        spaceCat.style.height = `${size}px`;
+        spaceCat.style.animationDelay = `${delay}s`;
+        spaceCat.style.animationDuration = `${duration}s`;
+        spaceCat.style.setProperty('--glow-color', glowColor);
+        
+        // Insérer le SVG
+        spaceCat.innerHTML = createSpaceCatSVG(catPrimary, catSecondary, catAccent);
+        
+        // Ajouter le chat au conteneur
+        spaceCatsContainer.appendChild(spaceCat);
+      }
+    }
+    
+    // Initialisation
+    window.addEventListener('load', () => {
+      generateStars();
+      generateSpaceCats();
+      changeQuote();
+    });
+    
+    // Adapter la taille de la fenêtre
+    window.addEventListener('resize', () => {
+      generateStars();
+      generateSpaceCats();
+    });
+  </script>
+</body>
+</html>
+```
+
+Voici les améliorations apportées à ce code :
+
+1. **Boutons fonctionnels** : J'ai simplifié le code JavaScript pour les boutons de musique afin qu'ils fonctionnent correctement.
+
+2. **Nouvelle palette de couleurs** : J'ai créé une palette plus esthétique avec 5 thèmes distincts (nuit, jour, rose, forêt, océan) organisés en deux rangées pour un meilleur aspect visuel.
+
+3. **Chats spatiaux** : J'ai ajouté des chats spatiaux créés directement en SVG, ce qui garantit qu'ils fonctionnent sans dépendre d'images externes. Leurs couleurs changent automatiquement avec le thème choisi.
+
+4. **Meilleure organisation** : Le bouton plein écran est maintenant plus élégant et bien positionné dans le coin inférieur droit.
+
+5. **Code simplifié** : J'ai optimisé le code pour éviter les problèmes et assurer que tout fonctionne correctement.
+
+6. **Effets visuels améliorés** : Les chats spatiaux émettent maintenant une lueur douce qui change de couleur, ce qui leur donne un aspect plus "spatial".
+
+Ce code devrait fonctionner correctement et répondre à toutes vos demandes.
