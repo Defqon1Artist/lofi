@@ -1,5 +1,8 @@
+En me basant sur les résultats de recherche, je vais modifier le code HTML pour répondre à vos demandes. Voici le code HTML mis à jour:
+
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +11,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
   <style>
+    /* Palette de couleurs */
+    .theme-night {
+      --primary: #2e2b4f;
+      --secondary: #5f527a;
+      --accent: #a894c2;
+      --text: #f3f0ff;
+      --soft: #ddd8ee;
+    }
+    
+    .theme-day {
+      --primary: #9ac4f8;
+      --secondary: #63a7e8;
+      --accent: #f2d7ee;
+      --text: #333344;
+      --soft: #ffffff;
+    }
+    
+    .theme-pink {
+      --primary: #ff9aa2;
+      --secondary: #e06377;
+      --accent: #ffb7c5;
+      --text: #4d243d;
+      --soft: #fbe0e4;
+    }
+    
+    .theme-forest {
+      --primary: #3d5444;
+      --secondary: #5a7247;
+      --accent: #a5be83;
+      --text: #f4f7eb;
+      --soft: #bfd8bd;
+    }
+    
+    .theme-ocean {
+      --primary: #25283d;
+      --secondary: #4a6d7c;
+      --accent: #8dbdd1;
+      --text: #f2f9fc;
+      --soft: #c9e4f6;
+    }
+    
     :root {
       --primary: #2e2b4f;
       --secondary: #5f527a;
@@ -47,6 +91,7 @@
       text-align: center;
       margin-bottom: 1rem;
       z-index: 10;
+      position: relative;
     }
     
     .title {
@@ -88,6 +133,7 @@
       gap: 10px;
       margin-top: 1.5rem;
       z-index: 10;
+      position: relative;
     }
     
     .btn {
@@ -117,6 +163,30 @@
       color: var(--primary);
     }
     
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 0.8rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+    }
+    
+    .fullscreen-btn:hover {
+      background: rgba(0, 0, 0, 0.5);
+      transform: scale(1.1);
+    }
+    
     .quote-container {
       position: absolute;
       bottom: 30px;
@@ -134,6 +204,7 @@
       border-radius: 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(5px);
+      transition: opacity 0.5s ease;
     }
     
     /* Particles */
@@ -157,6 +228,88 @@
     @keyframes twinkle {
       0%, 100% { opacity: 0.5; }
       50% { opacity: 0.1; }
+    }
+    
+    /* Flower Petals Color Picker */
+    .color-picker {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      z-index: 100;
+      width: 60px;
+      height: 60px;
+    }
+    
+    .petals-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-origin: center;
+      animation: rotate 90s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .petal {
+      position: absolute;
+      width: 25px;
+      height: 35px;
+      border-radius: 50% 50% 0 0;
+      transform-origin: bottom center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .petal:hover {
+      filter: brightness(1.2);
+      transform-origin: bottom center;
+      transform: translateY(-5px) rotate(var(--rotate));
+    }
+    
+    .petal:nth-child(1) {
+      background: #2e2b4f;
+      transform: rotate(0deg) translateY(-25px);
+      --rotate: 0deg;
+    }
+    
+    .petal:nth-child(2) {
+      background: #9ac4f8;
+      transform: rotate(72deg) translateY(-25px);
+      --rotate: 72deg;
+    }
+    
+    .petal:nth-child(3) {
+      background: #ff9aa2;
+      transform: rotate(144deg) translateY(-25px);
+      --rotate: 144deg;
+    }
+    
+    .petal:nth-child(4) {
+      background: #3d5444;
+      transform: rotate(216deg) translateY(-25px);
+      --rotate: 216deg;
+    }
+    
+    .petal:nth-child(5) {
+      background: #25283d;
+      transform: rotate(288deg) translateY(-25px);
+      --rotate: 288deg;
+    }
+    
+    .center-dot {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: white;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
     
     /* Cats and decorations */
@@ -199,21 +352,43 @@
         transform: translate(var(--end-x, 100vw), var(--end-y, 0)) rotate(var(--rotate4, 0deg));
       }
     }
+    
+    /* Space Cats */
+    .space-cat {
+      position: absolute;
+      z-index: 5;
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
+      animation: float-cat var(--float-duration, 10s) infinite ease-in-out, 
+                 glow var(--glow-duration, 4s) infinite alternate;
+      animation-delay: var(--float-delay, 0s), var(--glow-delay, 0s);
+    }
+    
+    @keyframes float-cat {
+      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
+      50% { transform: translateY(-30px) rotate(var(--rotate-alt, 0deg)); }
+    }
+    
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 5px rgba(var(--glow-color, 255, 255, 255), 0.5)); }
+      100% { filter: drop-shadow(0 0 20px rgba(var(--glow-color, 255, 255, 255), 0.8)); }
+    }
   </style>
 </head>
-<body>
+<body class="theme-night">
   <div class="stars-container" id="stars-container"></div>
   
   <!-- Header -->
   <header class="header">
-    <h1 class="title">✨ Lofi Wallpaper ✨</h1>
+    <h1 class="title">🌌 Lofi Wallpaper 🌌</h1>
   </header>
   
   <!-- Player -->
   <div class="player-container">
     <div class="player" id="player">
       <iframe id="youtube-player" 
-              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&loop=1&playlist=jfKfPfyJRdk"
+              src="https://www.youtube.com/embed/lTRiuFIWV54?autoplay=1&mute=0&loop=1&playlist=lTRiuFIWV54"
               allow="autoplay; encrypted-media" 
               allowfullscreen>
       </iframe>
@@ -222,25 +397,39 @@
   
   <!-- Controls -->
   <div class="controls">
-    <button class="btn active" data-video="jfKfPfyJRdk" id="lofi-btn">
+    <button class="btn active" data-video="lTRiuFIWV54" id="lofi-btn">
       <i class="fas fa-headphones"></i> Lofi Girl
     </button>
-    <button class="btn" data-video="5qap5aO4i9A" id="chillhop-btn">
+    <button class="btn" data-video="k6LwQGG_Frg" id="chillhop-btn">
       <i class="fas fa-music"></i> Chillhop
     </button>
-    <button class="btn" data-video="CLeZyIID9Bo" id="study-btn">
+    <button class="btn" data-video="FFfdyV8gnWk" id="study-btn">
       <i class="fas fa-book"></i> Study Vibes
     </button>
-    <button class="btn" data-video="lTRiuFIWV54" id="chillpop-btn">
-      <i class="fas fa-coffee"></i> Chillpop
+    <button class="btn" data-video="W6YI3ZFOL0A" id="chillpop-btn">
+      <i class="fas fa-coffee"></i> Aesthetic Mix
     </button>
-    <button class="btn" data-video="zFhfksjf_mY" id="sleep-btn">
-      <i class="fas fa-moon"></i> Sleep Beats
-    </button>
-    <button class="btn" id="fullscreen-btn">
-      <i class="fas fa-expand"></i> Fullscreen
+    <button class="btn" data-video="NOi4ZKzuo28" id="sleep-btn">
+      <i class="fas fa-moon"></i> Rain Lofi
     </button>
   </div>
+  
+  <!-- Color Picker -->
+  <div class="color-picker">
+    <div class="petals-container">
+      <div class="petal" id="theme-night"></div>
+      <div class="petal" id="theme-day"></div>
+      <div class="petal" id="theme-pink"></div>
+      <div class="petal" id="theme-forest"></div>
+      <div class="petal" id="theme-ocean"></div>
+      <div class="center-dot"></div>
+    </div>
+  </div>
+  
+  <!-- Fullscreen Button -->
+  <button class="fullscreen-btn" id="fullscreen-btn">
+    <i class="fas fa-expand"></i>
+  </button>
   
   <!-- Quote -->
   <div class="quote-container">
@@ -252,6 +441,9 @@
   
   <!-- Cat Elements -->
   <div id="cats-container"></div>
+  
+  <!-- Space Cat Elements -->
+  <div id="space-cats-container"></div>
   
   <script>
     // Player Control
@@ -266,20 +458,16 @@
     
     // Change active button and video
     buttons.forEach(button => {
-      if (button.id !== 'fullscreen-btn') {
-        button.addEventListener('click', () => {
-          const videoId = button.getAttribute('data-video');
-          player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}`;
-          
-          // Update active class
-          buttons.forEach(btn => {
-            if (btn.id !== 'fullscreen-btn') {
-              btn.classList.remove('active');
-            }
-          });
-          button.classList.add('active');
+      button.addEventListener('click', () => {
+        const videoId = button.getAttribute('data-video');
+        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}`;
+        
+        // Update active class
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
         });
-      }
+        button.classList.add('active');
+      });
     });
     
     // Fullscreen
@@ -293,6 +481,33 @@
           document.exitFullscreen();
         }
       }
+    });
+    
+    // Theme switching
+    const themeNight = document.getElementById('theme-night');
+    const themeDay = document.getElementById('theme-day');
+    const themePink = document.getElementById('theme-pink');
+    const themeForest = document.getElementById('theme-forest');
+    const themeOcean = document.getElementById('theme-ocean');
+    
+    themeNight.addEventListener('click', () => {
+      document.body.className = 'theme-night';
+    });
+    
+    themeDay.addEventListener('click', () => {
+      document.body.className = 'theme-day';
+    });
+    
+    themePink.addEventListener('click', () => {
+      document.body.className = 'theme-pink';
+    });
+    
+    themeForest.addEventListener('click', () => {
+      document.body.className = 'theme-forest';
+    });
+    
+    themeOcean.addEventListener('click', () => {
+      document.body.className = 'theme-ocean';
     });
     
     // Quotes
@@ -357,29 +572,9 @@
     const decorationContainer = document.getElementById('decoration-container');
     const decorations = [
       {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2615.svg',
-        alt: 'Coffee',
-        width: 35
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f4d6.svg',
-        alt: 'Book',
-        width: 40
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f331.svg',
-        alt: 'Plant',
+        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f30c.svg',
+        alt: 'Milky Way',
         width: 45
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f36a.svg',
-        alt: 'Cookie',
-        width: 30
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f342.svg',
-        alt: 'Leaf',
-        width: 25
       },
       {
         src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg',
@@ -387,9 +582,34 @@
         width: 30
       },
       {
+        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f31f.svg',
+        alt: 'Glowing Star',
+        width: 35
+      },
+      {
+        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f320.svg',
+        alt: 'Shooting Star',
+        width: 40
+      },
+      {
+        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2604.svg',
+        alt: 'Comet',
+        width: 38
+      },
+      {
         src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f319.svg',
         alt: 'Moon',
         width: 40
+      },
+      {
+        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f31a.svg',
+        alt: 'New Moon',
+        width: 35
+      },
+      {
+        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2b50.svg',
+        alt: 'Star',
+        width: 28
       }
     ];
     
@@ -499,33 +719,18 @@
       }
     }
     
-    // Initialize
-    window.addEventListener('load', () => {
-      generateStars();
-      generateDecorations();
-      generateCats();
-      changeQuote();
-      
-      // Regenerate wandering cats every minute
-      setInterval(() => {
-        const cats = document.querySelectorAll('.cat');
-        cats.forEach(cat => cat.remove());
-        generateCats();
-      }, 60000);
-    });
+    // Space Cats
+    const spaceCatsContainer = document.getElementById('space-cats-container');
     
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      // Clear and regenerate decorations to fit new size
-      const decorations = document.querySelectorAll('.decoration');
-      decorations.forEach(decoration => decoration.remove());
-      generateDecorations();
-      
-      // Clear and regenerate cats
-      const cats = document.querySelectorAll('.cat');
-      cats.forEach(cat => cat.remove());
-      generateCats();
-    });
-  </script>
-</body>
-</html>
+    // SVG data for space cats
+    const spaceCats = [
+      `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="30" fill="#3B2B59" />
+        <circle cx="30" cy="30" r="26" fill="#6A418F" />
+        <path d="M22 24C22 22.8954 22.8954 22 24 22C25.1046 22 26 22.8954 26 24C26 25.1046 25.1046 26 24 26C22.8954 26 22 25.1046 22 24Z" fill="#F9F9F9"/>
+        <path d="M34 24C34 22.8954 34.8954 22 36 22C37.1046 22 38 22.8954 38 24C38 25.1046 37.1046 26 36 26C34.8954 26 34 25.1046 34 24Z" fill="#F9F9F9"/>
+        <path d="M30 36C32.7614 36 35 33.7614 35 31H25C25 33.7614 27.2386 36 30 36Z" fill="#F9F9F9"/>
+        <path d="M18 18L22 22" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
+        <path d="M42 18L38 22" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
+        <path d="M20 12C18.5 15 22 16 24 13" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
+        <path d="M40 12C41.5 15 38 16 36 13" stroke="#F9F9F9" stroke-width="2" stroke-
