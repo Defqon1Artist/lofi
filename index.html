@@ -1,4 +1,4 @@
-En me basant sur les résultats de recherche, je vais modifier le code HTML pour répondre à vos demandes. Voici le code HTML mis à jour:
+Je m'excuse pour les problèmes avec le code. Il semble que le code SVG pour les chats spatiaux ait été tronqué et qu'il y ait d'autres problèmes. Voici une version simplifiée et complète qui devrait fonctionner correctement :
 
 ```html
 <!DOCTYPE html>
@@ -7,11 +7,10 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lofi Wallpaper</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
   <style>
-    /* Palette de couleurs */
+    /* Palettes de couleurs */
     .theme-night {
       --primary: #2e2b4f;
       --secondary: #5f527a;
@@ -50,14 +49,6 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
       --accent: #8dbdd1;
       --text: #f2f9fc;
       --soft: #c9e4f6;
-    }
-    
-    :root {
-      --primary: #2e2b4f;
-      --secondary: #5f527a;
-      --accent: #a894c2;
-      --text: #f3f0ff;
-      --soft: #ddd8ee;
     }
     
     * {
@@ -180,6 +171,8 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       z-index: 100;
+      width: 50px;
+      height: 50px;
     }
     
     .fullscreen-btn:hover {
@@ -312,7 +305,7 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
     
-    /* Cats and decorations */
+    /* Cats et décorations */
     .decoration {
       position: absolute;
       z-index: 2;
@@ -330,9 +323,25 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
       animation-delay: var(--move-delay, 0s);
     }
     
+    /* Chats de l'espace */
+    .space-cat {
+      position: absolute;
+      z-index: 5;
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
+      animation: float-cat var(--float-duration, 10s) infinite ease-in-out;
+      animation-delay: var(--float-delay, 0s);
+    }
+    
     @keyframes float {
       0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
       50% { transform: translateY(-20px) rotate(var(--rotate-alt, 0deg)); }
+    }
+    
+    @keyframes float-cat {
+      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
+      50% { transform: translateY(-30px) rotate(var(--rotate-alt, 0deg)); }
     }
     
     @keyframes move {
@@ -351,28 +360,6 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
       100% {
         transform: translate(var(--end-x, 100vw), var(--end-y, 0)) rotate(var(--rotate4, 0deg));
       }
-    }
-    
-    /* Space Cats */
-    .space-cat {
-      position: absolute;
-      z-index: 5;
-      width: 60px;
-      height: 60px;
-      filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
-      animation: float-cat var(--float-duration, 10s) infinite ease-in-out, 
-                 glow var(--glow-duration, 4s) infinite alternate;
-      animation-delay: var(--float-delay, 0s), var(--glow-delay, 0s);
-    }
-    
-    @keyframes float-cat {
-      0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
-      50% { transform: translateY(-30px) rotate(var(--rotate-alt, 0deg)); }
-    }
-    
-    @keyframes glow {
-      0% { filter: drop-shadow(0 0 5px rgba(var(--glow-color, 255, 255, 255), 0.5)); }
-      100% { filter: drop-shadow(0 0 20px rgba(var(--glow-color, 255, 255, 255), 0.8)); }
     }
   </style>
 </head>
@@ -449,11 +436,6 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
     // Player Control
     const player = document.getElementById('youtube-player');
     const buttons = document.querySelectorAll('.controls .btn');
-    const lofiBtn = document.getElementById('lofi-btn');
-    const chillhopBtn = document.getElementById('chillhop-btn');
-    const studyBtn = document.getElementById('study-btn');
-    const chillpopBtn = document.getElementById('chillpop-btn');
-    const sleepBtn = document.getElementById('sleep-btn');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
     
     // Change active button and video
@@ -542,6 +524,7 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
     // Generate stars
     const starsContainer = document.getElementById('stars-container');
     function generateStars() {
+      starsContainer.innerHTML = '';
       for (let i = 0; i < 150; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
@@ -600,20 +583,11 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
         src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f319.svg',
         alt: 'Moon',
         width: 40
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f31a.svg',
-        alt: 'New Moon',
-        width: 35
-      },
-      {
-        src: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2b50.svg',
-        alt: 'Star',
-        width: 28
       }
     ];
     
     function generateDecorations() {
+      decorationContainer.innerHTML = '';
       for (let i = 0; i < 15; i++) {
         const decoration = document.createElement('img');
         const randomDecoration = decorations[Math.floor(Math.random() * decorations.length)];
@@ -668,6 +642,7 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
     ];
     
     function generateCats() {
+      catsContainer.innerHTML = '';
       for (let i = 0; i < 8; i++) {
         const cat = document.createElement('img');
         const randomCat = cats[Math.floor(Math.random() * cats.length)];
@@ -722,15 +697,63 @@ En me basant sur les résultats de recherche, je vais modifier le code HTML pour
     // Space Cats
     const spaceCatsContainer = document.getElementById('space-cats-container');
     
-    // SVG data for space cats
-    const spaceCats = [
-      `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="30" cy="30" r="30" fill="#3B2B59" />
-        <circle cx="30" cy="30" r="26" fill="#6A418F" />
-        <path d="M22 24C22 22.8954 22.8954 22 24 22C25.1046 22 26 22.8954 26 24C26 25.1046 25.1046 26 24 26C22.8954 26 22 25.1046 22 24Z" fill="#F9F9F9"/>
-        <path d="M34 24C34 22.8954 34.8954 22 36 22C37.1046 22 38 22.8954 38 24C38 25.1046 37.1046 26 36 26C34.8954 26 34 25.1046 34 24Z" fill="#F9F9F9"/>
-        <path d="M30 36C32.7614 36 35 33.7614 35 31H25C25 33.7614 27.2386 36 30 36Z" fill="#F9F9F9"/>
-        <path d="M18 18L22 22" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
-        <path d="M42 18L38 22" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
-        <path d="M20 12C18.5 15 22 16 24 13" stroke="#F9F9F9" stroke-width="2" stroke-linecap="round"/>
-        <path d="M40 12C41.5 15 38 16 36 13" stroke="#F9F9F9" stroke-width="2" stroke-
+    function generateSpaceCats() {
+      spaceCatsContainer.innerHTML = '';
+      
+      // Créer 5 chats de l'espace avec des couleurs différentes
+      const spaceColors = [
+        '#6A418F', // Violet
+        '#344966', // Bleu foncé
+        '#1E2D40', // Bleu nuit
+        '#60047A', // Violet foncé
+        '#4B296B'  // Pourpre
+      ];
+      
+      for (let i = 0; i < 5; i++) {
+        const spaceCat = document.createElement('div');
+        spaceCat.classList.add('space-cat');
+        
+        // Couleur de fond aléatoire du chat
+        const color = spaceColors[Math.floor(Math.random() * spaceColors.length)];
+        
+        // Position aléatoire (éviter le centre où se trouve le lecteur)
+        let x, y;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const playerWidth = window.innerWidth * 0.3;
+        const playerHeight = playerWidth * 0.5625; // ratio 16:9
+        
+        do {
+          x = Math.random() * window.innerWidth;
+          y = Math.random() * window.innerHeight;
+        } while (
+          x > centerX - playerWidth/1.5 && 
+          x < centerX + playerWidth/1.5 && 
+          y > centerY - playerHeight/1.5 && 
+          y < centerY + playerHeight/1.5
+        );
+        
+        // Créer le chat de l'espace avec du HTML
+        spaceCat.innerHTML = `
+          <div style="position:relative; width:100%; height:100%;">
+            <div style="position:absolute; width:100%; height:100%; background:${color}; border-radius:50%; overflow:hidden;">
+              <div style="position:absolute; width:8px; height:8px; background:white; border-radius:50%; top:40%; left:30%;"></div>
+              <div style="position:absolute; width:8px; height:8px; background:white; border-radius:50%; top:40%; left:70%;"></div>
+              <div style="position:absolute; width:15px; height:6px; background:white; border-radius:3px; top:60%; left:50%; transform:translateX(-50%);"></div>
+              <div style="position:absolute; width:25px; height:12px; border:2px solid white; border-radius:50%; top:20%; left:25%; transform:rotate(-20deg);"></div>
+              <div style="position:absolute; width:25px; height:12px; border:2px solid white; border-radius:50%; top:20%; left:50%; transform:rotate(20deg);"></div>
+            </div>
+          </div>
+        `;
+        
+        // Animation et position
+        const duration = Math.random() * 10 + 8;
+        const delay = Math.random() * 5;
+        const rotate = Math.random() * 20 - 10;
+        const rotateAlt = rotate * -1;
+        
+        spaceCat.style.left = `${x}px`;
+        spaceCat.style.top = `${y}px`;
+        spaceCat.style.setProperty('--float-duration', `${duration}s`);
+        spaceCat.style.setProperty('--float-delay', `${delay}s`);
+        spaceCat
