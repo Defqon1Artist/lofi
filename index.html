@@ -3,37 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lofi Wallpaper</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+    <title>Lofi Wallpaper Paradise</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2e2b4f;
-            --secondary: #5f527a;
-            --accent: #a894c2;
-            --text: #f3f0ff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(-45deg, var(--primary), var(--secondary), #3a3356, #4a3b72);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             height: 100vh;
             overflow: hidden;
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: all 0.5s ease;
+            margin: 0;
+            padding: 0;
         }
 
         @keyframes gradient {
@@ -42,387 +25,308 @@
             100% { background-position: 0% 50%; }
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            z-index: 10;
-        }
-
-        .title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .player-container {
+        .video-container {
             position: relative;
-            width: 30%;
-            min-width: 320px;
-            max-width: 600px;
-            z-index: 10;
-            margin-bottom: 1.5rem;
-        }
-
-        .player {
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-            position: relative;
-            overflow: hidden;
+            width: 70%;
+            max-width: 1000px;
             border-radius: 20px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.1);
         }
 
-        .player iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            z-index: 10;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            padding: 0.7rem 1.2rem;
+        .btn-lofi {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.3s;
+            padding: 10px 20px;
+            color: white;
+            transition: all 0.3s ease;
+            margin: 0 10px;
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .btn-lofi:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
         }
 
-        .btn.active {
-            background: var(--accent);
-            color: var(--primary);
+        .btn-lofi.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .fullscreen-btn {
             position: fixed;
             bottom: 30px;
-            left: 30px;
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.3s;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
             z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .fullscreen-btn:hover {
-            background: rgba(0, 0, 0, 0.5);
             transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        .fullscreen-btn i {
-            font-size: 1.2rem;
-        }
-
-        /* Sakura Color Palette */
-        .sakura-palette {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 100;
-            width: 120px;
-            height: 120px;
-        }
-
-        .sakura-flower {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .sakura-petal {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.5);
+        .sakura {
             position: absolute;
-            overflow: hidden;
-            border-radius: 35% 70% 35% 70%;
-            transform-origin: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            opacity: 0.8;
+            z-index: -1;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
         }
 
-        .sakura-petal:hover {
-            transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .sakura-petal.active {
-            border: 3px solid white;
-            transform: scale(1.1);
-        }
-
-        /* Sakura petal positions for 5 colors */
-        .sakura-center {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-        }
-
-        .sakura-petal-1 {
-            top: 15%;
-            left: 50%;
-            transform: translate(-50%, 0) rotate(0deg);
-        }
-
-        .sakura-petal-2 {
-            top: 50%;
-            left: 80%;
-            transform: translate(-50%, -50%) rotate(72deg);
-        }
-
-        .sakura-petal-3 {
-            top: 85%;
-            left: 50%;
-            transform: translate(-50%, 0) rotate(144deg);
-        }
-
-        .sakura-petal-4 {
-            top: 50%;
-            left: 20%;
-            transform: translate(-50%, -50%) rotate(216deg);
-        }
-
-        .sakura-petal-5 {
-            top: 15%;
-            left: 20%;
-            transform: translate(0%, 0%) rotate(288deg);
-        }
-
-        .quote-container {
+        .cat {
             position: absolute;
-            bottom: 30px;
-            text-align: center;
-            max-width: 80%;
-            z-index: 10;
-        }
-
-        .quote {
-            font-size: 1.2rem;
-            font-style: italic;
-            font-weight: 300;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem 1.5rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            transition: opacity 0.5s ease;
-        }
-
-        /* Starry Background */
-        .stars-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: twinkle 4s infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.8; }
-        }
-
-        .volume-control {
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30px;
-            height: 100px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 15;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .volume-control input {
-            transform: rotate(-90deg);
             width: 80px;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .mute-btn {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-
-        /* Theme-specific variables */
-        .night-theme {
-            --primary: #2e2b4f;
-            --secondary: #5f527a;
-            --accent: #a894c2;
-            --text: #f3f0ff;
-        }
-
-        .day-theme {
-            --primary: #7fa5cf;
-            --secondary: #aad2ff;
-            --accent: #f2d7ee;
-            --text: #333344;
-        }
-
-        .pink-theme {
-            --primary: #ff9aa2;
-            --secondary: #e06377;
-            --accent: #ffb7c5;
-            --text: #4d243d;
-        }
-
-        .forest-theme {
-            --primary: #3d5444;
-            --secondary: #7c9960;
-            --accent: #a5be83;
-            --text: #f4f7eb;
-        }
-
-        .ocean-theme {
-            --primary: #25283d;
-            --secondary: #4a6d7c;
-            --accent: #8dbdd1;
-            --text: #f2f9fc;
-        }
-
-        /* Lofi Cats */
-        #lofi-cats-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            height: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             pointer-events: none;
-            z-index: 2;
+            z-index: 50;
+            transition: transform 0.3s ease;
         }
 
-        .lofi-cat {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            filter: drop-shadow(0 0 8px rgba(255, 150, 255, 0.7));
-            transition: transform 0.3s ease-out;
-            animation: float 6s infinite ease-in-out, moveCat 20s linear infinite;
+        .cat:hover {
+            transform: scale(1.2);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-        }
-
-        @keyframes moveCat {
-            0% { transform: translateX(-100px) translateY(20vh) scale(0.8); opacity: 0; }
-            10% { opacity: 1; }
-            50% { transform: translateX(calc(100vw + 50px)) translateY(80vh) scale(1.2); }
-            90% { opacity: 1; }
-            100% { transform: translateX(-100px) translateY(20vh) scale(0.8); opacity: 0; }
-        }
-
-        .cat-trail {
-            position: absolute;
-            width: 8px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.5;
-            pointer-events: none;
+        /* Styles pour la version PDF */
+        @media print {
+            body {
+                background: #1a1a2e !important;
+                height: auto;
+                overflow: visible;
+            }
+            
+            .video-container {
+                margin: 20px auto;
+                page-break-inside: avoid;
+            }
+            
+            .buttons-container {
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
-<body class="night-theme">
-    <div class="stars-container" id="stars-container"></div>
-
-    <header class="header">
-        <h1 class="title">🌌 Lofi Wallpaper 🌌</h1>
-    </header>
-
-    <div class="player-container">
-        <div class="player" id="player">
-            <iframe id="youtube-player"
-                    src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk"
-                    allow="autoplay; encrypted-media; loop"
-                    allowfullscreen>
-            </iframe>
-        </div>
-
-        <div class="volume-control">
-            <input type="range" id="volume-slider" min="0" max="100" value="70">
-            <button class="mute-btn" id="mute-btn"><i class="fas fa-volume-up"></i></button>
-        </div>
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <div class="video-container mb-8">
+        <video id="lofiVideo" autoplay loop muted playsinline webkit-playsinline class="w-full h-full object-cover">
+            <source src="https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-girl.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
     </div>
 
-    <div class="controls">
-        <button class="btn active" data-video="jfKfPfyJRdk">
-            <i class="fas fa-headphones"></i> Lofi Girl
-        </button>
-        <button class="btn" data-video="5qap5aO4i9A">
-            <i class="fas fa-music"></i> Chillhop
-        </button>
-        <button class="btn" data-video="n61ULEU7CO0">
-            <i class="fas fa-book"></i> Study Vibes
-        </button>
-        <button class="btn" data-video="4xDzrJKXOOY">
-            <i class="fas fa-coffee"></i> Aesthetic Mix
-        </button>
-        <button class="btn" data-video="rUxyKA_-grg">
-            <i class="fas fa-moon"></i> Rain Lofi
-        </button>
+    <div class="buttons-container flex flex-wrap justify-center mt-6 mb-10">
+        <button class="btn-lofi active" data-type="chill">Chill Lofi</button>
+        <button class="btn-lofi" data-type="study">Study Beats</button>
+        <button class="btn-lofi" data-type="sleep">Sleep Lofi</button>
+        <button class="btn-lofi" data-type="jazzy">Jazzy Lofi</button>
+        <button class="btn-lofi" data-type="rain">Rainy Mood</button>
     </div>
 
-    <div class="sakura-palette sakura-palette-5">
-        <div class="sakura-flower">
-            <div class="sakura-petal sakura-center sakura-petal-5-center active" id="theme-night"></div>
-            <div class="sakura-petal sakura-petal-1 sakura-petal-5-1" id="theme-day"></div>
-            <div class="sakura-petal sakura-petal-2 sakura-petal-5-2" id="theme-pink"></div>
-            <div class="sakura-petal sakura-petal-3 sakura-petal-5-3" id="theme-forest"></div>
+    <div class="fullscreen-btn" id="fullscreenBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        </svg>
+    </div>
+
+    <script>
+        // Vidéos Lofi pour chaque type
+        const lofiVideos = {
+            chill: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-girl.mp4",
+            study: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-girl-study.mp4",
+            sleep: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-sleep.mp4",
+            jazzy: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-jazzy.mp4",
+            rain: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-rain.mp4"
+        };
+
+        // Changement de vidéo selon le type
+        document.querySelectorAll('.btn-lofi').forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                const video = document.getElementById('lofiVideo');
+                video.src = lofiVideos[type];
+                video.load();
+                video.play();
+                
+                // Marquer le bouton actif
+                document.querySelectorAll('.btn-lofi').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Fonction plein écran
+        document.getElementById('fullscreenBtn').addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Erreur lors du passage en plein écran: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // Création et animation des fleurs de sakura
+        const sakuraColors = [
+            'rgba(255, 183, 197, 0.7)', // Rose pâle
+            'rgba(199, 153, 204, 0.7)', // Lavande
+            'rgba(255, 221, 148, 0.7)', // Jaune pâle
+            'rgba(173, 216, 230, 0.7)', // Bleu clair
+            'rgba(152, 251, 152, 0.7)'  // Vert pâle
+        ];
+
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.className = 'sakura';
+            
+            // Taille aléatoire
+            const size = Math.random() * 40 + 20;
+            sakura.style.width = `${size}px`;
+            sakura.style.height = `${size}px`;
+            
+            // Position initiale aléatoire
+            sakura.style.left = `${Math.random() * 100}vw`;
+            sakura.style.top = `-${size}px`;
+            
+            // Rotation aléatoire
+            const rotation = Math.random() * 360;
+            sakura.style.transform = `rotate(${rotation}deg)`;
+            
+            // Couleur aléatoire parmi les 5 couleurs définies
+            const colorIndex = Math.floor(Math.random() * sakuraColors.length);
+            sakura.style.backgroundColor = sakuraColors[colorIndex];
+            sakura.style.borderRadius = '50% 0 50% 50%';
+            
+            document.body.appendChild(sakura);
+            
+            // Animation de chute
+            const animationDuration = Math.random() * 10 + 10;
+            const horizontalMovement = Math.random() * 20 - 10;
+            
+            sakura.animate([
+                { transform: `translateX(0) translateY(0) rotate(${rotation}deg)` },
+                { transform: `translateX(${horizontalMovement}vw) translateY(105vh) rotate(${rotation + 360}deg)` }
+            ], {
+                duration: animationDuration * 1000,
+                easing: 'linear'
+            }).onfinish = () => {
+                sakura.remove();
+                createSakura();
+            };
+        }
+
+        // Création de plusieurs fleurs de sakura au chargement
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                createSakura();
+            }, i * 300);
+        }
+
+        // Création et animation des chats Lofi
+        const catImages = [
+            'https://cdn.jsdelivr.net/gh/catppuccin/catppuccin/assets/logos/exports/1544x1544_circle.png',
+            'https://cdn.jsdelivr.net/gh/catppuccin/catppuccin@main/assets/misc/transparent.png',
+            'https://cdn.jsdelivr.net/gh/catppuccin/catppuccin/assets/logos/exports/1544x1544_circle.png'
+        ];
+
+        function createCat() {
+            const cat = document.createElement('div');
+            cat.className = 'cat';
+            
+            // Image aléatoire de chat
+            const imageIndex = Math.floor(Math.random() * catImages.length);
+            cat.style.backgroundImage = `url(${catImages[imageIndex]})`;
+            
+            // Position initiale aléatoire sur les bords
+            const side = Math.floor(Math.random() * 4);
+            switch(side) {
+                case 0: // Haut
+                    cat.style.top = '-80px';
+                    cat.style.left = `${Math.random() * 100}vw`;
+                    break;
+                case 1: // Droite
+                    cat.style.top = `${Math.random() * 100}vh`;
+                    cat.style.left = '100vw';
+                    break;
+                case 2: // Bas
+                    cat.style.top = '100vh';
+                    cat.style.left = `${Math.random() * 100}vw`;
+                    break;
+                case 3: // Gauche
+                    cat.style.top = `${Math.random() * 100}vh`;
+                    cat.style.left = '-80px';
+                    break;
+            }
+            
+            document.body.appendChild(cat);
+            
+            // Point de destination aléatoire
+            const destX = Math.random() * window.innerWidth;
+            const destY = Math.random() * window.innerHeight;
+            
+            // Vitesse aléatoire
+            const duration = Math.random() * 15000 + 10000;
+            
+            // Animation de déplacement
+            cat.animate([
+                { transform: 'translate(0, 0)' },
+                { transform: `translate(calc(${destX}px - 100%), calc(${destY}px - 100%))` }
+            ], {
+                duration: duration,
+                easing: 'ease-in-out'
+            }).onfinish = () => {
+                // Animation de sortie
+                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
+                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
+                
+                cat.animate([
+                    { transform: `translate(calc(${destX}px - 100%), calc(${destY}px - 100%))` },
+                    { transform: `translate(calc(${exitX} - 100%), calc(${exitY} - 100%))` }
+                ], {
+                    duration: 8000,
+                    easing: 'ease-in-out'
+                }).onfinish = () => {
+                    cat.remove();
+                    setTimeout(createCat, Math.random() * 2000);
+                };
+            };
+        }
+
+        // Création de quelques chats au chargement
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                createCat();
+            }, i * 1000);
+        }
+
+        // Préchargement des vidéos
+        Object.values(lofiVideos).forEach(videoUrl => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = videoUrl;
+            link.as = 'video';
+            document.head.appendChild(link);
+        });
+    </script>
+</body>
+</html>
