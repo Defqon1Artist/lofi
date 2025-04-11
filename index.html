@@ -152,8 +152,8 @@
       font-size: 1.2rem;
     }
     
-    /* Flower Color Palette */
-    .color-palette {
+    /* Sakura Color Palette */
+    .sakura-palette {
       position: fixed;
       bottom: 30px;
       left: 30px;
@@ -162,35 +162,36 @@
       height: 150px;
     }
     
-    .color-flower {
+    .sakura-flower {
       position: relative;
       width: 100%;
       height: 100%;
     }
     
-    .color-option {
+    .sakura-petal {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
       cursor: pointer;
       transition: all 0.3s;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       border: 2px solid rgba(255, 255, 255, 0.5);
       position: absolute;
       overflow: hidden;
+      border-radius: 35% 70% 35% 70%;
+      transform-origin: center;
     }
     
-    .color-option:hover {
-      transform: scale(1.1);
+    .sakura-petal:hover {
+      transform: scale(1.1) rotate(15deg);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
     
-    .color-option.active {
+    .sakura-petal.active {
       border: 3px solid white;
       transform: scale(1.1);
     }
     
-    .color-option::after {
+    .sakura-petal::after {
       content: '';
       position: absolute;
       top: 0;
@@ -200,50 +201,51 @@
       background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
     }
     
-    /* Flower petal positions */
-    .color-center {
+    /* Sakura petal positions */
+    .sakura-center {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 5;
       width: 45px;
       height: 45px;
+      border-radius: 50%;
     }
     
-    .color-petal-1 {
+    .sakura-petal-1 {
       top: 10%;
       left: 50%;
-      transform: translate(-50%, 0);
+      transform: translate(-50%, 0) rotate(0deg);
     }
     
-    .color-petal-2 {
+    .sakura-petal-2 {
       top: 25%;
       left: 85%;
-      transform: translate(-50%, 0);
+      transform: translate(-50%, 0) rotate(60deg);
     }
     
-    .color-petal-3 {
+    .sakura-petal-3 {
       top: 75%;
       left: 85%;
-      transform: translate(-50%, 0);
+      transform: translate(-50%, 0) rotate(120deg);
     }
     
-    .color-petal-4 {
+    .sakura-petal-4 {
       top: 90%;
       left: 50%;
-      transform: translate(-50%, 0);
+      transform: translate(-50%, 0) rotate(180deg);
     }
     
-    .color-petal-5 {
+    .sakura-petal-5 {
       top: 75%;
       left: 15%;
-      transform: translate(-50%, 0);
+      transform: translate(-50%, 0) rotate(240deg);
     }
     
-    .color-petal-6 {
+    .sakura-petal-6 {
       top: 25%;
       left: 15%;
-      transform: translate(-50%, 0);
+      transform: translate(-50%, 0) rotate(300deg);
     }
     
     #theme-night {
@@ -316,8 +318,8 @@
       50% { opacity: 0.8; }
     }
     
-    /* Space Cats */
-    .space-cat {
+    /* Lofi Cats */
+    .lofi-cat {
       position: absolute;
       width: 60px;
       height: 60px;
@@ -455,10 +457,39 @@
       font-size: 16px;
       margin-top: 5px;
     }
+
+    /* Animation pour les pétales de sakura qui tombent */
+    .falling-petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.7;
+      z-index: 3;
+      pointer-events: none;
+      animation: fall 10s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-5%) rotate(0deg) scale(0.6);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.6);
+        opacity: 0.2;
+      }
+    }
   </style>
 </head>
 <body class="night-theme">
   <div class="stars-container" id="stars-container"></div>
+  <div id="falling-petals-container"></div>
   
   <!-- Header -->
   <header class="header">
@@ -469,7 +500,7 @@
   <div class="player-container">
     <div class="player" id="player">
       <iframe id="youtube-player" 
-              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&loop=1&playlist=jfKfPfyJRdk"
+              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&loop=1&playlist=jfKfPfyJRdk&enablejsapi=1"
               allow="autoplay; encrypted-media" 
               allowfullscreen>
       </iframe>
@@ -500,16 +531,16 @@
     </button>
   </div>
   
-  <!-- Color Palette in Flower Shape -->
-  <div class="color-palette">
-    <div class="color-flower">
-      <div class="color-option color-center active" id="theme-night"></div>
-      <div class="color-option color-petal-1" id="theme-day"></div>
-      <div class="color-option color-petal-2" id="theme-pink"></div>
-      <div class="color-option color-petal-3" id="theme-forest"></div>
-      <div class="color-option color-petal-4" id="theme-ocean"></div>
-      <div class="color-option color-petal-5" id="theme-sunset"></div>
-      <div class="color-option color-petal-6" id="theme-galaxy"></div>
+  <!-- Color Palette in Sakura Shape -->
+  <div class="sakura-palette">
+    <div class="sakura-flower">
+      <div class="sakura-petal sakura-center active" id="theme-night"></div>
+      <div class="sakura-petal sakura-petal-1" id="theme-day"></div>
+      <div class="sakura-petal sakura-petal-2" id="theme-pink"></div>
+      <div class="sakura-petal sakura-petal-3" id="theme-forest"></div>
+      <div class="sakura-petal sakura-petal-4" id="theme-ocean"></div>
+      <div class="sakura-petal sakura-petal-5" id="theme-sunset"></div>
+      <div class="sakura-petal sakura-petal-6" id="theme-galaxy"></div>
     </div>
   </div>
   
@@ -523,34 +554,34 @@
     <div class="quote" id="quote">"Breathe. You're here now."</div>
   </div>
   
-  <!-- Space Cats Container -->
-  <div id="space-cats-container"></div>
+  <!-- Lofi Cats Container -->
+  <div id="lofi-cats-container"></div>
   
   <script>
     // Variables globales
-    const player = document.getElementById('youtube-player');
+    let ytPlayer = null;
     const buttons = document.querySelectorAll('.controls .btn');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const colorOptions = document.querySelectorAll('.color-option');
+    const colorOptions = document.querySelectorAll('.sakura-petal');
     const quoteElement = document.getElementById('quote');
     const starsContainer = document.getElementById('stars-container');
-    const spaceCatsContainer = document.getElementById('space-cats-container');
+    const lofiCatsContainer = document.getElementById('lofi-cats-container');
     const volumeSlider = document.getElementById('volume-slider');
     const muteBtn = document.getElementById('mute-btn');
+    const fallingPetalsContainer = document.getElementById('falling-petals-container');
     
     // YouTube API
-    let ytPlayer;
-    
-    // Load YouTube API
     function loadYouTubeAPI() {
       const tag = document.createElement('script');
       tag.src = "https://www.youtube.com/iframe_api";
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      console.log("YouTube API script added");
     }
     
     // YouTube API will call this function when ready
     window.onYouTubeIframeAPIReady = function() {
+      console.log("YouTube API ready");
       const videoId = document.querySelector('.controls .active').getAttribute('data-video');
       
       ytPlayer = new YT.Player('youtube-player', {
@@ -565,12 +596,18 @@
           'rel': 0
         },
         events: {
-          'onReady': onPlayerReady
+          'onReady': onPlayerReady,
+          'onError': onPlayerError
         }
       });
     };
     
+    function onPlayerError(event) {
+      console.error("YouTube Player Error:", event.data);
+    }
+    
     function onPlayerReady(event) {
+      console.log("YouTube Player ready");
       // Set initial volume
       event.target.setVolume(70);
       
@@ -601,28 +638,34 @@
         }
         isMuted = !isMuted;
       });
+      
+      // Setup video buttons now that player is ready
+      setupVideoButtons();
     }
     
     // Sélection des vidéos
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        const videoId = button.getAttribute('data-video');
-        
-        if (ytPlayer) {
-          ytPlayer.loadVideoById({
-            'videoId': videoId,
-            'startSeconds': 0,
-            'suggestedQuality': 'large'
-          });
-        } else {
-          player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=0`;
-        }
-        
-        // Update active class
-        buttons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    function setupVideoButtons() {
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const videoId = button.getAttribute('data-video');
+          console.log("Button clicked, changing to video:", videoId);
+          
+          if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+            ytPlayer.loadVideoById({
+              'videoId': videoId,
+              'startSeconds': 0,
+              'suggestedQuality': 'large'
+            });
+            
+            // Update active class
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+          } else {
+            console.error("YouTube Player not ready yet");
+          }
+        });
       });
-    });
+    }
     
     // Plein écran
     fullscreenBtn.addEventListener('click', () => {
@@ -665,8 +708,8 @@
           document.body.className = 'galaxy-theme';
         }
         
-        // Recréer les chats spatiaux avec la nouvelle couleur
-        generateSpaceCats();
+        // Recréer les chats avec la nouvelle couleur
+        generateLofiCats();
       });
     });
     
@@ -733,12 +776,12 @@
         starsContainer.appendChild(star);
       }
     }
-    
-    // Fonction pour créer un SVG de chat spatial
-    function createSpaceCatSVG(color1, color2, color3) {
+
+    // Fonction pour créer un SVG de chat lofi
+    function createLofiCatSVG(color1, color2, color3) {
       // Couleurs par défaut si non fournies
       color1 = color1 || '#6A418F';
-      color2 = color2 || '#483D8B';
+      color2 = color2 || '#483D8B';  
       color3 = color3 || '#FFFFFF';
       
       return `
@@ -748,6 +791,11 @@
           
           <!-- Traits décoratifs -->
           <circle cx="50" cy="50" r="35" fill="${color2}" />
+          
+          <!-- Casque -->
+          <path d="M25,30 C25,20 75,20 75,30" stroke="${color3}" stroke-width="3" fill="none" />
+          <rect x="20" y="30" width="10" height="15" rx="5" fill="${color3}" />
+          <rect x="70" y="30" width="10" height="15" rx="5" fill="${color3}" />
           
           <!-- Yeux -->
           <circle cx="35" cy="40" r="6" fill="${color3}" />
@@ -766,206 +814,9 @@
           <path d="M20,25 Q30,10 40,25" fill="${color1}" />
           <path d="M80,25 Q70,10 60,25" fill="${color1}" />
           
-          <!-- Moustaches -->
-          <path d="M30,55 L15,50" stroke="${color3}" stroke-width="1" />
-          <path d="M30,58 L12,58" stroke="${color3}" stroke-width="1" />
-          <path d="M30,61 L15,65" stroke="${color3}" stroke-width="1" />
-          
-          <path d="M70,55 L85,50" stroke="${color3}" stroke-width="1" />
-          <path d="M70,58 L88,58" stroke="${color3}" stroke-width="1" />
-          <path d="M70,61 L85,65" stroke="${color3}" stroke-width="1" />
-          
-          <!-- Étoiles autour -->
-          <circle cx="15" cy="15" r="2" fill="white" />
-          <circle cx="85" cy="25" r="1.5" fill="white" />
-          <circle cx="75" cy="85" r="2" fill="white" />
-          <circle cx="25" cy="75" r="1.5" fill="white" />
-          
-          <!-- Ligne spatiale -->
-          <path d="M5,50 Q20,55 30,45 T60,50 T90,45" stroke="${color3}" stroke-width="1" fill="none" opacity="0.6" />
-        </svg>
-      `;
-    }
-    
-    // Créer une traînée pour le chat spatial
-    function createCatTrail(color) {
-      return `
-        <svg class="cat-trail" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="trailGradient" x1="0%" y1="50%" x2="100%" y2="50%">
-              <stop offset="0%" stop-color="${color}" stop-opacity="0" />
-              <stop offset="50%" stop-color="${color}" stop-opacity="0.3" />
-              <stop offset="100%" stop-color="${color}" stop-opacity="0.7" />
-            </linearGradient>
-          </defs>
-          <path d="M0,15 Q30,5 50,15 T100,15" stroke="url(#trailGradient)" stroke-width="6" fill="none" />
-        </svg>
-      `;
-    }
-    
-    // Générer les chats spatiaux
-    function generateSpaceCats() {
-      spaceCatsContainer.innerHTML = '';
-      
-      // Obtenir les couleurs du thème actuel
-      const computedStyle = getComputedStyle(document.body);
-      const catPrimary = computedStyle.getPropertyValue('--cat-primary');
-      const catSecondary = computedStyle.getPropertyValue('--cat-secondary');
-      const catAccent = computedStyle.getPropertyValue('--cat-accent');
-      
-      // Créer 7 chats spatiaux
-      for (let i = 0; i < 7; i++) {
-        const spaceCat = document.createElement('div');
-        spaceCat.classList.add('space-cat');
-        spaceCat.setAttribute('data-id', i);
-        
-        // Position aléatoire (éviter le centre où se trouve le lecteur)
-        let x, y;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const playerWidth = Math.min(window.innerWidth * 0.3, 600);
-        const playerHeight = playerWidth * 0.5625; // ratio 16:9
-        
-        // Éviter le centre
-        do {
-          x = Math.random() * (window.innerWidth - 100);
-          y = Math.random() * (window.innerHeight - 100);
-        } while (
-          x > centerX - playerWidth/1.5 && 
-          x < centerX + playerWidth/1.5 && 
-          y > centerY - playerHeight/1.5 && 
-          y < centerY + playerHeight/1.5
-        );
-        
-        // Taille aléatoire
-        const size = Math.random() * 30 + 40;
-        
-        // Vitesse aléatoire
-        const speed = Math.random() * 3 + 1;
-        
-        // Direction aléatoire
-        const directionX = Math.random() > 0.5 ? 1 : -1;
-        const directionY = Math.random() > 0.5 ? 1 : -1;
-        
-        // Animation et style
-        const glowColor = i % 2 === 0 ? '150, 150, 255' : '255, 150, 255';
-        
-        spaceCat.style.left = `${x}px`;
-        spaceCat.style.top = `${y}px`;
-        spaceCat.style.width = `${size}px`;
-        spaceCat.style.height = `${size}px`;
-        spaceCat.style.setProperty('--glow-color', glowColor);
-        
-        // Stocker les données de mouvement comme attributs
-        spaceCat.setAttribute('data-dir-x', directionX);
-        spaceCat.setAttribute('data-dir-y', directionY);
-        spaceCat.setAttribute('data-speed', speed);
-        
-        // Insérer le SVG
-        spaceCat.innerHTML = createSpaceCatSVG(catPrimary, catSecondary, catAccent);
-        spaceCat.innerHTML += createCatTrail(catPrimary);
-        
-        // Ajouter le chat au conteneur
-        spaceCatsContainer.appendChild(spaceCat);
-      }
-    }
-    
-    // Animer les chats spatiaux
-    function animateSpaceCats() {
-      const cats = document.querySelectorAll('.space-cat');
-      
-      cats.forEach(cat => {
-        // Récupérer la position actuelle
-        let x = parseFloat(cat.style.left);
-        let y = parseFloat(cat.style.top);
-        
-        // Récupérer la direction et la vitesse
-        let dirX = parseFloat(cat.getAttribute('data-dir-x'));
-        let dirY = parseFloat(cat.getAttribute('data-dir-y'));
-        let speed = parseFloat(cat.getAttribute('data-speed'));
-        
-        // Calcul du nouveau mouvement
-        x += dirX * speed;
-        y += dirY * speed;
-        
-        // Vérifier les collisions avec les bords
-        const width = cat.offsetWidth;
-        const height = cat.offsetHeight;
-        
-        if (x <= 0 || x >= window.innerWidth - width) {
-          dirX *= -1;
-          cat.setAttribute('data-dir-x', dirX);
-        }
-        
-        if (y <= 0 || y >= window.innerHeight - height) {
-          dirY *= -1;
-          cat.setAttribute('data-dir-y', dirY);
-        }
-        
-        // Appliquer la nouvelle position
-        cat.style.left = `${x}px`;
-        cat.style.top = `${y}px`;
-        
-        // Rotation basée sur la direction
-        let angle = Math.atan2(dirY, dirX) * (180 / Math.PI);
-        cat.style.transform = `rotate(${angle}deg)`;
-      });
-      
-      requestAnimationFrame(animateSpaceCats);
-    }
-    
-    // Effet de clic sur les chats
-    document.addEventListener('click', function(e) {
-      const cats = document.querySelectorAll('.space-cat');
-      
-      cats.forEach(cat => {
-        // Changer temporairement la direction vers le point de clic
-        const catX = parseFloat(cat.style.left) + cat.offsetWidth/2;
-        const catY = parseFloat(cat.style.top) + cat.offsetHeight/2;
-        
-        const clickX = e.clientX;
-        const clickY = e.clientY;
-        
-        // Calculer la direction vers le clic
-        const dx = clickX - catX;
-        const dy = clickY - catY;
-        const distance = Math.sqrt(dx*dx + dy*dy);
-        
-        // Si le clic est assez proche du chat
-        if (distance < 200) {
-          // Normaliser le vecteur direction
-          const dirX = dx / distance;
-          const dirY = dy / distance;
-          
-          // Mettre à jour la direction avec un effet temporaire
-          cat.setAttribute('data-dir-x', dirX);
-          cat.setAttribute('data-dir-y', dirY);
-          
-          // Augmenter la vitesse temporairement
-          cat.setAttribute('data-speed', 5);
-          
-          // Revenir à une vitesse normale après un délai
-          setTimeout(() => {
-            cat.setAttribute('data-speed', 1 + Math.random() * 3);
-          }, 1000);
-        }
-      });
-    });
-    
-    // Initialisation
-    window.addEventListener('load', () => {
-      loadYouTubeAPI();
-      generateStars();
-      generateSpaceCats();
-      animateSpaceCats();
-      changeQuote();
-    });
-    
-    // Adapter la taille de la fenêtre
-    window.addEventListener('resize', () => {
-      generateStars();
-      generateSpaceCats();
-    });
-  </script>
-</body>
-</html>
+          <!-- Notes de musique -->
+          <g transform="translate(75, 28) scale(0.15) rotate(15)">
+            <path d="M80,0 C80,0 80,80 80,80 C80,80 0,80 0,80 C0,80 80,0 80,0 z" fill="${color3}"/>
+            <rect x="75" y="0" width="5" height="60" fill="${color3}"/>
+          </g>
+          </
