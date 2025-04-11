@@ -4,19 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lofi Wallpaper</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     :root {
       --primary: #2e2b4f;
       --secondary: #5f527a;
       --accent: #a894c2;
       --text: #f3f0ff;
-      --soft: #ddd8ee;
-      --cat-primary: #8a7bb3;
-      --cat-secondary: #60507c;
-      --cat-accent: #ffd6ff;
     }
     
     * {
@@ -71,7 +66,7 @@
     .player {
       width: 100%;
       height: 0;
-      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      padding-bottom: 56.25%;
       position: relative;
       overflow: hidden;
       border-radius: 20px;
@@ -115,7 +110,6 @@
     .btn:hover {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     }
     
     .btn.active {
@@ -189,16 +183,6 @@
     .sakura-petal.active {
       border: 3px solid white;
       transform: scale(1.1);
-    }
-    
-    .sakura-petal::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
     }
     
     /* Sakura petal positions */
@@ -318,106 +302,6 @@
       50% { opacity: 0.8; }
     }
     
-    /* Lofi Cats */
-    .lofi-cat {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      z-index: 5;
-      pointer-events: none;
-      filter: drop-shadow(0 0 10px rgba(var(--glow-color, 255, 150, 255), 0.7));
-      transition: transform 0.3s ease-out;
-    }
-    
-    .cat-trail {
-      position: absolute;
-      width: 100%;
-      height: 30px;
-      top: 50%;
-      left: -20px;
-      transform: translateY(-50%);
-      z-index: -1;
-      opacity: 0.4;
-    }
-    
-    /* Theme-specific variables */
-    .night-theme {
-      --primary: #2e2b4f;
-      --secondary: #5f527a;
-      --accent: #a894c2;
-      --text: #f3f0ff;
-      --soft: #ddd8ee;
-      --cat-primary: #8a7bb3;
-      --cat-secondary: #60507c;
-      --cat-accent: #ffd6ff;
-    }
-    
-    .day-theme {
-      --primary: #7fa5cf;
-      --secondary: #aad2ff;
-      --accent: #f2d7ee;
-      --text: #333344;
-      --soft: #ffffff;
-      --cat-primary: #64b5f6;
-      --cat-secondary: #3d89dc;
-      --cat-accent: #d0edff;
-    }
-    
-    .pink-theme {
-      --primary: #ff9aa2;
-      --secondary: #e06377;
-      --accent: #ffb7c5;
-      --text: #4d243d;
-      --soft: #fbe0e4;
-      --cat-primary: #f48fb1;
-      --cat-secondary: #e06377;
-      --cat-accent: #fce4ec;
-    }
-    
-    .forest-theme {
-      --primary: #3d5444;
-      --secondary: #7c9960;
-      --accent: #a5be83;
-      --text: #f4f7eb;
-      --soft: #bfd8bd;
-      --cat-primary: #81c784;
-      --cat-secondary: #558b2f;
-      --cat-accent: #c8e6c9;
-    }
-    
-    .ocean-theme {
-      --primary: #25283d;
-      --secondary: #4a6d7c;
-      --accent: #8dbdd1;
-      --text: #f2f9fc;
-      --soft: #c9e4f6;
-      --cat-primary: #4fc3f7;
-      --cat-secondary: #0288d1;
-      --cat-accent: #bbdefb;
-    }
-    
-    .sunset-theme {
-      --primary: #ff7e5f;
-      --secondary: #feb47b;
-      --accent: #ffda8e;
-      --text: #4d2c1e;
-      --soft: #fcefe8;
-      --cat-primary: #ff8a65;
-      --cat-secondary: #e64a19;
-      --cat-accent: #ffd180;
-    }
-    
-    .galaxy-theme {
-      --primary: #311b92;
-      --secondary: #7c4dff;
-      --accent: #b39ddb;
-      --text: #ffffff;
-      --soft: #e0dcf0;
-      --cat-primary: #9575cd;
-      --cat-secondary: #5e35b1;
-      --cat-accent: #d1c4e9;
-    }
-    
     .volume-control {
       position: absolute;
       right: -15px;
@@ -443,12 +327,6 @@
       cursor: pointer;
     }
     
-    .volume-icon {
-      margin-top: 5px;
-      color: white;
-      font-size: 14px;
-    }
-    
     .mute-btn {
       background: none;
       border: none;
@@ -457,39 +335,60 @@
       font-size: 16px;
       margin-top: 5px;
     }
-
-    /* Animation pour les pétales de sakura qui tombent */
-    .falling-petal {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      opacity: 0.7;
-      z-index: 3;
-      pointer-events: none;
-      animation: fall 10s linear infinite;
+    
+    /* Theme-specific variables */
+    .night-theme {
+      --primary: #2e2b4f;
+      --secondary: #5f527a;
+      --accent: #a894c2;
+      --text: #f3f0ff;
     }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-5%) rotate(0deg) scale(0.6);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg) scale(0.6);
-        opacity: 0.2;
-      }
+    
+    .day-theme {
+      --primary: #7fa5cf;
+      --secondary: #aad2ff;
+      --accent: #f2d7ee;
+      --text: #333344;
+    }
+    
+    .pink-theme {
+      --primary: #ff9aa2;
+      --secondary: #e06377;
+      --accent: #ffb7c5;
+      --text: #4d243d;
+    }
+    
+    .forest-theme {
+      --primary: #3d5444;
+      --secondary: #7c9960;
+      --accent: #a5be83;
+      --text: #f4f7eb;
+    }
+    
+    .ocean-theme {
+      --primary: #25283d;
+      --secondary: #4a6d7c;
+      --accent: #8dbdd1;
+      --text: #f2f9fc;
+    }
+    
+    .sunset-theme {
+      --primary: #ff7e5f;
+      --secondary: #feb47b;
+      --accent: #ffda8e;
+      --text: #4d2c1e;
+    }
+    
+    .galaxy-theme {
+      --primary: #311b92;
+      --secondary: #7c4dff;
+      --accent: #b39ddb;
+      --text: #ffffff;
     }
   </style>
 </head>
 <body class="night-theme">
   <div class="stars-container" id="stars-container"></div>
-  <div id="falling-petals-container"></div>
   
   <!-- Header -->
   <header class="header">
@@ -500,7 +399,7 @@
   <div class="player-container">
     <div class="player" id="player">
       <iframe id="youtube-player" 
-              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&loop=1&playlist=jfKfPfyJRdk&enablejsapi=1"
+              src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=0&iv_load_policy=3&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
               allow="autoplay; encrypted-media" 
               allowfullscreen>
       </iframe>
@@ -514,19 +413,19 @@
   
   <!-- Controls -->
   <div class="controls">
-    <button class="btn active" data-video="jfKfPfyJRdk" id="lofi-btn">
+    <button class="btn active" data-video="jfKfPfyJRdk">
       <i class="fas fa-headphones"></i> Lofi Girl
     </button>
-    <button class="btn" data-video="5qap5aO4i9A" id="chillhop-btn">
+    <button class="btn" data-video="5qap5aO4i9A">
       <i class="fas fa-music"></i> Chillhop
     </button>
-    <button class="btn" data-video="n61ULEU7CO0" id="study-btn">
+    <button class="btn" data-video="n61ULEU7CO0">
       <i class="fas fa-book"></i> Study Vibes
     </button>
-    <button class="btn" data-video="4xDzrJKXOOY" id="chillpop-btn">
+    <button class="btn" data-video="4xDzrJKXOOY">
       <i class="fas fa-coffee"></i> Aesthetic Mix
     </button>
-    <button class="btn" data-video="rUxyKA_-grg" id="sleep-btn">
+    <button class="btn" data-video="rUxyKA_-grg">
       <i class="fas fa-moon"></i> Rain Lofi
     </button>
   </div>
@@ -554,120 +453,92 @@
     <div class="quote" id="quote">"Breathe. You're here now."</div>
   </div>
   
-  <!-- Lofi Cats Container -->
-  <div id="lofi-cats-container"></div>
-  
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     // Variables globales
-    let ytPlayer = null;
+    let ytPlayer;
     const buttons = document.querySelectorAll('.controls .btn');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
     const colorOptions = document.querySelectorAll('.sakura-petal');
     const quoteElement = document.getElementById('quote');
     const starsContainer = document.getElementById('stars-container');
-    const lofiCatsContainer = document.getElementById('lofi-cats-container');
     const volumeSlider = document.getElementById('volume-slider');
     const muteBtn = document.getElementById('mute-btn');
-    const fallingPetalsContainer = document.getElementById('falling-petals-container');
     
     // YouTube API
-    function loadYouTubeAPI() {
-      const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      console.log("YouTube API script added");
-    }
-    
-    // YouTube API will call this function when ready
     window.onYouTubeIframeAPIReady = function() {
-      console.log("YouTube API ready");
-      const videoId = document.querySelector('.controls .active').getAttribute('data-video');
-      
       ytPlayer = new YT.Player('youtube-player', {
-        videoId: videoId,
-        playerVars: {
-          'autoplay': 1,
-          'controls': 0,
-          'loop': 1,
-          'playlist': videoId,
-          'modestbranding': 1,
-          'showinfo': 0,
-          'rel': 0
-        },
         events: {
           'onReady': onPlayerReady,
-          'onError': onPlayerError
+          'onStateChange': onPlayerStateChange
         }
       });
     };
     
-    function onPlayerError(event) {
-      console.error("YouTube Player Error:", event.data);
-    }
-    
     function onPlayerReady(event) {
-      console.log("YouTube Player ready");
       // Set initial volume
       event.target.setVolume(70);
+      setupVolumeControls();
+      setupVideoButtons();
+    }
+    
+    function onPlayerStateChange(event) {
+      // Restart the video if it ends
+      if (event.data === YT.PlayerState.ENDED) {
+        event.target.playVideo();
+      }
+    }
+    
+    // Setup volume controls
+    function setupVolumeControls() {
+      let isMuted = false;
       
-      // Setup volume slider
       volumeSlider.addEventListener('input', function() {
         ytPlayer.setVolume(this.value);
-        
-        // Update mute button icon
-        if (parseInt(this.value) === 0) {
-          muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-        } else if (parseInt(this.value) < 50) {
-          muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-        } else {
-          muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-        }
+        updateVolumeIcon(this.value);
       });
       
-      // Setup mute button
-      let isMuted = false;
       muteBtn.addEventListener('click', function() {
         if (isMuted) {
           ytPlayer.unMute();
           ytPlayer.setVolume(parseInt(volumeSlider.value));
-          muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+          updateVolumeIcon(volumeSlider.value);
         } else {
           ytPlayer.mute();
           muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
         }
         isMuted = !isMuted;
       });
-      
-      // Setup video buttons now that player is ready
-      setupVideoButtons();
     }
     
-    // Sélection des vidéos
+    function updateVolumeIcon(value) {
+      if (parseInt(value) === 0) {
+        muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      } else if (parseInt(value) < 50) {
+        muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+      } else {
+        muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+      }
+    }
+    
+    // Setup video buttons
     function setupVideoButtons() {
       buttons.forEach(button => {
         button.addEventListener('click', () => {
           const videoId = button.getAttribute('data-video');
-          console.log("Button clicked, changing to video:", videoId);
           
-          if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-            ytPlayer.loadVideoById({
-              'videoId': videoId,
-              'startSeconds': 0,
-              'suggestedQuality': 'large'
-            });
+          if (ytPlayer && ytPlayer.loadVideoById) {
+            ytPlayer.loadVideoById(videoId);
             
             // Update active class
             buttons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-          } else {
-            console.error("YouTube Player not ready yet");
           }
         });
       });
     }
     
-    // Plein écran
+    // Fullscreen toggle
     fullscreenBtn.addEventListener('click', () => {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
@@ -682,38 +553,18 @@
       }
     });
     
-    // Changement de thème
+    // Theme switching
     colorOptions.forEach(option => {
       option.addEventListener('click', () => {
-        // Mettre à jour la classe active
         colorOptions.forEach(opt => opt.classList.remove('active'));
         option.classList.add('active');
         
-        // Changer le thème
         const themeId = option.id;
-        
-        if (themeId === 'theme-night') {
-          document.body.className = 'night-theme';
-        } else if (themeId === 'theme-day') {
-          document.body.className = 'day-theme';
-        } else if (themeId === 'theme-pink') {
-          document.body.className = 'pink-theme';
-        } else if (themeId === 'theme-forest') {
-          document.body.className = 'forest-theme';
-        } else if (themeId === 'theme-ocean') {
-          document.body.className = 'ocean-theme';
-        } else if (themeId === 'theme-sunset') {
-          document.body.className = 'sunset-theme';
-        } else if (themeId === 'theme-galaxy') {
-          document.body.className = 'galaxy-theme';
-        }
-        
-        // Recréer les chats avec la nouvelle couleur
-        generateLofiCats();
+        document.body.className = themeId.replace('theme-', '') + '-theme';
       });
     });
     
-    // Citations
+    // Quotes
     const quotes = [
       "Breathe. You're here now.",
       "Small steps, big journey.",
@@ -724,47 +575,34 @@
       "Your presence is enough.",
       "The journey is the destination.",
       "Embrace the gentle quiet.",
-      "This too shall pass.",
-      "Inside silence there is magic.",
-      "Inspiration exists, but it has to find you working.",
-      "The beauty of life is in small things.",
-      "Stay curious, stay chill.",
-      "Creativity takes courage.",
-      "Be patient with yourself."
+      "Inside silence there is magic."
     ];
     
     function changeQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
       
-      // Effet de fondu
       quoteElement.style.opacity = 0;
-      
       setTimeout(() => {
         quoteElement.textContent = `"${quotes[randomIndex]}"`;
         quoteElement.style.opacity = 1;
       }, 500);
     }
     
-    // Changer la citation toutes les 10 secondes
-    setInterval(changeQuote, 10000);
+    // Change quote every 15 seconds
+    setInterval(changeQuote, 15000);
     
-    // Générer les étoiles
+    // Generate stars
     function generateStars() {
       starsContainer.innerHTML = '';
-      const starCount = Math.min(300, Math.floor(window.innerWidth * window.innerHeight / 1000));
+      const starCount = Math.min(200, Math.floor(window.innerWidth * window.innerHeight / 1500));
       
       for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
         
-        // Position aléatoire
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        
-        // Taille aléatoire
         const size = Math.random() * 2 + 1;
-        
-        // Animation aléatoire
         const delay = Math.random() * 4;
         
         star.style.left = `${x}%`;
@@ -776,47 +614,12 @@
         starsContainer.appendChild(star);
       }
     }
-
-    // Fonction pour créer un SVG de chat lofi
-    function createLofiCatSVG(color1, color2, color3) {
-      // Couleurs par défaut si non fournies
-      color1 = color1 || '#6A418F';
-      color2 = color2 || '#483D8B';  
-      color3 = color3 || '#FFFFFF';
-      
-      return `
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <!-- Corps principal -->
-          <circle cx="50" cy="50" r="40" fill="${color1}" />
-          
-          <!-- Traits décoratifs -->
-          <circle cx="50" cy="50" r="35" fill="${color2}" />
-          
-          <!-- Casque -->
-          <path d="M25,30 C25,20 75,20 75,30" stroke="${color3}" stroke-width="3" fill="none" />
-          <rect x="20" y="30" width="10" height="15" rx="5" fill="${color3}" />
-          <rect x="70" y="30" width="10" height="15" rx="5" fill="${color3}" />
-          
-          <!-- Yeux -->
-          <circle cx="35" cy="40" r="6" fill="${color3}" />
-          <circle cx="65" cy="40" r="6" fill="${color3}" />
-          <circle cx="35" cy="40" r="3" fill="#000" />
-          <circle cx="65" cy="40" r="3" fill="#000" />
-          
-          <!-- Reflet dans les yeux -->
-          <circle cx="33" cy="38" r="2" fill="white" />
-          <circle cx="63" cy="38" r="2" fill="white" />
-          
-          <!-- Bouche -->
-          <path d="M40,60 Q50,70 60,60" stroke="${color3}" stroke-width="2" fill="none" />
-          
-          <!-- Oreilles -->
-          <path d="M20,25 Q30,10 40,25" fill="${color1}" />
-          <path d="M80,25 Q70,10 60,25" fill="${color1}" />
-          
-          <!-- Notes de musique -->
-          <g transform="translate(75, 28) scale(0.15) rotate(15)">
-            <path d="M80,0 C80,0 80,80 80,80 C80,80 0,80 0,80 C0,80 80,0 80,0 z" fill="${color3}"/>
-            <rect x="75" y="0" width="5" height="60" fill="${color3}"/>
-          </g>
-          
+    
+    // Initialize stars
+    generateStars();
+    
+    // Regenerate stars on window resize
+    window.addEventListener('resize', generateStars);
+  </script>
+</body>
+</html>
