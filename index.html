@@ -189,11 +189,13 @@
         }
 
         .cat-gif-left {
-            left: 60px;
+            left: 16.7%; /* Centré dans le premier tiers */
+            transform: translate(-50%, -50%);
         }
 
         .cat-gif-right {
-            right: 60px;
+            right: 16.7%; /* Centré dans le dernier tiers */
+            transform: translate(50%, -50%);
         }
 
         @media (max-width: 768px) {
@@ -215,11 +217,11 @@
             }
 
             .cat-gif-left {
-                left: 10px;
+                left: 15%;
             }
 
             .cat-gif-right {
-                right: 10px;
+                right: 15%;
             }
         }
     </style>
@@ -233,7 +235,7 @@
         <p class="quote-author">- Chill Vibes Collective</p>
     </div>
 
-    <!-- GIFs de chats inversés et recentrés -->
+    <!-- GIFs de chats repositionnés -->
     <div class="cat-gif cat-gif-left" style="background-image: url('https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif');"></div>
     <div class="cat-gif cat-gif-right" style="background-image: url('https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif');"></div>
 
