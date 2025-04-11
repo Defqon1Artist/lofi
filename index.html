@@ -284,7 +284,7 @@
     </div>
 
     <div class="video-container mb-8">
-        <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=1&loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="buttons-container flex flex-wrap justify-center mt-6 mb-10">
@@ -315,7 +315,27 @@
         </svg>
     </div>
 
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
+        // Variable globale pour le player YouTube
+        let player;
+
+        // Initialiser le player YouTube
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('lofiVideo', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Le player est prêt
+            setupCatPawVolumeControl();
+        }
+
         // Couleurs de fond pour chaque type
         const lofiThemes = {
             chill: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
@@ -324,6 +344,40 @@
             jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55)',
             space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)'
         };
+
+        // Citations pour chaque thème
+        const lofiQuotes = {
+            chill: [
+                { text: "Lofi beats - where time slows down, and inspiration speeds up.", author: "Chill Vibes Collective" },
+                { text: "The gentle rhythm of lofi clears the mind and soothes the soul.", author: "Anonymous" }
+            ],
+            study: [
+                { text: "Focus follows the flow of ambient beats.", author: "Study Guru" },
+                { text: "When the mind wanders, lofi brings it back.", author: "Academic Flow" }
+            ],
+            sleep: [
+                { text: "Dreams come easier on waves of gentle melodies.", author: "Sleep Therapist" },
+                { text: "Let the slow beats guide you to peaceful slumber.", author: "Nocturnal Rhythms" }
+            ],
+            jazzy: [
+                { text: "Jazz-infused lofi - where tradition meets modern calm.", author: "Melody Maven" },
+                { text: "The improvisation of jazz with the peace of lofi - perfect harmony.", author: "Jazz Cat" }
+            ],
+            space: [
+                { text: "Floating through cosmic soundscapes, finding peace among the stars.", author: "Cosmic Dreamer" },
+                { text: "Space lofi - the soundtrack to universal meditation.", author: "Astral Beats" }
+            ]
+        };
+
+        // Fonction pour afficher une citation aléatoire selon le thème
+        function showRandomQuote(type) {
+            const quotes = lofiQuotes[type] || lofiQuotes.chill;
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            
+            document.querySelector('.quote-text').textContent = `"${quote.text}"`;
+            document.querySelector('.quote-author').textContent = `- ${quote.author}`;
+        }
 
         // Fonction pour mettre à jour l'horloge numérique
         function updateClock() {
@@ -345,8 +399,13 @@
                 const videoId = this.getAttribute('data-video-id');
                 
                 // Changer la vidéo YouTube
-                const iframe = document.getElementById('lofiVideo');
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&loop=1`;
+                if (player && player.loadVideoById) {
+                    player.loadVideoById(videoId);
+                } else {
+                    // Fallback si l'API YouTube n'est pas chargée
+                    const iframe = document.getElementById('lofiVideo');
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1`;
+                }
                 
                 // Changer la couleur de fond
                 document.body.style.background = lofiThemes[type];
@@ -380,11 +439,11 @@
             const volumeTrack = document.querySelector('.volume-track');
             const volumeFill = document.querySelector('.volume-fill');
             const toePads = document.querySelectorAll('.toe-pad');
-            const iframe = document.getElementById('lofiVideo');
             let isDragging = false;
             
             // Set initial volume position
             updatePawPosition(0.7);
+            setVolume(0.7);
             
             // Update volume based on paw position
             function updateVolumeFromPaw(e) {
@@ -399,9 +458,10 @@
                 setVolume(volume);
                 updatePawPosition(volume);
                 
-                // Pour YouTube, on doit utiliser postMessage
-                const youtubeWindow = iframe.contentWindow;
-                youtubeWindow.postMessage('{"event":"command","func":"setVolume","args":[' + Math.round(volume * 100) + ']}', '*');
+                // Pour YouTube, on doit utiliser l'API
+                if (player && player.setVolume) {
+                    player.setVolume(volume * 100);
+                }
             }
             
             function setVolume(volume) {
@@ -701,4 +761,72 @@
                 const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
                 const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
                 
-                cat.animate(
+                cat.animate([
+                    { transform: 'rotate(0deg)' },
+                    { transform: `translate(calc(${exitX} - ${posX}vw), calc(${exitY} - ${posY}vh))` }
+                ], {
+                    duration: 5000,
+                    easing: 'ease-in-out'
+                }).onfinish = () => {
+                    cat.remove();
+                    setTimeout(createCat, Math.random() * 2000);
+                };
+            };
+        }
+
+        function playingCatAnimation(cat) {
+            // Point de départ
+            const startX = parseInt(cat.style.left) || 0;
+            const startY = parseInt(cat.style.top) || 0;
+            
+            // Animation de jeu (mouvements aléatoires)
+            const keyframes = [];
+            const steps = 5;
+            
+            for (let i = 0; i <= steps; i++) {
+                if (i === 0) {
+                    keyframes.push({ transform: 'translate(0, 0)' });
+                } else if (i === steps) {
+                    keyframes.push({ transform: 'translate(0, 0)' });
+                } else {
+                    const randomX = (Math.random() * 200 - 100);
+                    const randomY = (Math.random() * 200 - 100);
+                    const randomScale = 0.8 + Math.random() * 0.4;
+                    const randomRotate = Math.random() * 40 - 20;
+                    keyframes.push({ 
+                        transform: `translate(${randomX}px, ${randomY}px) scale(${randomScale}) rotate(${randomRotate}deg)` 
+                    });
+                }
+            }
+            
+            cat.animate(keyframes, {
+                duration: 10000,
+                easing: 'ease-in-out'
+            }).onfinish = () => {
+                // Le chat part
+                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
+                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
+                
+                cat.animate([
+                    { transform: 'translate(0, 0)' },
+                    { transform: `translate(calc(${exitX} - ${startX}px), calc(${exitY} - ${startY}px))` }
+                ], {
+                    duration: 5000,
+                    easing: 'ease-in-out'
+                }).onfinish = () => {
+                    cat.remove();
+                    setTimeout(createCat, Math.random() * 2000);
+                };
+            };
+        }
+
+        // Créer quelques chats initiaux
+        for (let i = 0; i < 3; i++) {
+            setTimeout(createCat, i * 1000);
+        }
+
+        // Initialiser avec une citation aléatoire
+        showRandomQuote('chill');
+    </script>
+</body>
+</html>
