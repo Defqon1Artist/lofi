@@ -175,27 +175,25 @@
             pointer-events: none;
         }
 
-        /* Ajout des styles pour les GIFs de chats de chaque côté */
+        /* Style amélioré pour les GIFs de chats de chaque côté */
         .cat-gif {
-            position: absolute;
-            width: 150px;
-            height: 150px;
+            position: fixed;
+            width: 200px;
+            height: 200px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             z-index: 10;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .cat-gif-left {
-            left: calc(50% - 300px);
-            top: 50%;
-            transform: translateY(-50%);
+            left: 40px;
         }
 
         .cat-gif-right {
-            right: calc(50% - 300px);
-            top: 50%;
-            transform: translateY(-50%);
+            right: 40px;
         }
 
         @media (max-width: 768px) {
@@ -211,9 +209,9 @@
                 margin: 5px 0;
             }
 
-            .cat-gif-left, .cat-gif-right {
-                width: 100px;
-                height: 100px;
+            .cat-gif {
+                width: 120px;
+                height: 120px;
             }
 
             .cat-gif-left {
@@ -235,20 +233,20 @@
         <p class="quote-author">- Chill Vibes Collective</p>
     </div>
 
-    <!-- Ajout des GIFs de chats de chaque côté -->
+    <!-- Ajout des GIFs de chats de chaque côté avec meilleur positionnement -->
     <div class="cat-gif cat-gif-left" style="background-image: url('https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif');"></div>
-    <div class="cat-gif cat-gif-right" style="background-image: url('https://i.pinimg.com/originals/59/15/d9/5915d94119d182012af8a99b6f6f1f7d.gif');"></div>
+    <div class="cat-gif cat-gif-right" style="background-image: url('https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif');"></div>
 
     <div class="video-container mb-8">
         <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="buttons-container flex flex-wrap justify-center mt-6 mb-10">
-        <button class="btn-lofi active" data-type="chill" data-video-id="jfKfPfyJRdk">Chill Lofi</button>
-        <button class="btn-lofi" data-type="study" data-video-id="lTRiuFIWV54">Study Beats</button>
-        <button class="btn-lofi" data-type="sleep" data-video-id="rPjez8z61rI">Sleep Lofi</button>
-        <button class="btn-lofi" data-type="jazzy" data-video-id="5yx6BWlEVcY">Jazzy Lofi</button>
-        <button class="btn-lofi" data-type="space" data-video-id="n61ULEU7CO0">Space Lofi</button>
+        <button class="btn-lofi active" data-type="chill" data-video-id="jfKfPfyJRdk">Lofi Radio 24/7</button>
+        <button class="btn-lofi" data-type="study" data-video-id="lTRiuFIWV54">Focus Study Mix</button>
+        <button class="btn-lofi" data-type="sleep" data-video-id="rPjez8z61rI">Sleep Beats</button>
+        <button class="btn-lofi" data-type="jazzy" data-video-id="5yx6BWlEVcY">Jazz Hop Café</button>
+        <button class="btn-lofi" data-type="space" data-video-id="n61ULEU7CO0">Space Ambient Mix</button>
     </div>
 
     <div class="fullscreen-btn" id="fullscreenBtn">
