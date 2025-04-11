@@ -109,80 +109,6 @@
             transform: scale(1.2);
         }
 
-        /* Color palette (Sakura flower) - FIXED VERSION */
-        .color-palette {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 200px;
-            height: 200px;
-            z-index: 100;
-        }
-
-        .sakura-flower {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 192, 203, 0.7);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            z-index: 101;
-        }
-
-        .sakura-flower:hover {
-            transform: scale(1.1);
-        }
-
-        .sakura-petal {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background-color: white;
-            border-radius: 50% 50% 0 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            opacity: 1;
-            z-index: 100;
-        }
-
-        .petal-1 {
-            top: -80px;
-            left: -15px;
-            background: linear-gradient(to right, #ff6b6b, #ffa8a8);
-            transform: translate(0, 0) rotate(0deg) scale(1);
-        }
-
-        .petal-2 {
-            top: -50px;
-            left: 50px;
-            background: linear-gradient(to right, #74c0fc, #a5d8ff);
-            transform: translate(0, 0) rotate(72deg) scale(1);
-        }
-
-        .petal-3 {
-            top: 30px;
-            left: 80px;
-            background: linear-gradient(to right, #51cf66, #b2f2bb);
-            transform: translate(0, 0) rotate(144deg) scale(1);
-        }
-
-        .petal-4 {
-            top: 80px;
-            left: 0px;
-            background: linear-gradient(to right, #fcc419, #ffe066);
-            transform: translate(0, 0) rotate(216deg) scale(1);
-        }
-
-        .petal-5 {
-            top: 20px;
-            left: -80px;
-            background: linear-gradient(to right, #9775fa, #d0bfff);
-            transform: translate(0, 0) rotate(288deg) scale(1);
-        }
-
         /* Cat Paw Volume Control - REDUCED SIZE */
         .volume-control {
             position: fixed;
@@ -333,10 +259,7 @@
     </div>
 
     <div class="video-container mb-8">
-        <video id="lofiVideo" autoplay loop playsinline webkit-playsinline class="w-full h-full object-cover">
-            <source src="https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-girl.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la vidéo HTML5.
-        </video>
+        <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&controls=1&loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="buttons-container flex flex-wrap justify-center mt-6 mb-10">
@@ -359,15 +282,6 @@
             <div class="paw-pad main-pad" id="volumePaw"></div>
         </div>
         <i class="fas fa-volume-up volume-icon"></i>
-    </div>
-
-    <div class="color-palette" id="colorPalette">
-        <div class="sakura-flower"></div>
-        <div class="sakura-petal petal-1" data-theme="pink"></div>
-        <div class="sakura-petal petal-2" data-theme="blue"></div>
-        <div class="sakura-petal petal-3" data-theme="green"></div>
-        <div class="sakura-petal petal-4" data-theme="yellow"></div>
-        <div class="sakura-petal petal-5" data-theme="purple"></div>
     </div>
 
     <div class="fullscreen-btn" id="fullscreenBtn">
@@ -394,13 +308,22 @@
     </audio>
 
     <script>
-        // Vidéos Lofi pour chaque type
+        // YouTube videos pour chaque type de lofi (2h environ)
         const lofiVideos = {
-            chill: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-girl.mp4",
-            study: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-girl-study.mp4",
-            sleep: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-sleep.mp4",
-            jazzy: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-jazzy.mp4",
-            space: "https://cdn.jsdelivr.net/gh/filipepereiradesouza/lofi@main/lofi-rain.mp4" // Using rain as space for now
+            chill: "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&controls=1&loop=1", // lofi hip hop radio - beats to relax/study to
+            study: "https://www.youtube.com/embed/lTRiuFIWV54?autoplay=1&mute=1&controls=1&loop=1", // 2 HOUR STUDY WITH ME | Background noise, Real time, No music, Relaxing, Focus
+            sleep: "https://www.youtube.com/embed/DWcJFNfaw9c?autoplay=1&mute=1&controls=1&loop=1", // lofi sleep - beats to relax/sleep to
+            jazzy: "https://www.youtube.com/embed/5yx6BWlEVcY?autoplay=1&mute=1&controls=1&loop=1", // Jazz Cafe Music - Relaxing Bossa Nova & Jazz Instrumental Music For Work, Study
+            space: "https://www.youtube.com/embed/n61ULEU7CO0?autoplay=1&mute=1&controls=1&loop=1"  // lofi space night ~ lofi hip hop mix
+        };
+
+        // Couleurs de fond pour chaque type
+        const lofiThemes = {
+            chill: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
+            study: 'linear-gradient(135deg, #2c3e50, #4ca1af, #a8edea)',
+            sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364)',
+            jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55)',
+            space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)'
         };
 
         // Variables pour l'audio actif
@@ -457,7 +380,6 @@
             function setVolume(volume) {
                 // Update audio volume
                 currentAudio.volume = volume;
-                document.getElementById('lofiVideo').volume = volume;
                 
                 // Update visual fill
                 volumeFill.style.width = `${volume * 100}%`;
@@ -527,27 +449,32 @@
             });
         }
 
-        // Changement de vidéo et audio selon le type
+        // Changement de vidéo YouTube, audio et couleur de fond selon le type
         document.querySelectorAll('.btn-lofi').forEach(button => {
             button.addEventListener('click', function() {
                 const type = this.getAttribute('data-type');
                 
-                // Change video
-                const video = document.getElementById('lofiVideo');
-                video.src = lofiVideos[type];
-                video.load();
-                video.play();
+                // Changer la vidéo YouTube
+                const videoContainer = document.getElementById('lofiVideo');
+                videoContainer.src = lofiVideos[type];
                 
-                // Change audio
+                // Changer l'audio
                 currentAudio.pause();
                 currentAudioType = type;
                 currentAudio = document.getElementById(`lofiAudio-${currentAudioType}`);
                 currentAudio.volume = document.querySelector('.volume-fill').clientWidth / document.querySelector('.volume-track').clientWidth;
                 currentAudio.play().catch(e => console.log("Playback prevented:", e));
                 
+                // Changer la couleur de fond
+                document.body.style.background = lofiThemes[type];
+                document.body.style.backgroundSize = '400% 400%';
+                
                 // Marquer le bouton actif
                 document.querySelectorAll('.btn-lofi').forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
+                
+                // Mettre à jour la citation avec le changement de thème
+                showRandomQuote(type);
             });
         });
 
@@ -562,41 +489,6 @@
                     document.exitFullscreen();
                 }
             }
-        });
-
-        // Sakura color palette themes
-        const themes = {
-            pink: {
-                background: 'linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb)',
-                name: 'Cherry Blossom'
-            },
-            blue: {
-                background: 'linear-gradient(135deg, #2c3e50, #4ca1af, #a8edea)',
-                name: 'Night Ocean'
-            },
-            green: {
-                background: 'linear-gradient(135deg, #134e5e, #71b280, #d4fc79)',
-                name: 'Forest Dream'
-            },
-            yellow: {
-                background: 'linear-gradient(135deg, #fc4a1a, #f7b733, #ffefba)',
-                name: 'Sunset'
-            },
-            purple: {
-                background: 'linear-gradient(135deg, #6a3093, #a044ff, #d38cad)',
-                name: 'Space Fantasy'
-            }
-        };
-
-        document.querySelectorAll('.sakura-petal').forEach(petal => {
-            petal.addEventListener('click', function() {
-                const theme = this.getAttribute('data-theme');
-                document.body.style.background = themes[theme].background;
-                document.body.style.backgroundSize = '400% 400%';
-                
-                // Update quote with theme change
-                showRandomQuote(themes[theme].name);
-            });
         });
 
         // Création et animation des fleurs de sakura
@@ -655,18 +547,26 @@
             }, i * 300);
         }
 
-        // Création et animation des chats Lofi - Une plus grande variété
+        // Collection d'images de chats améliorée avec plus de variété
         const catImages = [
-            // Regular cats
+            // Chats normaux
             'https://cdn.jsdelivr.net/gh/catppuccin/catppuccin/assets/logos/exports/1544x1544_circle.png',
             'https://cdn.jsdelivr.net/gh/nullishamy/blog-assets@main/cat-assets/lofi-cat-head.png',
-            // Space cats
+            // Chats pixel art
+            'https://i.imgur.com/mEXTdP1.png', // Pixel art cat
+            'https://i.imgur.com/Jmz3Tsd.png', // Pixel art cat sleeping
+            // Chats espace
             'https://cdn.jsdelivr.net/gh/nullishamy/blog-assets@main/cat-assets/space-cat.png',
-            // Sleeping cats
+            'https://i.imgur.com/8vBMAqI.png', // Space cat with helmet
+            // Chats qui dorment
             'https://cdn.jsdelivr.net/gh/nullishamy/blog-assets@main/cat-assets/sleeping-cat.png',
-            // Cute cats
+            'https://i.imgur.com/6ZYKCcs.png', // Another sleeping cat
+            // Chats mignons
             'https://cdn.jsdelivr.net/gh/nullishamy/blog-assets@main/cat-assets/cute-cat.png',
-            'https://cdn.jsdelivr.net/gh/nullishamy/blog-assets@main/cat-assets/cat-plant.png'
+            'https://cdn.jsdelivr.net/gh/nullishamy/blog-assets@main/cat-assets/cat-plant.png',
+            'https://i.imgur.com/KxlmD2D.png', // Cat with headphones
+            'https://i.imgur.com/2t9MHpe.png', // Cat playing
+            'https://i.imgur.com/LcPjSbw.png'  // Lofi cat
         ];
 
         const catBehaviors = ['walk', 'sleep', 'sit', 'play'];
@@ -793,177 +693,3 @@
                     cat.remove();
                     setTimeout(createCat, Math.random() * 2000);
                 };
-            };
-        }
-
-        function sittingCatAnimation(cat) {
-            // Position aléatoire
-            const posX = Math.random() * 80 + 10;
-            const posY = Math.random() * 80 + 10;
-            
-            cat.style.left = `${posX}vw`;
-            cat.style.top = `${posY}vh`;
-            
-            // Animation de la tête qui bouge légèrement
-            cat.animate([
-                { transform: 'rotate(0deg)' },
-                { transform: 'rotate(5deg)' },
-                { transform: 'rotate(-5deg)' },
-                { transform: 'rotate(0deg)' }
-            ], {
-                duration: 5000,
-                iterations: 3,
-                easing: 'ease-in-out'
-            }).onfinish = () => {
-                // Le chat part
-                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
-                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
-                
-                cat.animate([
-                    { transform: 'scale(1)', left: `${posX}vw`, top: `${posY}vh` },
-                    { transform: 'scale(0.8)', left: exitX, top: exitY, opacity: 0 }
-                ], {
-                    duration: 5000,
-                    easing: 'ease-in-out',
-                    fill: 'forwards'
-                }).onfinish = () => {
-                    cat.remove();
-                    setTimeout(createCat, Math.random() * 2000);
-                };
-            };
-        }
-
-        function playingCatAnimation(cat) {
-            // Position aléatoire
-            const posX = Math.random() * 70 + 15;
-            const posY = Math.random() * 70 + 15;
-            
-            cat.style.left = `${posX}vw`;
-            cat.style.top = `${posY}vh`;
-            
-            // Animation de jeu (sauts et tournoiements)
-            cat.animate([
-                { transform: 'scale(1) rotate(0deg)' },
-                { transform: 'scale(1.2) rotate(20deg)' },
-                { transform: 'scale(1.1) rotate(-20deg)' },
-                { transform: 'scale(1.3) rotate(10deg)' },
-                { transform: 'scale(1) rotate(0deg)' }
-            ], {
-                duration: 8000,
-                easing: 'ease-in-out'
-            }).onfinish = () => {
-                // Le chat part
-                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
-                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
-                
-                cat.animate([
-                    { transform: 'scale(1)', left: `${posX}vw`, top: `${posY}vh` },
-                    { transform: 'scale(0.8)', left: exitX, top: exitY, opacity: 0 }
-                ], {
-                    duration: 3000,
-                    easing: 'ease-in-out',
-                    fill: 'forwards'
-                }).onfinish = () => {
-                    cat.remove();
-                    setTimeout(createCat, Math.random() * 2000);
-                };
-            };
-        }
-
-        // Création de chats au chargement (différents types)
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => {
-                createCat();
-            }, i * 1500);
-        }
-
-        // Collection de citations Lofi
-        const lofiQuotes = [
-            {
-                text: "In the sanctuary of beats and melodies, find your own rhythm.",
-                author: "Lofi Wisdom"
-            },
-            {
-                text: "Let the beats calm your mind as pages of knowledge fill your thoughts.",
-                author: "Study with Lofi"
-            },
-            {
-                text: "The space between notes is where meditation begins.",
-                author: "Chill Philosophy"
-            },
-            {
-                text: "Lofi isn't just music; it's a companion for lonely nights and productive days.",
-                author: "Beats & Peace"
-            },
-            {
-                text: "Sometimes the most productive thing you can do is relax.",
-                author: "Lofi Study Guide"
-            },
-            {
-                text: "The right beat can turn homework into a meditative practice.",
-                author: "Student's Lofi Companion"
-            },
-            {
-                text: "Create your bubble of calm amidst the chaos of life.",
-                author: "Urban Lofi"
-            },
-            {
-                text: "When words fail, let the beats speak for your soul.",
-                author: "Silent Conversations"
-            },
-            {
-                text: "Your mind deserves a soundtrack as beautiful as your thoughts.",
-                author: "Mindful Beats"
-            },
-            {
-                text: "Finding clarity in the repetition of lofi loops - life's greatest metaphor.",
-                author: "Philosopher's Playlist"
-            }
-        ];
-
-        function showRandomQuote(theme = null) {
-            const quoteContainer = document.querySelector('.quote-container');
-            const quoteText = document.querySelector('.quote-text');
-            const quoteAuthor = document.querySelector('.quote-author');
-            
-            // Sélectionner une citation aléatoire
-            let randomIndex = Math.floor(Math.random() * lofiQuotes.length);
-            let quote = lofiQuotes[randomIndex];
-            
-            // Ajouter une mention du thème si indiqué
-            if (theme) {
-                quote = {
-                    text: `${theme} mode: ${quote.text}`,
-                    author: quote.author
-                };
-            }
-            
-            // Animation de fondu
-            quoteContainer.style.opacity = 0;
-            
-            setTimeout(() => {
-                quoteText.textContent = `"${quote.text}"`;
-                quoteAuthor.textContent = `- ${quote.author}`;
-                quoteContainer.style.opacity = 0.9;
-            }, 500);
-        }
-
-        // Changer la citation toutes les 30 secondes
-        function startQuoteRotation() {
-            showRandomQuote();
-            setInterval(showRandomQuote, 30000);
-        }
-
-        startQuoteRotation();
-
-        // Préchargement des vidéos et audios
-        Object.values(lofiVideos).forEach(videoUrl => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.href = videoUrl;
-            link.as = 'video';
-            document.head.appendChild(link);
-        });
-    </script>
-</body>
-</html>
