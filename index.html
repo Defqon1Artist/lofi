@@ -375,13 +375,13 @@
             player.setVolume(70);
         }
 
-        // Couleurs de fond pour chaque type
+        // Couleurs de fond pour chaque type - Tous animés comme le premier
         const lofiThemes = {
             chill: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
-            study: 'linear-gradient(135deg, #2c3e50, #4ca1af, #a8edea)',
-            sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364)',
-            jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55)',
-            space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)'
+            study: 'linear-gradient(135deg, #2c3e50, #4ca1af, #2d6d7f, #a8edea)',
+            sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364, #1e3b50)',
+            jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55, #c04d6d)',
+            space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e, #3c1053)'
         };
 
         // Quotes for each theme
@@ -458,9 +458,10 @@
                     iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1`;
                 }
                 
-                // Changer la couleur de fond
+                // Changer la couleur de fond avec animation
                 document.body.style.background = lofiThemes[type];
                 document.body.style.backgroundSize = '400% 400%';
+                document.body.style.animation = 'gradient 15s ease infinite';
                 
                 // Marquer le bouton actif
                 document.querySelectorAll('.btn-lofi').forEach(btn => btn.classList.remove('active'));
