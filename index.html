@@ -147,6 +147,20 @@
             transition: opacity 0.5s ease;
         }
 
+        .quote-text, .quote-author {
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .quote-text.fade-out, .quote-author.fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .quote-text.fade-in, .quote-author.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .quote-text {
             font-size: 1rem;
             font-style: italic;
@@ -284,6 +298,52 @@
             100% { transform: translateX(calc(100vw + 150px)); }
         }
 
+        /* Flying cat animation */
+        .flying-cat {
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            pointer-events: none;
+            z-index: 50;
+            animation: floatCat 30s infinite ease-in-out;
+        }
+
+        @keyframes floatCat {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(40vw, -10vh) rotate(5deg);
+            }
+            50% {
+                transform: translate(80vw, 20vh) rotate(-5deg);
+            }
+            75% {
+                transform: translate(40vw, 40vh) rotate(10deg);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        /* Boutons flottants */
+        .btn-flower {
+            position: absolute;
+            background: #ffe0f0;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 90;
+        }
+
+        .btn-flower:hover {
+            transform: scale(1.2);
+        }
+
         @media (max-width: 1024px) {
             .buttons-container {
                 flex-wrap: nowrap;
@@ -331,13 +391,26 @@
     <div class="digital-clock" id="digitalClock">00:00:00</div>
 
     <div class="quote-container">
-        <p class="quote-text">"Lofi beats - where time slows down, and inspiration speeds up."</p>
-        <p class="quote-author">- Chill Vibes Collective</p>
+        <p class="quote-text fade-in">"Lofi beats - where time slows down, and inspiration speeds up."</p>
+        <p class="quote-author fade-in">- Chill Vibes Collective</p>
     </div>
 
     <!-- GIFs de chats repositionnés -->
     <div class="cat-gif cat-gif-left" style="background-image: url('https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif');"></div>
     <div class="cat-gif cat-gif-right" style="background-image: url('https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif');"></div>
+
+    <!-- Boutons flottants -->
+    <button class="btn-flower" style="top: 30%; left: 30%;" onclick="moveButton(this)">🌸</button>
+    <button class="btn-flower" style="top: 50%; left: 50%;" onclick="moveButton(this)">🌼</button>
+    <button class="btn-flower" style="top: 70%; left: 40%;" onclick="moveButton(this)">🌺</button>
+
+    <!-- Flying cats -->
+    <img src="https://media.tenor.com/j1PyzHn_-g8AAAAi/cat-loaf.gif" class="flying-cat" style="top: 10%; left: 0%; animation-delay: 0s;">
+    <img src="https://media.tenor.com/Di8zK1kVdrAAAAAi/cute-cat.gif" class="flying-cat" style="top: 30%; left: -10%; animation-delay: 5s;">
+    <img src="https://media.tenor.com/9-rLn6gzoQwAAAAi/kawaii-cat.gif" class="flying-cat" style="top: 50%; left: -20%; animation-delay: 10s;">
+    <img src="https://media.tenor.com/Mng3HlhDFSUAAAAi/pusheen-laptop.gif" class="flying-cat" style="top: 15%; left: 5%; animation-delay: 8s;">
+    <img src="https://media.tenor.com/V3kgz1qBslYAAAAi/cat-pixel.gif" class="flying-cat" style="top: 70%; left: 10%; animation-delay: 3s;">
+    <img src="https://media.tenor.com/6rIyB7G3UQsAAAAi/cute-cat.gif" class="flying-cat" style="top: 25%; left: 15%; animation-delay: 15s;">
 
     <div class="video-container mb-8">
         <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -375,13 +448,13 @@
             player.setVolume(70);
         }
 
-        // Couleurs de fond pour chaque type - Tous animés comme le premier
+        // Couleurs de fond pour chaque type
         const lofiThemes = {
             chill: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
-            study: 'linear-gradient(135deg, #2c3e50, #4ca1af, #2d6d7f, #a8edea)',
-            sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364, #1e3b50)',
-            jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55, #c04d6d)',
-            space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e, #3c1053)'
+            study: 'linear-gradient(135deg, #2c3e50, #4ca1af, #a8edea, #3498db)',
+            sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364, #12475f)',
+            jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55, #b91372)',
+            space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e, #16213e)'
         };
 
         // Quotes for each theme
@@ -421,15 +494,33 @@
         setInterval(updateClock, 1000);
         updateClock(); // Initialiser immédiatement
 
-        // Show random quote based on theme
+        // Show random quote based on theme with smooth fade transition
         function showRandomQuote(type) {
             const quotes = lofiQuotes[type];
             if (quotes && quotes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * quotes.length);
                 const quote = quotes[randomIndex];
                 
-                document.querySelector('.quote-text').textContent = `"${quote.text}"`;
-                document.querySelector('.quote-author').textContent = `- ${quote.author}`;
+                // Sélectionner les éléments
+                const quoteTextElement = document.querySelector('.quote-text');
+                const quoteAuthorElement = document.querySelector('.quote-author');
+                
+                // Effet de fondu sortant
+                quoteTextElement.classList.add('fade-out');
+                quoteAuthorElement.classList.add('fade-out');
+                
+                // Attendre la fin de l'animation de sortie
+                setTimeout(() => {
+                    // Mettre à jour le contenu
+                    quoteTextElement.textContent = `"${quote.text}"`;
+                    quoteAuthorElement.textContent = `- ${quote.author}`;
+                    
+                    // Déclencher l'animation d'entrée
+                    quoteTextElement.classList.remove('fade-out');
+                    quoteAuthorElement.classList.remove('fade-out');
+                    quoteTextElement.classList.add('fade-in');
+                    quoteAuthorElement.classList.add('fade-in');
+                }, 1000); // 1 seconde pour la transition de sortie
             }
         }
 
@@ -458,10 +549,9 @@
                     iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1`;
                 }
                 
-                // Changer la couleur de fond avec animation
+                // Changer la couleur de fond
                 document.body.style.background = lofiThemes[type];
                 document.body.style.backgroundSize = '400% 400%';
-                document.body.style.animation = 'gradient 15s ease infinite';
                 
                 // Marquer le bouton actif
                 document.querySelectorAll('.btn-lofi').forEach(btn => btn.classList.remove('active'));
@@ -540,7 +630,13 @@
             'https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif',
             'https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif',
             'https://i.pinimg.com/originals/e9/f0/4e/e9f04e760fbd8a7dbc19c8b860876f0f.gif',
-            'https://i.pinimg.com/originals/6e/48/36/6e4836ce122b44072a8b11a186b07e42.gif'
+            'https://i.pinimg.com/originals/6e/48/36/6e4836ce122b44072a8b11a186b07e42.gif',
+            'https://media.tenor.com/j1PyzHn_-g8AAAAi/cat-loaf.gif',
+            'https://media.tenor.com/Di8zK1kVdrAAAAAi/cute-cat.gif',
+            'https://media.tenor.com/9-rLn6gzoQwAAAAi/kawaii-cat.gif',
+            'https://media.tenor.com/Mng3HlhDFSUAAAAi/pusheen-laptop.gif',
+            'https://media.tenor.com/V3kgz1qBslYAAAAi/cat-pixel.gif',
+            'https://media.tenor.com/6rIyB7G3UQsAAAAi/cute-cat.gif'
         ];
 
         const catBehaviors = ['walk', 'sleep', 'sit', 'play'];
@@ -743,6 +839,16 @@
             };
         }
 
+        // Fonction pour déplacer les boutons fleurs
+        function moveButton(btn) {
+            const maxX = window.innerWidth - btn.offsetWidth;
+            const maxY = window.innerHeight - btn.offsetHeight;
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            btn.style.left = `${newX}px`;
+            btn.style.top = `${newY}px`;
+        }
+
         // Création de notes de musique flottantes
         function createMusicNote(x, y, rotation) {
             const noteTypes = ['♪', '♫', '♬', '♩', '♭', '♮'];
@@ -872,7 +978,7 @@
         // Initialize everything on load
         window.addEventListener('load', function() {
             // Create initial cats
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     createCat();
                 }, i * 1000 + 2000);
