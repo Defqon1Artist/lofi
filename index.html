@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lofi Wallpaper Paradise</title>
+    <title>Lofi Wallpaper Paradise - Enhanced</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
     <style>
+        :root {
+            /* Define theme vignette colors as variables */
+            --vignette-chill: radial-gradient(circle at center, transparent 30%, rgba(83, 52, 131, 0.7) 100%);
+            --vignette-study: radial-gradient(circle at center, transparent 30%, rgba(52, 152, 219, 0.7) 100%);
+            --vignette-sleep: radial-gradient(circle at center, transparent 30%, rgba(18, 71, 95, 0.7) 100%);
+            --vignette-jazzy: radial-gradient(circle at center, transparent 30%, rgba(185, 19, 114, 0.7) 100%);
+            --vignette-space: radial-gradient(circle at center, transparent 30%, rgba(15, 12, 41, 0.7) 100%);
+            --vignette-default: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483);
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483); /* Default to chill */
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             height: 100vh;
@@ -19,9 +29,10 @@
             margin: 0;
             padding: 0;
             position: relative;
+            transition: background 2s ease; /* Smooth background transition */
         }
 
-        /* Dark fade vignette effect */
+        /* Dynamic vignette effect using CSS variable */
         body:after {
             content: '';
             position: fixed;
@@ -29,10 +40,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+            background: var(--vignette-active, var(--vignette-default)); /* Use active or default */
             pointer-events: none;
             z-index: 5;
-            transition: background 2s ease;
+            transition: background 2s ease; /* Match body background transition */
         }
 
         @keyframes gradient {
@@ -43,7 +54,7 @@
 
         .video-container {
             position: relative;
-            width: 45%;
+            width: 45%; /* Slightly smaller to give more space? Adjust as needed */
             margin: 0 auto;
             border-radius: 20px;
             overflow: hidden;
@@ -53,34 +64,8 @@
             z-index: 10;
         }
 
-        .btn-lofi {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            padding: 5px 12px;
-            color: white;
-            transition: all 0.3s ease;
-            margin: 0 4px;
-            font-weight: 500;
-            font-size: 0.8rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .btn-lofi:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-lofi.active {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .buttons-container {
+        /* Buttons container - Now includes volume */
+        .controls-container {
             position: fixed;
             bottom: 30px;
             left: 50%;
@@ -89,12 +74,111 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px;
+            background: rgba(0, 0, 0, 0.4); /* Slightly darker */
+            padding: 8px 15px; /* More padding */
             border-radius: 30px;
             width: auto;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px); /* Stronger blur */
+            gap: 5px; /* Space between elements */
         }
+
+        .theme-buttons {
+            display: flex;
+            flex-wrap: nowrap; /* Prevent wrapping on smaller screens initially */
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+            padding-bottom: 5px; /* Space for scrollbar if it appears */
+             scrollbar-width: thin; /* Firefox scrollbar */
+            scrollbar-color: rgba(255,255,255,0.3) transparent; /* Firefox scrollbar */
+        }
+        /* Webkit scrollbar styling */
+        .theme-buttons::-webkit-scrollbar { height: 4px; }
+        .theme-buttons::-webkit-scrollbar-track { background: transparent; }
+        .theme-buttons::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.3); border-radius: 20px; }
+
+
+        .btn-lofi {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 5px 12px;
+            color: white;
+            transition: all 0.3s ease;
+            margin: 0 3px; /* Slightly reduced margin */
+            font-weight: 500;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+
+        .btn-lofi:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px); /* Reduced hover lift */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-lofi.active {
+            background: rgba(255, 255, 255, 0.35); /* Slightly more prominent active state */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+
+        /* Volume Controls Styles */
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            margin-left: 10px; /* Space between theme buttons and volume */
+        }
+
+        .volume-slider {
+            width: 80px; /* Adjust width as needed */
+            height: 5px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+            appearance: none; /* Override default look */
+            -webkit-appearance: none;
+            transition: background 0.3s ease;
+        }
+        .volume-slider:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        /* Thumb styles */
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none; -webkit-appearance: none;
+            width: 14px; height: 14px;
+            background: #ff79c6; /* Lofi pink */
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 121, 198, 0.7);
+        }
+        .volume-slider::-moz-range-thumb {
+            width: 14px; height: 14px;
+            background: #ff79c6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+             box-shadow: 0 0 5px rgba(255, 121, 198, 0.7);
+        }
+
+        .mute-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-left: 8px;
+            padding: 5px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .mute-btn:hover {
+            color: #ff79c6;
+            transform: scale(1.1);
+        }
+
 
         .fullscreen-btn {
             position: fixed;
@@ -112,58 +196,19 @@
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-
         .fullscreen-btn:hover {
             transform: scale(1.1);
             background: rgba(255, 255, 255, 0.3);
         }
 
-        .sakura {
-            position: absolute;
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            opacity: 0.8;
-            z-index: 4;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
-        }
-
-        .cat {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            pointer-events: none;
-            z-index: 50;
-            transition: transform 0.3s ease;
-            opacity: 0.85;
-        }
-
-        .cat:hover {
-            transform: scale(1.2);
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -10;
-            opacity: 0;
-            transition: opacity 2s ease;
-        }
-
-        /* MODIFIED QUOTE STYLES - Reduced width and added fade transition */
+        /* Quote Container - Keep as is, but ensure transition */
         .quote-container {
             position: fixed;
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
             width: auto;
-            max-width: 50%; /* Reduced from 80% */
+            max-width: 50%;
             min-width: 300px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
@@ -173,24 +218,13 @@
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 100;
-            opacity: 0.9;
-            transition: opacity 0.5s ease; /* Added smooth transition for opacity */
+            opacity: 0; /* Start hidden, fade in via JS */
+            transition: opacity 0.8s ease; /* Smoother fade */
         }
+        .quote-text { font-size: 1rem; font-style: italic; margin-bottom: 8px; line-height: 1.5; }
+        .quote-author { font-size: 0.85rem; font-weight: 300; text-align: right; }
 
-        .quote-text {
-            font-size: 1rem;
-            font-style: italic;
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .quote-author {
-            font-size: 0.85rem;
-            font-weight: 300;
-            text-align: right;
-        }
-
-        /* Horloge numérique */
+        /* Digital Clock - Keep as is */
         .digital-clock {
             position: fixed;
             top: 15px;
@@ -210,436 +244,405 @@
             text-shadow: 0 0 5px rgba(255, 121, 198, 0.7);
             border: 1px solid rgba(255, 121, 198, 0.3);
         }
+        .digital-clock:after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(255, 121, 198, 0.1), transparent); border-radius: 10px; pointer-events: none; }
 
-        .digital-clock:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255, 121, 198, 0.1), transparent);
-            border-radius: 10px;
-            pointer-events: none;
-        }
+        /* Side Cat GIFs - Keep as is */
+        .cat-gif { position: fixed; width: 200px; height: 200px; background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 10; top: 50%; transform: translateY(-50%); }
+        .cat-gif-left { left: 16.7%; transform: translate(-50%, -50%); }
+        .cat-gif-right { right: 16.7%; transform: translate(50%, -50%); }
 
-        /* Style amélioré pour les GIFs de chats de chaque côté */
-        .cat-gif {
-            position: fixed;
-            width: 200px;
-            height: 200px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 10;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+        /* Floating elements - Keep general styles, maybe reduce count/frequency in JS */
+        .sakura { position: absolute; background-size: contain; background-repeat: no-repeat; pointer-events: none; opacity: 0.7; z-index: 4; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
+        .cat { position: absolute; width: 80px; height: 80px; background-size: contain; background-repeat: no-repeat; background-position: center; pointer-events: none; z-index: 50; transition: transform 0.3s ease; opacity: 0.85; }
+        .cat:hover { transform: scale(1.2); }
+        .flying-cat { position: absolute; width: 56px; height: 56px; pointer-events: none; z-index: 50; animation: floatCat 35s infinite ease-in-out; } /* Slightly slower */
+        .floating-gif { position: absolute; width: 100px; height: 100px; background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 20; pointer-events: none; }
+        .coffee-cup { position: absolute; width: 80px; height: 80px; background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 15; animation: steam 9s infinite ease-in-out; } /* Slightly slower */
+        .laptop { position: absolute; width: 120px; height: 90px; background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 15; }
+        .book { position: absolute; width: 70px; height: 70px; background-size: contain; background-repeat: no-repeat; background-position: center; z-index: 15; transform-origin: center; animation: pageFlip 6s infinite ease-in-out; } /* Slightly slower */
+        .music-note { position: absolute; width: 30px; height: 30px; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.6; pointer-events: none; z-index: 5; }
 
-        .cat-gif-left {
-            left: 16.7%; 
-            transform: translate(-50%, -50%);
-        }
-
-        .cat-gif-right {
-            right: 16.7%; 
-            transform: translate(50%, -50%);
-        }
-
-        /* Éléments Lofi */
-        .music-note {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.7;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-
-        .stars-container {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            transform-origin: center center;
-        }
-
-        .star {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background-color: white;
-            border-radius: 50%;
-            z-index: 2;
-        }
-
+        /* Stars - Slower twinkle */
+        .stars-container { position: absolute; width: 100vw; height: 100vh; top: 0; left: 0; z-index: 1; transform-origin: center center; }
+        .star { position: absolute; width: 3px; height: 3px; background-color: white; border-radius: 50%; z-index: 2; }
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
+            0%, 100% { opacity: 0.1; transform: scale(0.7); }
+            50% { opacity: 0.9; transform: scale(1.1); }
+        } /* Less aggressive twinkle */
 
-        .cloud {
-            position: absolute;
-            width: 100px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            z-index: 3;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .cloud:before, .cloud:after {
-            content: '';
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-        }
-
-        .cloud:before {
-            width: 60px;
-            height: 60px;
-            top: -30px;
-            left: 15px;
-        }
-
-        .cloud:after {
-            width: 80px;
-            height: 80px;
-            top: -40px;
-            right: 15px;
-        }
-
+        /* Clouds - Slower drift */
+        .cloud { position: absolute; width: 100px; height: 60px; background-color: rgba(255, 255, 255, 0.15); border-radius: 50px; z-index: 3; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); opacity: 0; /* Start hidden, fade in */ animation: fadeInCloud 3s ease forwards; }
+        .cloud:before, .cloud:after { content: ''; position: absolute; background-color: rgba(255, 255, 255, 0.15); border-radius: 50%; }
+        .cloud:before { width: 60px; height: 60px; top: -30px; left: 15px; }
+        .cloud:after { width: 80px; height: 80px; top: -40px; right: 15px; }
         @keyframes drift {
-            0% { transform: translateX(-150px); }
-            100% { transform: translateX(calc(100vw + 150px)); }
+            0% { transform: translateX(-150px) scale(var(--cloud-scale, 1)); } /* Use CSS variable for scale */
+            100% { transform: translateX(calc(100vw + 150px)) scale(var(--cloud-scale, 1)); }
+        } /* Drift animation itself */
+        @keyframes fadeInCloud {
+             to { opacity: var(--cloud-opacity, 0.2); } /* Use CSS variable for final opacity */
         }
 
-        /* Flying cat animation */
-        .flying-cat {
-            position: absolute;
-            width: 56px;
-            height: 56px;
-            pointer-events: none;
-            z-index: 50;
-            animation: floatCat 30s infinite ease-in-out;
-        }
+        /* Other animations - floatCat, floatAround, steam, pageFlip - kept similar, maybe slightly slower via duration/delay */
+        @keyframes floatCat { 0% { transform: translate(0, 0); } 25% { transform: translate(35vw, -8vh) rotate(4deg); } 50% { transform: translate(75vw, 18vh) rotate(-4deg); } 75% { transform: translate(35vw, 35vh) rotate(8deg); } 100% { transform: translate(0, 0); } } /* Slightly less movement */
+        @keyframes floatAround { 0% { transform: translate(0, 0) rotate(0deg); } 33% { transform: translate(80px, -40px) rotate(8deg); } 66% { transform: translate(-15px, 60px) rotate(-4deg); } 100% { transform: translate(0, 0) rotate(0deg); } } /* Slightly less movement */
+        @keyframes steam { 0%, 100% { transform: translateY(0); opacity: 0.7; } 50% { transform: translateY(-12px); opacity: 0.9; } } /* Subtler steam */
+        @keyframes pageFlip { 0%, 100% { transform: rotateY(0deg); } 50% { transform: rotateY(12deg); } } /* Subtler flip */
 
-        @keyframes floatCat {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(40vw, -10vh) rotate(5deg);
-            }
-            50% {
-                transform: translate(80vw, 20vh) rotate(-5deg);
-            }
-            75% {
-                transform: translate(40vw, 40vh) rotate(10deg);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
+        /* Floating buttons - Keep as is */
+        .btn-flower { position: absolute; background: #ffe0f0; border: none; padding: 15px; border-radius: 50%; font-size: 1.8em; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 90; }
+        .btn-flower:hover { transform: scale(1.2); }
 
-        /* Boutons flottants */
-        .btn-flower {
-            position: absolute;
-            background: #ffe0f0;
-            border: none;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 1.8em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            z-index: 90;
-        }
-
-        .btn-flower:hover {
-            transform: scale(1.2);
-        }
-
-        /* Theme-specific vignette colors */
-        .vignette-chill {
-            background: radial-gradient(circle at center, transparent 30%, rgba(83, 52, 131, 0.7) 100%);
-        }
-        
-        .vignette-study {
-            background: radial-gradient(circle at center, transparent 30%, rgba(52, 152, 219, 0.7) 100%);
-        }
-        
-        .vignette-sleep {
-            background: radial-gradient(circle at center, transparent 30%, rgba(18, 71, 95, 0.7) 100%);
-        }
-        
-        .vignette-jazzy {
-            background: radial-gradient(circle at center, transparent 30%, rgba(185, 19, 114, 0.7) 100%);
-        }
-        
-        .vignette-space {
-            background: radial-gradient(circle at center, transparent 30%, rgba(15, 12, 41, 0.7) 100%);
-        }
-
-        /* Nouveaux GIFs animés */
-        .floating-gif {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 20;
-            pointer-events: none;
-        }
-
-        @keyframes floatAround {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(100px, -50px) rotate(10deg); }
-            66% { transform: translate(-20px, 80px) rotate(-5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
-        .coffee-cup {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 15;
-            animation: steam 8s infinite ease-in-out;
-        }
-
-        @keyframes steam {
-            0%, 100% { transform: translateY(0); opacity: 0.8; }
-            50% { transform: translateY(-15px); opacity: 1; }
-        }
-
-        .laptop {
-            position: absolute;
-            width: 120px;
-            height: 90px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 15;
-        }
-
-        .book {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: 15;
-            transform-origin: center;
-            animation: pageFlip 5s infinite ease-in-out;
-        }
-
-        @keyframes pageFlip {
-            0%, 100% { transform: rotateY(0deg); }
-            50% { transform: rotateY(15deg); }
-        }
-
+        /* Responsive adjustments */
         @media (max-width: 1024px) {
-            .buttons-container {
-                flex-wrap: nowrap;
-                width: 90%;
-                justify-content: space-between;
-                overflow-x: auto;
-                padding: 10px 5px;
-            }
-            
-            .btn-lofi {
-                margin: 0 4px;
-                padding: 6px 14px;
-                font-size: 0.8rem;
-            }
-            
-            /* Responsive quote container */
-            .quote-container {
-                max-width: 70%;
-                padding: 12px 20px;
-            }
-            
-            .quote-text {
-                font-size: 0.95rem;
-            }
+            .controls-container { width: 95%; padding: 8px 10px; }
+            .theme-buttons { /* Ensure it scrolls nicely */ }
+            .btn-lofi { padding: 6px 10px; font-size: 0.75rem; margin: 0 2px; }
+            .volume-controls { margin-left: 5px; }
+            .volume-slider { width: 60px; }
+            .quote-container { max-width: 70%; padding: 12px 20px; top: 80px; } /* Slightly higher */
+            .quote-text { font-size: 0.9rem; }
+            .video-container { width: 60%; } /* Adjust video size */
+            .cat-gif { width: 150px; height: 150px; }
+             .cat-gif-left { left: 10%; }
+            .cat-gif-right { right: 10%; }
         }
 
         @media (max-width: 768px) {
-            .video-container {
-                width: 95%;
-            }
-            
-            .btn-lofi {
-                margin: 0 3px;
-                padding: 6px 10px;
-                font-size: 0.75rem;
-            }
-
-            .cat-gif {
-                width: 120px;
-                height: 120px;
-            }
-
-            .cat-gif-left {
-                left: 15%;
-            }
-
-            .cat-gif-right {
-                right: 15%;
-            }
-            
-            /* Smaller screen quote container */
-            .quote-container {
-                max-width: 80%;
-                min-width: 250px;
-                padding: 10px 15px;
-                top: 90px;
-            }
-            
-            .quote-text {
-                font-size: 0.9rem;
-            }
-            
-            .quote-author {
-                font-size: 0.8rem;
-            }
+             .video-container { width: 90%; } /* Larger video on mobile */
+             .controls-container { bottom: 15px; width: 95%; }
+             .btn-lofi { padding: 5px 8px; font-size: 0.7rem; }
+             .volume-slider { width: 50px; }
+             .mute-btn { font-size: 1rem; margin-left: 5px; }
+             .fullscreen-btn { width: 45px; height: 45px; bottom: 75px; right: 15px; } /* Move fullscreen up */
+             .quote-container { max-width: 85%; min-width: 0; padding: 10px 15px; top: 70px; } /* Even higher */
+             .quote-text { font-size: 0.85rem; }
+             .quote-author { font-size: 0.75rem; }
+             .digital-clock { font-size: 1rem; padding: 6px 12px; top: 10px;}
+             /* Hide side cats and some floating elements on small screens maybe? */
+             .cat-gif, .floating-gif, .laptop, .book, .coffee-cup { display: none; } /* Example: hide distracting elements */
+             .flying-cat { width: 40px; height: 40px; } /* Smaller flying cats */
         }
+
     </style>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen">
-    <!-- Vignette overlay that changes with theme -->
-    <div id="themeVignette" class="vignette-chill"></div>
-    
+
     <!-- Horloge numérique -->
     <div class="digital-clock" id="digitalClock">00:00:00</div>
 
-    <!-- MODIFIED QUOTE CONTAINER - Reduced width -->
-    <div class="quote-container">
-        <p class="quote-text">"Lofi beats - where time slows down, and inspiration speeds up."</p>
-        <p class="quote-author">- Chill Vibes Collective</p>
+    <!-- Quote Container -->
+    <div class="quote-container" id="quoteContainer">
+        <p class="quote-text"></p>
+        <p class="quote-author"></p>
     </div>
 
-    <!-- GIFs de chats repositionnés -->
+    <!-- Side Cat GIFs -->
     <div class="cat-gif cat-gif-left" style="background-image: url('https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif');"></div>
     <div class="cat-gif cat-gif-right" style="background-image: url('https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif');"></div>
 
-    <!-- Nouveaux GIFs animés ajoutés -->
-    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/fc/7e/ce/fc7ece8e4944a0edd90b6d4f12ab9a01.gif'); top: 15%; left: 20%; animation: floatAround 35s infinite alternate ease-in-out;"></div>
-    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/06/33/01/063301a2592bc2f6d8e98ab6c54c0105.gif'); bottom: 25%; right: 15%; animation: floatAround 45s infinite alternate-reverse ease-in-out;"></div>
+    <!-- Decorative Floating GIFs (Consider reducing count or hiding on mobile) -->
+    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/fc/7e/ce/fc7ece8e4944a0edd90b6d4f12ab9a01.gif'); top: 15%; left: 20%; animation: floatAround 38s infinite alternate ease-in-out;"></div>
+    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/06/33/01/063301a2592bc2f6d8e98ab6c54c0105.gif'); bottom: 25%; right: 15%; animation: floatAround 48s infinite alternate-reverse ease-in-out;"></div>
     <div class="coffee-cup" style="background-image: url('https://i.pinimg.com/originals/ef/64/91/ef6491a5e9d4ac6487debb502186d404.gif'); bottom: 20%; left: 25%;"></div>
     <div class="laptop" style="background-image: url('https://i.pinimg.com/originals/ff/9e/9c/ff9e9cbb4ba9abc9c12b153947f06776.gif'); top: 30%; right: 25%;"></div>
     <div class="book" style="background-image: url('https://i.pinimg.com/originals/12/46/19/1246192ff41c6dcba4218a10fe454f6f.gif'); bottom: 35%; right: 35%;"></div>
-    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/fc/bd/3f/fcbd3f388f902b19634e873a3a54fdea.gif'); top: 40%; right: 10%; width: 150px; height: 150px; animation: floatAround 50s infinite ease-in-out;"></div>
+    <!-- <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/fc/bd/3f/fcbd3f388f902b19634e873a3a54fdea.gif'); top: 40%; right: 10%; width: 150px; height: 150px; animation: floatAround 55s infinite ease-in-out;"></div> -->
 
-    <!-- Boutons flottants -->
+    <!-- Floating Buttons -->
     <button class="btn-flower" style="top: 30%; left: 30%;" onclick="moveButton(this)">🌸</button>
     <button class="btn-flower" style="top: 50%; left: 50%;" onclick="moveButton(this)">🌼</button>
     <button class="btn-flower" style="top: 70%; left: 40%;" onclick="moveButton(this)">🌺</button>
 
-    <!-- Flying cats -->
+    <!-- Flying cats (Reduced count for performance) -->
     <img src="https://media.tenor.com/j1PyzHn_-g8AAAAi/cat-loaf.gif" class="flying-cat" style="top: 10%; left: 0%; animation-delay: 0s;">
-    <img src="https://media.tenor.com/Di8zK1kVdrAAAAAi/cute-cat.gif" class="flying-cat" style="top: 30%; left: -10%; animation-delay: 5s;">
-    <img src="https://media.tenor.com/9-rLn6gzoQwAAAAi/kawaii-cat.gif" class="flying-cat" style="top: 50%; left: -20%; animation-delay: 10s;">
-    <img src="https://media.tenor.com/Mng3HlhDFSUAAAAi/pusheen-laptop.gif" class="flying-cat" style="top: 15%; left: 5%; animation-delay: 8s;">
-    <img src="https://media.tenor.com/V3kgz1qBslYAAAAi/cat-pixel.gif" class="flying-cat" style="top: 70%; left: 10%; animation-delay: 3s;">
-    <img src="https://media.tenor.com/6rIyB7G3UQsAAAAi/cute-cat.gif" class="flying-cat" style="top: 25%; left: 15%; animation-delay: 15s;">
-    
-    <!-- Nouveaux chats animés ajoutés -->
-    <img src="https://media.tenor.com/OqGAZF-JNuUAAAAi/cat-pusheen.gif" class="flying-cat" style="top: 45%; left: 5%; animation-delay: 12s;">
-    <img src="https://media.tenor.com/8lL_cjtfUY8AAAAi/cat-pixel.gif" class="flying-cat" style="top: 20%; right: 10%; animation-delay: 7s;">
-    <img src="https://media.tenor.com/c9RkDmbc7FkAAAAi/cat-nyan-cat.gif" class="flying-cat" style="top: 60%; right: 15%; animation-delay: 9s; width: 80px; height: 80px;">
+    <img src="https://media.tenor.com/Di8zK1kVdrAAAAAi/cute-cat.gif" class="flying-cat" style="top: 30%; left: -5%; animation-delay: 7s;">
+    <img src="https://media.tenor.com/9-rLn6gzoQwAAAAi/kawaii-cat.gif" class="flying-cat" style="top: 60%; left: -10%; animation-delay: 14s;">
+    <img src="https://media.tenor.com/Mng3HlhDFSUAAAAi/pusheen-laptop.gif" class="flying-cat" style="top: 15%; left: 5%; animation-delay: 10s;">
+    <img src="https://media.tenor.com/V3kgz1qBslYAAAAi/cat-pixel.gif" class="flying-cat" style="top: 75%; left: 10%; animation-delay: 4s;">
+    <!-- <img src="https://media.tenor.com/6rIyB7G3UQsAAAAi/cute-cat.gif" class="flying-cat" style="top: 25%; left: 15%; animation-delay: 18s;"> -->
+    <!-- <img src="https://media.tenor.com/OqGAZF-JNuUAAAAi/cat-pusheen.gif" class="flying-cat" style="top: 45%; left: 5%; animation-delay: 16s;"> -->
+    <img src="https://media.tenor.com/8lL_cjtfUY8AAAAi/cat-pixel.gif" class="flying-cat" style="top: 20%; right: 10%; animation-delay: 9s;">
+    <!-- <img src="https://media.tenor.com/c9RkDmbc7FkAAAAi/cat-nyan-cat.gif" class="flying-cat" style="top: 60%; right: 15%; animation-delay: 12s; width: 80px; height: 80px;"> -->
 
-    <div class="video-container mb-8">
-        <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!-- Main Video Player -->
+    <div class="video-container my-8"> <!-- Added my-8 for some vertical margin -->
+        <iframe id="lofiVideo" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <div class="buttons-container">
-        <button class="btn-lofi active" data-type="chill" data-video-id="jfKfPfyJRdk">Lofi Radio 24/7</button>
-        <button class="btn-lofi" data-type="study" data-video-id="lTRiuFIWV54">Focus Study Mix</button>
-        <button class="btn-lofi" data-type="sleep" data-video-id="rPjez8z61rI">Sleep Beats</button>
-        <button class="btn-lofi" data-type="jazzy" data-video-id="5yx6BWlEVcY">Jazz Hop Café</button>
-        <button class="btn-lofi" data-type="space" data-video-id="n61ULEU7CO0">Space Ambient Mix</button>
+    <!-- Controls Container: Theme Buttons + Volume -->
+    <div class="controls-container">
+        <div class="theme-buttons">
+            <!-- Buttons will be populated by JS -->
+        </div>
+        <div class="volume-controls">
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="70">
+            <button id="muteBtn" class="mute-btn">
+                <i class="fas fa-volume-high"></i> <!-- Icon changes based on state -->
+            </button>
+        </div>
     </div>
 
+    <!-- Fullscreen Button -->
     <div class="fullscreen-btn" id="fullscreenBtn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
             <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
         </svg>
     </div>
 
+    <!-- Starfield Container -->
+    <div class="stars-container" id="starsContainer"></div>
+
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // YouTube API player
+        // --- Configuration ---
+        const SAKURA_COUNT = 10; // Reduced count
+        const INITIAL_CAT_COUNT = 4; // Reduced count
+        const MUSIC_NOTE_COUNT = 5; // Reduced count
+        const CLOUD_COUNT = 3; // Reduced count
+        const QUOTE_INTERVAL = 18000; // Change quote every 18 seconds
+        const STAR_COUNT = 150; // Reduced star count
+        const DEFAULT_THEME = 'chill';
+        const DEFAULT_VOLUME = 70;
+
+        // --- Theme Data ---
+        const themesData = {
+            chill: {
+                name: "Lofi Radio 24/7",
+                videoId: 'jfKfPfyJRdk',
+                gradient: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
+                vignetteVar: '--vignette-chill',
+                quotes: [
+                    { text: "Lofi beats - where time slows down, and inspiration speeds up.", author: "Chill Vibes Collective" },
+                    { text: "The best ideas come when your mind is lost in the chill.", author: "LoFi Enthusiast" },
+                    { text: "Embrace the calm, ride the beat.", author: "Urban Melodies" }
+                ]
+            },
+            study: {
+                name: "Focus Study Mix",
+                videoId: 'lTRiuFIWV54',
+                gradient: 'linear-gradient(135deg, #2c3e50, #4ca1af, #a8edea, #3498db)',
+                 vignetteVar: '--vignette-study',
+                quotes: [
+                    { text: "Study not to know more, but to know better.", author: "LoFi Study Group" },
+                    { text: "Focus flows when the beats are slow.", author: "Academic Rhythms" },
+                    { text: "Unlock your potential, one note at a time.", author: "Mindful Study" }
+                ]
+            },
+            sleep: {
+                name: "Sleep Beats",
+                videoId: 'rPjez8z61rI',
+                gradient: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364, #12475f)',
+                 vignetteVar: '--vignette-sleep',
+                quotes: [
+                    { text: "The night wraps around these melodies like a blanket.", author: "Dreamwave Producer" },
+                    { text: "Sleep is the best meditation, and lofi is its soundtrack.", author: "Nocturnal Notes" },
+                    { text: "Drift away on waves of ambient calm.", author: "Slumber Scapes" }
+                ]
+            },
+            jazzy: {
+                name: "Jazz Hop Café",
+                videoId: '5yx6BWlEVcY',
+                gradient: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55, #b91372)',
+                 vignetteVar: '--vignette-jazzy',
+                quotes: [
+                    { text: "Jazz is not just music, it's a feeling. Lofi is its modern whisper.", author: "Blue Note Beats" },
+                    { text: "The saxophone dreams in lofi.", author: "Jazzy Chill Masters" },
+                    { text: "Smooth vibes for sophisticated souls.", author: "The Jazz Hop Corner" }
+                ]
+            },
+            space: {
+                name: "Space Ambient Mix",
+                videoId: 'n61ULEU7CO0',
+                gradient: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e, #16213e)',
+                 vignetteVar: '--vignette-space',
+                quotes: [
+                    { text: "We are made of star stuff, listening to star sounds.", author: "Cosmic Chill" },
+                    { text: "Space lofi - the sound of planets thinking.", author: "Orbital Frequencies" },
+                    { text: "Floating through galaxies on waves of sound.", author: "Astral Producer" }
+                ]
+            }
+        };
+
+        // --- Global Variables ---
         let player;
-        
+        let quoteIntervalId;
+        const body = document.body;
+        const quoteContainer = document.getElementById('quoteContainer');
+        const quoteTextEl = quoteContainer.querySelector('.quote-text');
+        const quoteAuthorEl = quoteContainer.querySelector('.quote-author');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const muteBtn = document.getElementById('muteBtn');
+        const muteIcon = muteBtn.querySelector('i');
+        const themeButtonsContainer = document.querySelector('.theme-buttons');
+        const videoIframe = document.getElementById('lofiVideo');
+
+        // --- YouTube Player API ---
         function onYouTubeIframeAPIReady() {
+            const initialVideoId = themesData[getCurrentTheme()].videoId;
             player = new YT.Player('lofiVideo', {
+                height: '100%',
+                width: '100%',
+                videoId: initialVideoId, // Load initial video
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 1, // Keep controls for YT interaction
+                    'loop': 1,
+                    'playlist': initialVideoId, // Needed for loop=1
+                    'modestbranding': 1, // Less YT branding
+                    'fs': 0 // Disable YT fullscreen button (we have ours)
+                },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onError': onPlayerError
+                    // 'onStateChange': onPlayerStateChange // Optional: for more control
                 }
             });
         }
-        
+
         function onPlayerReady(event) {
-            // Set initial volume
-            player.setVolume(70);
+            console.log("Player Ready");
+            // Restore volume and mute state from localStorage
+            const savedVolume = localStorage.getItem('lofiVolume');
+            const savedMuted = localStorage.getItem('lofiMuted') === 'true'; // Convert string to boolean
+
+            const initialVolume = savedVolume ? parseInt(savedVolume, 10) : DEFAULT_VOLUME;
+            player.setVolume(initialVolume);
+            volumeSlider.value = initialVolume;
+
+            if (savedMuted) {
+                player.mute();
+            } else {
+                player.unMute();
+            }
+            updateMuteIcon(); // Update icon based on restored state
+
+            // Ensure video plays (sometimes autoplay policies interfere)
+             setTimeout(() => {
+                if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                     player.playVideo();
+                 }
+             }, 1000);
         }
 
-        // Quotes for each theme
-        const lofiQuotes = {
-            chill: [
-                { text: "Lofi beats - where time slows down, and inspiration speeds up.", author: "Chill Vibes Collective" },
-                { text: "The best ideas come when your mind is lost in the chill.", author: "LoFi Enthusiast" },
-                { text: "We are made of star stuff, listening to star sounds.", author: "Cosmic Chill" }
-            ],
-            study: [
-                { text: "Study not to know more, but to know better.", author: "LoFi Study Group" },
-                { text: "Focus flows when the beats are slow.", author: "Academic Rhythms" },
-                { text: "In the silence between notes, knowledge finds its voice.", author: "Study Sessions" }
-            ],
-            sleep: [
-                { text: "The night wraps around these melodies like a blanket.", author: "Dreamwave Producer" },
-                { text: "Sleep is the best meditation, and lofi is its soundtrack.", author: "Nocturnal Notes" },
-                { text: "Stars whispering lullabies to the dreaming world.", author: "Night Sky Beats" }
-            ],
-            jazzy: [
-                { text: "Jazz is not just music, it's a feeling. Lofi is its modern whisper.", author: "Blue Note Beats" },
-                { text: "The saxophone dreams in lofi.", author: "Jazzy Chill Masters" },
-                { text: "Every note a story, every beat a memory.", author: "Jazz Heritage" }
-            ],
-            space: [
-                { text: "We are made of star stuff, listening to star sounds.", author: "Cosmic Chill" },
-                { text: "Space lofi - the sound of planets thinking.", author: "Orbital Frequencies" },
-                { text: "Floating through galaxies on waves of sound.", author: "Astral Producer" }
-            ]
-        };
+         function onPlayerError(event) {
+            console.error("YouTube Player Error:", event.data);
+            // Maybe display a message to the user
+        }
 
-        // Couleurs de fond pour chaque type
-        const lofiThemes = {
-            chill: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
-            study: 'linear-gradient(135deg, #2c3e50, #4ca1af, #a8edea, #3498db)',
-            sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364, #12475f)',
-            jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55, #b91372)',
-            space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e, #16213e)'
-        };
 
-        // Fonction pour mettre à jour l'horloge numérique
+        // --- Theme Management ---
+        function getCurrentTheme() {
+            const savedTheme = localStorage.getItem('lofiTheme');
+            return savedTheme && themesData[savedTheme] ? savedTheme : DEFAULT_THEME;
+        }
+
+        function applyTheme(type, isInitial = false) {
+            if (!themesData[type]) type = DEFAULT_THEME;
+            const theme = themesData[type];
+
+            // 1. Update Background Gradient
+            body.style.background = theme.gradient;
+            body.style.backgroundSize = '400% 400%'; // Ensure animation properties reset correctly
+
+            // 2. Update Vignette Effect
+             document.documentElement.style.setProperty('--vignette-active', `var(${theme.vignetteVar})`);
+
+
+            // 3. Update YouTube Video (only if not initial load and player exists)
+            if (!isInitial && player && player.loadVideoById) {
+                 player.loadVideoById({ videoId: theme.videoId });
+                 // Ensure playlist for looping is updated as well
+                 // Note: official API for changing playlist is complex, reloading might be simpler if loop breaks
+             } else if (isInitial) {
+                 // Set the initial iframe src (handled by onYouTubeIframeAPIReady now)
+                 // videoIframe.src = `https://www.youtube.com/embed/${theme.videoId}?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1&playlist=${theme.videoId}`;
+             }
+
+
+            // 4. Update Active Button Class
+            document.querySelectorAll('.btn-lofi').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-type') === type);
+            });
+
+            // 5. Show Random Quote for the theme
+            showRandomQuote(type);
+
+            // 6. Save theme to localStorage
+            if (!isInitial) { // Don't save during initial load based on potentially outdated storage
+                 localStorage.setItem('lofiTheme', type);
+            }
+        }
+
+        // --- Quotes ---
+        function showRandomQuote(type) {
+             if (!themesData[type]) type = DEFAULT_THEME;
+            const quotes = themesData[type].quotes;
+            if (quotes && quotes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                const quote = quotes[randomIndex];
+
+                quoteContainer.style.opacity = '0'; // Fade out
+
+                setTimeout(() => {
+                    quoteTextEl.textContent = `"${quote.text}"`;
+                    quoteAuthorEl.textContent = `- ${quote.author}`;
+                    quoteContainer.style.opacity = '0.9'; // Fade back in
+                }, 600); // Wait for fade out
+            }
+        }
+
+        function startQuoteRotation() {
+            if (quoteIntervalId) clearInterval(quoteIntervalId); // Clear existing interval
+            quoteIntervalId = setInterval(() => {
+                showRandomQuote(getCurrentTheme());
+            }, QUOTE_INTERVAL);
+        }
+
+
+        // --- Volume Controls ---
+        function updateMuteIcon() {
+            if (!player || typeof player.isMuted !== 'function') return; // Guard against player not ready
+
+            if (player.isMuted()) {
+                muteIcon.classList.remove('fa-volume-high');
+                muteIcon.classList.add('fa-volume-xmark');
+                 volumeSlider.disabled = true; // Optionally disable slider when muted
+            } else {
+                muteIcon.classList.remove('fa-volume-xmark');
+                muteIcon.classList.add('fa-volume-high');
+                 volumeSlider.disabled = false;
+            }
+        }
+
+        volumeSlider.addEventListener('input', function() {
+            if (!player || typeof player.setVolume !== 'function') return;
+            const volume = parseInt(this.value, 10);
+            player.setVolume(volume);
+            localStorage.setItem('lofiVolume', volume);
+            // Unmute if user adjusts volume
+            if (player.isMuted()) {
+                player.unMute();
+                localStorage.setItem('lofiMuted', 'false');
+            }
+            updateMuteIcon();
+        });
+
+        muteBtn.addEventListener('click', function() {
+             if (!player || typeof player.isMuted !== 'function') return;
+
+            if (player.isMuted()) {
+                player.unMute();
+                localStorage.setItem('lofiMuted', 'false');
+            } else {
+                player.mute();
+                localStorage.setItem('lofiMuted', 'true');
+            }
+            updateMuteIcon();
+        });
+
+
+        // --- Clock ---
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -648,132 +651,12 @@
             document.getElementById('digitalClock').textContent = `${hours}:${minutes}:${seconds}`;
         }
 
-        // Mettre à jour l'horloge toutes les secondes
-        setInterval(updateClock, 1000);
-        updateClock(); // Initialiser immédiatement
 
-        // Update vignette effect based on theme
-        function updateVignette(themeType) {
-            // Remove all vignette classes
-            document.body.classList.remove('vignette-chill', 'vignette-study', 'vignette-sleep', 'vignette-jazzy', 'vignette-space');
-            
-            // Add the appropriate vignette class
-            document.body.classList.add('vignette-' + themeType);
-            
-            // Update the after pseudo-element
-            const style = document.createElement('style');
-            let radialGradient;
-            
-            switch(themeType) {
-                case 'chill':
-                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(83, 52, 131, 0.7) 100%)';
-                    break;
-                case 'study':
-                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(52, 152, 219, 0.7) 100%)';
-                    break;
-                case 'sleep':
-                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(18, 71, 95, 0.7) 100%)';
-                    break;
-                case 'jazzy':
-                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(185, 19, 114, 0.7) 100%)';
-                    break;
-                case 'space':
-                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(15, 12, 41, 0.7) 100%)';
-                    break;
-                default:
-                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%)';
-            }
-            
-            style.textContent = `body:after { background: ${radialGradient}; }`;
-            document.head.appendChild(style);
-        }
-
-        // SIMPLIFIED: Show random quote based on theme with simple fade transition
-        function showRandomQuote(type) {
-            const quotes = lofiQuotes[type];
-            if (quotes && quotes.length > 0) {
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                const quote = quotes[randomIndex];
-                
-                // Get the quote container
-                const quoteContainer = document.querySelector('.quote-container');
-                
-                // Fade out
-                quoteContainer.style.opacity = '0';
-                
-                // Wait for fade out to complete then update content
-                setTimeout(() => {
-                    // Update content
-                    quoteContainer.innerHTML = `
-                        <p class="quote-text">"${quote.text}"</p>
-                        <p class="quote-author">- ${quote.author}</p>
-                    `;
-                    
-                    // Fade back in
-                    quoteContainer.style.opacity = '0.9';
-                }, 500);
-            }
-        }
-
-        // Fonction pour faire défiler les citations automatiquement
-        function startQuoteRotation() {
-            setInterval(() => {
-                const activeButton = document.querySelector('.btn-lofi.active');
-                if (activeButton) {
-                    const activeType = activeButton.getAttribute('data-type');
-                    showRandomQuote(activeType);
-                }
-            }, 15000); // Change toutes les 15 secondes
-        }
-
-        // Changement de vidéo YouTube et couleur de fond selon le type de bouton
-        document.querySelectorAll('.btn-lofi').forEach(button => {
-            button.addEventListener('click', function() {
-                // Si le bouton est déjà actif, ne rien faire
-                if (this.classList.contains('active')) return;
-                
-                const type = this.getAttribute('data-type');
-                const videoId = this.getAttribute('data-video-id');
-                
-                // Background transition
-                const overlay = document.createElement('div');
-                overlay.className = 'bg-overlay';
-                overlay.style.background = lofiThemes[type];
-                document.body.appendChild(overlay);
-                
-                setTimeout(() => {
-                    overlay.style.opacity = '1';
-                    updateVignette(type);
-                }, 50);
-                
-                setTimeout(() => {
-                    document.body.style.background = lofiThemes[type];
-                    document.body.style.backgroundSize = '400% 400%';
-                    overlay.remove();
-                }, 2000);
-                
-                // Changer la vidéo YouTube
-                if (player && player.loadVideoById) {
-                    player.loadVideoById(videoId);
-                } else {
-                    const iframe = document.getElementById('lofiVideo');
-                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1`;
-                }
-                
-                // Marquer le bouton actif
-                document.querySelectorAll('.btn-lofi').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Mettre à jour la citation avec le changement de thème
-                showRandomQuote(type);
-            });
-        });
-
-        // Fonction plein écran
+        // --- Fullscreen ---
         document.getElementById('fullscreenBtn').addEventListener('click', function() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    console.error(`Erreur lors du passage en plein écran: ${err.message}`);
+                    console.error(`Fullscreen request failed: ${err.message} (${err.name})`);
                 });
             } else {
                 if (document.exitFullscreen) {
@@ -782,449 +665,248 @@
             }
         });
 
-        // Création et animation des fleurs de sakura
-        const sakuraColors = [
-            'rgba(255, 183, 197, 0.7)', // Rose pâle
-            'rgba(199, 153, 204, 0.7)', // Lavande
-            'rgba(255, 221, 148, 0.7)', // Jaune pâle
-            'rgba(173, 216, 230, 0.7)', // Bleu clair
-            'rgba(152, 251, 152, 0.7)'  // Vert pâle
-        ];
+        // --- Background Animations ---
 
+        // Sakura Creation (Reduced count)
+        const sakuraColors = ['rgba(255, 183, 197, 0.7)', 'rgba(199, 153, 204, 0.7)', 'rgba(255, 221, 148, 0.7)', 'rgba(173, 216, 230, 0.7)', 'rgba(152, 251, 152, 0.7)'];
         function createSakura() {
             const sakura = document.createElement('div');
             sakura.className = 'sakura';
-            
-            // Taille aléatoire
-            const size = Math.random() * 40 + 20;
-            sakura.style.width = `${size}px`;
-            sakura.style.height = `${size}px`;
-            
-            // Position initiale aléatoire
+            const size = Math.random() * 30 + 15; // Slightly smaller range
+            sakura.style.width = `${size}px`; sakura.style.height = `${size}px`;
             sakura.style.left = `${Math.random() * 100}vw`;
             sakura.style.top = `-${size}px`;
-            
-            // Rotation aléatoire
             const rotation = Math.random() * 360;
             sakura.style.transform = `rotate(${rotation}deg)`;
-            
-            // Couleur aléatoire parmi les 5 couleurs définies
             const colorIndex = Math.floor(Math.random() * sakuraColors.length);
             sakura.style.backgroundColor = sakuraColors[colorIndex];
             sakura.style.borderRadius = '50% 0 50% 50%';
-            
-            document.body.appendChild(sakura);
-            
-            // Animation de chute
-            const animationDuration = Math.random() * 10 + 10;
-            const horizontalMovement = Math.random() * 20 - 10;
-            
+            body.appendChild(sakura);
+
+            const animationDuration = Math.random() * 12 + 12; // Slightly longer duration
+            const horizontalMovement = Math.random() * 15 - 7.5;
             sakura.animate([
-                { transform: `translateX(0) translateY(0) rotate(${rotation}deg)` },
-                { transform: `translateX(${horizontalMovement}vw) translateY(105vh) rotate(${rotation + 360}deg)` }
+                { transform: `translateX(0) translateY(0) rotate(${rotation}deg)`, opacity: 0.7 },
+                { transform: `translateX(${horizontalMovement}vw) translateY(105vh) rotate(${rotation + 360}deg)`, opacity: 0.9 },
+                 { transform: `translateX(${horizontalMovement * 1.2}vw) translateY(110vh) rotate(${rotation + 400}deg)`, opacity: 0 } // Ensure it goes off screen
             ], {
                 duration: animationDuration * 1000,
                 easing: 'linear'
             }).onfinish = () => {
                 sakura.remove();
-                createSakura();
+                // Don't immediately recreate, rely on initial count and maybe a slow timer if needed
             };
         }
 
-        // Collection d'images de chats avec des URLs fiables
-        const catImages = [
-            'https://i.pinimg.com/originals/0c/31/13/0c31132a548266c51e18a896533ac9d5.gif',
-            'https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif',
-            'https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif',
-            'https://i.pinimg.com/originals/e9/f0/4e/e9f04e760fbd8a7dbc19c8b860876f0f.gif',
-            'https://i.pinimg.com/originals/6e/48/36/6e4836ce122b44072a8b11a186b07e42.gif',
-            'https://media.tenor.com/j1PyzHn_-g8AAAAi/cat-loaf.gif',
-            'https://media.tenor.com/Di8zK1kVdrAAAAAi/cute-cat.gif',
-            'https://media.tenor.com/9-rLn6gzoQwAAAAi/kawaii-cat.gif',
-            'https://media.tenor.com/Mng3HlhDFSUAAAAi/pusheen-laptop.gif',
-            'https://media.tenor.com/V3kgz1qBslYAAAAi/cat-pixel.gif',
-            'https://media.tenor.com/6rIyB7G3UQsAAAAi/cute-cat.gif'
+        // Cat Creation (Simplified logic for example, keep your complex one if preferred)
+        const catImages = [ /* Your list of cat images */
+             'https://i.pinimg.com/originals/0c/31/13/0c31132a548266c51e18a896533ac9d5.gif',
+             'https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif',
+             'https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif',
+             'https://media.tenor.com/j1PyzHn_-g8AAAAi/cat-loaf.gif',
+             'https://media.tenor.com/Di8zK1kVdrAAAAAi/cute-cat.gif',
         ];
-
-        const catBehaviors = ['walk', 'sleep', 'sit', 'play'];
-
+        let activeCats = 0;
         function createCat() {
-            const cat = document.createElement('div');
-            cat.className = 'cat';
-            
-            // Image aléatoire de chat
-            const imageIndex = Math.floor(Math.random() * catImages.length);
-            cat.style.backgroundImage = `url(${catImages[imageIndex]})`;
-            
-            // Taille aléatoire
-            const size = Math.random() * 40 + 60; // 60px to 100px
-            cat.style.width = `${size}px`;
-            cat.style.height = `${size}px`;
-            
-            // Position initiale aléatoire sur les bords
-            const side = Math.floor(Math.random() * 4);
-            switch(side) {
-                case 0: // Haut
-                    cat.style.top = '-80px';
-                    cat.style.left = `${Math.random() * 100}vw`;
-                    break;
-                case 1: // Droite
-                    cat.style.top = `${Math.random() * 100}vh`;
-                    cat.style.left = '100vw';
-                    break;
-                case 2: // Bas
-                    cat.style.top = '100vh';
-                    cat.style.left = `${Math.random() * 100}vw`;
-                    break;
-                case 3: // Gauche
-                    cat.style.top = `${Math.random() * 100}vh`;
-                    cat.style.left = '-80px';
-                    break;
-            }
-            
-            document.body.appendChild(cat);
-            
-            // Choisir un comportement
-            const behavior = catBehaviors[Math.floor(Math.random() * catBehaviors.length)];
-            
-            switch(behavior) {
-                case 'walk':
-                    walkingCatAnimation(cat);
-                    break;
-                case 'sleep':
-                    sleepingCatAnimation(cat);
-                    break;
-                case 'sit':
-                    sittingCatAnimation(cat);
-                    break;
-                case 'play':
-                    playingCatAnimation(cat);
-                    break;
-            }
-        }
+             if (activeCats >= INITIAL_CAT_COUNT * 1.5) return; // Limit concurrent cats slightly above initial
 
-        function walkingCatAnimation(cat) {
-            // Point de destination aléatoire
-            const destX = Math.random() * window.innerWidth;
-            const destY = Math.random() * window.innerHeight;
-            
-            // Vitesse aléatoire
-            const duration = Math.random() * 15000 + 10000;
-            
-            // Animation de déplacement
+            activeCats++;
+            const cat = document.createElement('div');
+            cat.className = 'cat'; // Use the '.cat' class for basic styling
+            cat.style.backgroundImage = `url(${catImages[Math.floor(Math.random() * catImages.length)]})`;
+            const size = Math.random() * 30 + 50; // 50px to 80px
+            cat.style.width = `${size}px`; cat.style.height = `${size}px`;
+
+            // Simple random walk across screen
+            const startX = Math.random() > 0.5 ? '-100px' : 'calc(100vw + 20px)';
+            const startY = `${Math.random() * 80 + 10}vh`; // Avoid top/bottom edges
+            const endX = Math.random() * 80 + 10; // Percentage
+            const endY = Math.random() * 80 + 10; // Percentage
+
+            cat.style.left = startX;
+            cat.style.top = startY;
+            cat.style.transform = `scaleX(${startX === '-100px' ? 1 : -1})`; // Flip cat based on direction
+
+            body.appendChild(cat);
+
+            const duration = Math.random() * 15000 + 15000; // 15-30 seconds
+
             cat.animate([
-                { transform: 'translate(0, 0)' },
-                { transform: `translate(calc(${destX}px - 100%), calc(${destY}px - 100%))` }
+                { left: startX, top: startY, opacity: 0.9 },
+                { left: `${endX}vw`, top: `${endY}vh`, opacity: 0.9, offset: 0.9 }, // Pause slightly before fading
+                { left: `${endX}vw`, top: `${endY}vh`, opacity: 0 }
             ], {
                 duration: duration,
-                easing: 'ease-in-out'
+                easing: 'linear' // Simple linear movement
             }).onfinish = () => {
-                // Animation de sortie
-                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
-                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
-                
-                cat.animate([
-                    { transform: `translate(calc(${destX}px - 100%), calc(${destY}px - 100%))` },
-                    { transform: `translate(calc(${exitX} - 100%), calc(${exitY} - 100%))` }
-                ], {
-                    duration: 8000,
-                    easing: 'ease-in-out'
-                }).onfinish = () => {
-                    cat.remove();
-                    setTimeout(createCat, Math.random() * 2000);
-                };
+                cat.remove();
+                activeCats--;
+                 // Slowly add more cats over time if desired
+                 setTimeout(createCat, Math.random() * 20000 + 10000); // 10-30 sec delay
             };
         }
 
-        function sleepingCatAnimation(cat) {
-            // Position aléatoire à l'écran
-            const posX = Math.random() * 80 + 10; // 10% to 90%
-            const posY = Math.random() * 80 + 10; // 10% to 90%
-            
-            cat.style.left = `${posX}vw`;
-            cat.style.top = `${posY}vh`;
-            
-            // Animation de respiration lente (gonflement léger)
-            cat.animate([
-                { transform: 'scale(1)' },
-                { transform: 'scale(1.05)' },
-                { transform: 'scale(1)' }
+
+        // Music Note Creation (Reduced count)
+        function createMusicNote() {
+            const noteTypes = ['♪', '♫', '♬', '♩']; // Simpler notes
+            const note = document.createElement('div');
+            note.className = 'music-note';
+            note.textContent = noteTypes[Math.floor(Math.random() * noteTypes.length)];
+            note.style.color = 'rgba(255, 255, 255, 0.6)';
+            note.style.fontSize = `${Math.random() * 15 + 18}px`;
+            note.style.left = `${Math.random() * 100}vw`;
+            note.style.top = `${Math.random() * 50 + 50}vh`; // Start lower half
+            const rotation = Math.random() * 40 - 20; // Less rotation
+            note.style.transform = `rotate(${rotation}deg)`;
+            body.appendChild(note);
+
+            note.animate([
+                { transform: `translateY(0) rotate(${rotation}deg)`, opacity: 0.6 },
+                { transform: `translateY(-80px) rotate(${rotation + 15}deg)`, opacity: 0.8 },
+                { transform: `translateY(-160px) rotate(${rotation + 30}deg)`, opacity: 0 }
             ], {
-                duration: 3000,
-                iterations: 10,
-                easing: 'ease-in-out'
+                duration: Math.random() * 6000 + 6000, // Slower rise
+                easing: 'ease-out'
             }).onfinish = () => {
-                // Le chat se réveille et part
-                cat.animate([
-                    { transform: 'scale(1)', opacity: 1 },
-                    { transform: 'scale(1.2)', opacity: 0.5 },
-                    { transform: 'scale(0)', opacity: 0 }
-                ], {
-                    duration: 2000,
-                    easing: 'ease-in-out'
-                }).onfinish = () => {
-                    cat.remove();
-                    setTimeout(createCat, Math.random() * 2000);
-                };
+                note.remove();
             };
         }
 
-        function sittingCatAnimation(cat) {
-            // Position aléatoire
-            const posX = Math.random() * 80 + 10;
-            const posY = Math.random() * 80 + 10;
-            
-            cat.style.left = `${posX}vw`;
-            cat.style.top = `${posY}vh`;
-            
-            // Animation de la tête qui bouge légèrement
-            cat.animate([
-                { transform: 'rotate(0deg)' },
-                { transform: 'rotate(5deg)' },
-                { transform: 'rotate(-5deg)' },
-                { transform: 'rotate(0deg)' }
-            ], {
-                duration: 5000,
-                iterations: 3,
-                easing: 'ease-in-out'
-            }).onfinish = () => {
-                // Le chat part
-                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
-                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
-                
-                cat.animate([
-                    { transform: 'translate(0, 0)' },
-                    { transform: `translate(calc(${exitX} - 100%), calc(${exitY} - 100%))` }
+
+        // Starfield Creation
+        function createStarField() {
+            const starsContainer = document.getElementById('starsContainer');
+            starsContainer.innerHTML = ''; // Clear previous stars if any
+            for (let i = 0; i < STAR_COUNT; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                star.style.left = `${x}vw`;
+                star.style.top = `${y}vh`;
+                const size = Math.random() * 2 + 0.5; // Smaller stars
+                star.style.width = `${size}px`; star.style.height = `${size}px`;
+                const initialOpacity = Math.random() * 0.6 + 0.1; // Dimmer overall
+                star.style.opacity = initialOpacity;
+
+                starsContainer.appendChild(star);
+
+                star.animate([
+                    { opacity: initialOpacity * 0.5, transform: 'scale(0.8)' }, // Dimmer min opacity
+                    { opacity: initialOpacity * 1.5 > 1 ? 1 : initialOpacity * 1.5 , transform: 'scale(1.1)' }, // Clamp max opacity
+                    { opacity: initialOpacity * 0.5, transform: 'scale(0.8)' }
                 ], {
-                    duration: 5000,
-                    easing: 'ease-in-out'
-                }).onfinish = () => {
-                    cat.remove();
-                    setTimeout(createCat, Math.random() * 2000);
-                };
-            };
+                    duration: Math.random() * 4000 + 3000, // Slower twinkle
+                    iterations: Infinity,
+                    direction: 'alternate',
+                    easing: 'ease-in-out',
+                     delay: Math.random() * 3000 // Stagger start times
+                });
+            }
+
+            // Collective rotation (slow)
+             if (starsContainer.style.animationName !== 'rotateStars') { // Prevent reapplying animation
+                 starsContainer.style.animation = 'rotateStars 300s linear infinite';
+                 // Define @keyframes in CSS or inject style
+                 const styleSheet = document.styleSheets[0];
+                 styleSheet.insertRule(`
+                    @keyframes rotateStars {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+                `, styleSheet.cssRules.length);
+             }
         }
 
-        function playingCatAnimation(cat) {
-            // Position aléatoire
-            const posX = Math.random() * 80 + 10;
-            const posY = Math.random() * 80 + 10;
-            
-            cat.style.left = `${posX}vw`;
-            cat.style.top = `${posY}vh`;
-            
-            // Animation de jeu
-            cat.animate([
-                { transform: 'translate(0, 0) rotate(0deg)' },
-                { transform: 'translate(20px, -30px) rotate(10deg)' },
-                { transform: 'translate(-20px, 15px) rotate(-5deg)' },
-                { transform: 'translate(15px, 20px) rotate(15deg)' },
-                { transform: 'translate(-25px, -25px) rotate(-15deg)' },
-                { transform: 'translate(0, 0) rotate(0deg)' }
-            ], {
-                duration: 8000,
-                iterations: 1,
-                easing: 'ease-in-out'
-            }).onfinish = () => {
-                // Le chat part en bondissant
-                const exitX = Math.random() > 0.5 ? '120vw' : '-120px';
-                const exitY = Math.random() > 0.5 ? '120vh' : '-120px';
-                
-                cat.animate([
-                    { transform: 'translate(0, 0) scale(1)' },
-                    { transform: 'translate(40px, -60px) scale(1.1)' },
-                    { transform: 'translate(80px, 0) scale(1)' },
-                    { transform: 'translate(120px, -40px) scale(1.1)' },
-                    { transform: `translate(calc(${exitX} - 100%), calc(${exitY} - 100%)) scale(1)` }
-                ], {
-                    duration: 4000,
-                    easing: 'ease-in-out'
-                }).onfinish = () => {
-                    cat.remove();
-                    setTimeout(createCat, Math.random() * 2000);
-                };
-            };
+        // Cloud Creation
+        function createCloud() {
+            const cloud = document.createElement('div');
+            cloud.className = 'cloud';
+            const scale = Math.random() * 0.4 + 0.6; // 0.6 to 1.0 scale
+            const opacity = Math.random() * 0.15 + 0.1; // 0.1 to 0.25 opacity
+             // Use CSS variables for dynamic properties
+             cloud.style.setProperty('--cloud-scale', scale);
+             cloud.style.setProperty('--cloud-opacity', opacity);
+
+            cloud.style.left = '-200px'; // Start further off screen
+            cloud.style.top = `${Math.random() * 35 + 5}vh`; // Upper part of screen
+
+            body.appendChild(cloud);
+
+             const duration = Math.random() * 80000 + 60000; // 60-140 seconds drift
+
+            // Apply drift animation via JS to set duration easily
+             cloud.animate([
+                 { transform: `translateX(-200px) scale(${scale})` },
+                 { transform: `translateX(calc(100vw + 200px)) scale(${scale})` }
+             ], {
+                 duration: duration,
+                 easing: 'linear'
+             }).onfinish = () => {
+                 cloud.remove();
+                 // Recreate cloud after a delay
+                 setTimeout(createCloud, Math.random() * 15000);
+             };
         }
 
-        // Fonction pour déplacer les boutons fleurs
+
+        // Flower Button Interaction
         function moveButton(btn) {
-            const maxX = window.innerWidth - btn.offsetWidth;
-            const maxY = window.innerHeight - btn.offsetHeight;
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
+            const maxX = window.innerWidth - btn.offsetWidth - 20; // Add padding
+            const maxY = window.innerHeight - btn.offsetHeight - 20;
+            const newX = Math.random() * maxX + 10; // Ensure padding
+            const newY = Math.random() * maxY + 10;
             btn.style.left = `${newX}px`;
             btn.style.top = `${newY}px`;
         }
 
-        // Création de notes de musique flottantes
-        function createMusicNote(x, y, rotation) {
-            const noteTypes = ['♪', '♫', '♬', '♩', '♭', '♮'];
-            const note = document.createElement('div');
-            note.className = 'music-note';
-            note.textContent = noteTypes[Math.floor(Math.random() * noteTypes.length)];
-            
-            // Appliquer des styles CSS directement
-            note.style.color = 'rgba(255, 255, 255, 0.7)';
-            note.style.fontSize = `${Math.random() * 20 + 20}px`;
-            note.style.left = `${x}vw`;
-            note.style.top = `${y}vh`;
-            note.style.transform = `rotate(${rotation}deg)`;
-            
-            document.body.appendChild(note);
-            
-            // Animation de flottement
-            note.animate([
-                { transform: `translateY(0) rotate(${rotation}deg)`, opacity: 0.7 },
-                { transform: `translateY(-50px) rotate(${rotation + 20}deg)`, opacity: 0.9 },
-                { transform: `translateY(-100px) rotate(${rotation + 40}deg)`, opacity: 0 }
-            ], {
-                duration: Math.random() * 5000 + 5000,
-                easing: 'ease-out'
-            }).onfinish = () => {
-                note.remove();
-                createMusicNote(
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 360
-                );
-            };
-        }
-
-        // Création et rotation collective des étoiles
-        function createStarField() {
-            // Conteneur pour les étoiles
-            const starsContainer = document.createElement('div');
-            starsContainer.className = 'stars-container';
-            document.body.appendChild(starsContainer);
-            
-            // Créer des étoiles dans le conteneur
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                // Position aléatoire
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                
-                star.style.left = `${x}vw`;
-                star.style.top = `${y}vh`;
-                
-                // Variation de taille
-                const size = Math.random() * 3 + 1;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // Variation de luminosité
-                star.style.opacity = Math.random() * 0.8 + 0.2;
-                
-                starsContainer.appendChild(star);
-                
-                // Animation de scintillement
-                star.animate([
-                    { opacity: star.style.opacity, transform: 'scale(1)' },
-                    { opacity: '1', transform: 'scale(1.5)' },
-                    { opacity: star.style.opacity, transform: 'scale(1)' }
-                ], {
-                    duration: Math.random() * 3000 + 2000,
-                    iterations: Infinity,
-                    direction: 'alternate',
-                    easing: 'ease-in-out'
+        // --- Initialization ---
+        function initialize() {
+             // Create Theme Buttons Dynamically
+            Object.keys(themesData).forEach(type => {
+                const theme = themesData[type];
+                const button = document.createElement('button');
+                button.className = 'btn-lofi';
+                button.setAttribute('data-type', type);
+                button.textContent = theme.name;
+                button.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        applyTheme(type);
+                    }
                 });
-            }
-            
-            // Animation de rotation collective du conteneur d'étoiles
-            starsContainer.animate([
-                { transform: 'rotate(0deg)' },
-                { transform: 'rotate(360deg)' }
-            ], {
-                duration: 240000, // 4 minutes pour une rotation complète
-                iterations: Infinity,
-                easing: 'linear'
+                themeButtonsContainer.appendChild(button);
             });
+
+
+            // 1. Set Initial Theme (from localStorage or default)
+            const initialTheme = getCurrentTheme();
+            applyTheme(initialTheme, true); // Apply visually without saving back to storage
+
+            // 2. Start Clock
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // 3. Start Quote Rotation
+            startQuoteRotation(); // Start immediately with the initial theme's quote
+
+             // 4. Initialize Background Elements (Reduced Counts)
+             createStarField();
+             for (let i = 0; i < SAKURA_COUNT; i++) { setTimeout(createSakura, i * 500); }
+             for (let i = 0; i < INITIAL_CAT_COUNT; i++) { setTimeout(createCat, i * 2000 + 1000); }
+             for (let i = 0; i < MUSIC_NOTE_COUNT; i++) { setTimeout(createMusicNote, i * 1500 + 3000); }
+             for (let i = 0; i < CLOUD_COUNT; i++) { setTimeout(createCloud, i * 10000 + 5000); }
+
+             // 5. Set up initial iframe src (API will handle loading)
+             videoIframe.src = `https://www.youtube.com/embed/${themesData[initialTheme].videoId}?enablejsapi=1&autoplay=1&loop=1&playlist=${themesData[initialTheme].videoId}&controls=1`;
+
+
+             console.log("Initialization complete. Initial theme:", initialTheme);
         }
 
-        // Création de nuages dérivants
-        function createCloud(startPosition) {
-            const cloud = document.createElement('div');
-            cloud.className = 'cloud';
-            
-            cloud.style.left = '-150px';
-            cloud.style.top = `${Math.random() * 40 + 5}vh`;
-            
-            // Variation de taille
-            const scale = Math.random() * 0.5 + 0.5;
-            cloud.style.transform = `scale(${scale})`;
-            
-            // Variation d'opacité
-            cloud.style.opacity = Math.random() * 0.2 + 0.1;
-            
-            document.body.appendChild(cloud);
-            
-            // Animation de déplacement
-            cloud.animate([
-                { transform: `translateX(0) scale(${scale})` },
-                { transform: `translateX(calc(100vw + 150px)) scale(${scale})` }
-            ], {
-                duration: Math.random() * 60000 + 40000,
-                easing: 'linear'
-            }).onfinish = () => {
-                cloud.remove();
-                createCloud(startPosition);
-            };
-        }
+        // --- Wait for window load to ensure all elements are ready ---
+        window.addEventListener('load', initialize);
 
-        // Création d'éléments lofi avec meilleure dispersion
-        function createLofiElements() {
-            // Création de notes de musique bien espacées
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    createMusicNote(
-                        Math.random() * 100, // position X aléatoire en %
-                        Math.random() * 100, // position Y aléatoire en %
-                        Math.random() * 360  // rotation aléatoire
-                    );
-                }, i * 1000);
-            }
-            
-            // Création d'étoiles qui tournent collectivement
-            createStarField();
-            
-            // Création de nuages bien espacés
-            for (let i = 0; i < 4; i++) {
-                setTimeout(() => {
-                    createCloud(i * 25); // Position initiale en % de la largeur
-                }, i * 2000);
-            }
-        }
-
-        // Initialize everything on load
-        window.addEventListener('load', function() {
-            // Create initial cats
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    createCat();
-                }, i * 1000 + 2000);
-            }
-            
-            // Start quote rotation
-            startQuoteRotation();
-            
-            // Create sakura elements
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    createSakura();
-                }, i * 300);
-            }
-            
-            // Create lofi elements
-            createLofiElements();
-            
-            // Set the initial vignette effect
-            updateVignette('chill');
-            
-            // Ensure the quote is visible
-            showRandomQuote('chill');
-        });
     </script>
 </body>
 </html>
