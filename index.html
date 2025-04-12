@@ -18,7 +18,21 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            transition: background 1s ease;
+            position: relative;
+        }
+
+        /* Dark fade vignette effect */
+        body:after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+            pointer-events: none;
+            z-index: 5;
+            transition: background 2s ease;
         }
 
         @keyframes gradient {
@@ -36,6 +50,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 3px solid rgba(255, 255, 255, 0.1);
             aspect-ratio: 16/9;
+            z-index: 10;
         }
 
         .btn-lofi {
@@ -43,11 +58,12 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 5px 12px;
             color: white;
             transition: all 0.3s ease;
-            margin: 0 8px;
+            margin: 0 4px;
             font-weight: 500;
+            font-size: 0.8rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
@@ -73,10 +89,11 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
-            background: transparent;
-            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
             border-radius: 30px;
             width: auto;
+            backdrop-filter: blur(5px);
         }
 
         .fullscreen-btn {
@@ -85,8 +102,8 @@
             right: 30px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -107,7 +124,7 @@
             background-repeat: no-repeat;
             pointer-events: none;
             opacity: 0.8;
-            z-index: -1;
+            z-index: 4;
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
         }
 
@@ -128,13 +145,26 @@
             transform: scale(1.2);
         }
 
-        /* Quote container */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -10;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        /* FIXED QUOTE STYLES - Simplified for better rendering */
         .quote-container {
             position: fixed;
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
+            width: auto;
             max-width: 80%;
+            min-width: 60%;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             border-radius: 15px;
@@ -144,31 +174,17 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 100;
             opacity: 0.9;
-            transition: opacity 0.5s ease;
-        }
-
-        .quote-text, .quote-author {
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .quote-text.fade-out, .quote-author.fade-out {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        .quote-text.fade-in, .quote-author.fade-in {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .quote-text {
             font-size: 1rem;
             font-style: italic;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         .quote-author {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 300;
             text-align: right;
         }
@@ -220,12 +236,12 @@
         }
 
         .cat-gif-left {
-            left: 16.7%; /* Centré dans le premier tiers */
+            left: 16.7%; 
             transform: translate(-50%, -50%);
         }
 
         .cat-gif-right {
-            right: 16.7%; /* Centré dans le dernier tiers */
+            right: 16.7%; 
             transform: translate(50%, -50%);
         }
 
@@ -246,6 +262,16 @@
             0% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(5deg); }
             100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .stars-container {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            transform-origin: center center;
         }
 
         .star {
@@ -344,6 +370,89 @@
             transform: scale(1.2);
         }
 
+        /* Theme-specific vignette colors */
+        .vignette-chill {
+            background: radial-gradient(circle at center, transparent 30%, rgba(83, 52, 131, 0.7) 100%);
+        }
+        
+        .vignette-study {
+            background: radial-gradient(circle at center, transparent 30%, rgba(52, 152, 219, 0.7) 100%);
+        }
+        
+        .vignette-sleep {
+            background: radial-gradient(circle at center, transparent 30%, rgba(18, 71, 95, 0.7) 100%);
+        }
+        
+        .vignette-jazzy {
+            background: radial-gradient(circle at center, transparent 30%, rgba(185, 19, 114, 0.7) 100%);
+        }
+        
+        .vignette-space {
+            background: radial-gradient(circle at center, transparent 30%, rgba(15, 12, 41, 0.7) 100%);
+        }
+
+        /* Nouveaux GIFs animés */
+        .floating-gif {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(100px, -50px) rotate(10deg); }
+            66% { transform: translate(-20px, 80px) rotate(-5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .coffee-cup {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 15;
+            animation: steam 8s infinite ease-in-out;
+        }
+
+        @keyframes steam {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-15px); opacity: 1; }
+        }
+
+        .laptop {
+            position: absolute;
+            width: 120px;
+            height: 90px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 15;
+        }
+
+        .book {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 15;
+            transform-origin: center;
+            animation: pageFlip 5s infinite ease-in-out;
+        }
+
+        @keyframes pageFlip {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(15deg); }
+        }
+
         @media (max-width: 1024px) {
             .buttons-container {
                 flex-wrap: nowrap;
@@ -355,8 +464,18 @@
             
             .btn-lofi {
                 margin: 0 4px;
-                padding: 8px 16px;
-                font-size: 0.9rem;
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+            
+            /* Responsive quote container */
+            .quote-container {
+                max-width: 85%;
+                padding: 12px 20px;
+            }
+            
+            .quote-text {
+                font-size: 0.95rem;
             }
         }
 
@@ -367,8 +486,8 @@
             
             .btn-lofi {
                 margin: 0 3px;
-                padding: 8px 12px;
-                font-size: 0.8rem;
+                padding: 6px 10px;
+                font-size: 0.75rem;
             }
 
             .cat-gif {
@@ -383,21 +502,48 @@
             .cat-gif-right {
                 right: 15%;
             }
+            
+            /* Smaller screen quote container */
+            .quote-container {
+                max-width: 90%;
+                padding: 10px 15px;
+                top: 90px;
+            }
+            
+            .quote-text {
+                font-size: 0.9rem;
+            }
+            
+            .quote-author {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen">
+    <!-- Vignette overlay that changes with theme -->
+    <div id="themeVignette" class="vignette-chill"></div>
+    
     <!-- Horloge numérique -->
     <div class="digital-clock" id="digitalClock">00:00:00</div>
 
+    <!-- FIXED QUOTE CONTAINER - Simplified structure -->
     <div class="quote-container">
-        <p class="quote-text fade-in">"Lofi beats - where time slows down, and inspiration speeds up."</p>
-        <p class="quote-author fade-in">- Chill Vibes Collective</p>
+        <p class="quote-text">"Lofi beats - where time slows down, and inspiration speeds up."</p>
+        <p class="quote-author">- Chill Vibes Collective</p>
     </div>
 
     <!-- GIFs de chats repositionnés -->
     <div class="cat-gif cat-gif-left" style="background-image: url('https://i.pinimg.com/originals/cf/94/20/cf94204d9c184ff030c707026ce3deb4.gif');"></div>
     <div class="cat-gif cat-gif-right" style="background-image: url('https://i.pinimg.com/originals/f9/42/5e/f9425ec6e73ca64317310db4a3f3e05c.gif');"></div>
+
+    <!-- Nouveaux GIFs animés ajoutés -->
+    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/fc/7e/ce/fc7ece8e4944a0edd90b6d4f12ab9a01.gif'); top: 15%; left: 20%; animation: floatAround 35s infinite alternate ease-in-out;"></div>
+    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/06/33/01/063301a2592bc2f6d8e98ab6c54c0105.gif'); bottom: 25%; right: 15%; animation: floatAround 45s infinite alternate-reverse ease-in-out;"></div>
+    <div class="coffee-cup" style="background-image: url('https://i.pinimg.com/originals/ef/64/91/ef6491a5e9d4ac6487debb502186d404.gif'); bottom: 20%; left: 25%;"></div>
+    <div class="laptop" style="background-image: url('https://i.pinimg.com/originals/ff/9e/9c/ff9e9cbb4ba9abc9c12b153947f06776.gif'); top: 30%; right: 25%;"></div>
+    <div class="book" style="background-image: url('https://i.pinimg.com/originals/12/46/19/1246192ff41c6dcba4218a10fe454f6f.gif'); bottom: 35%; right: 35%;"></div>
+    <div class="floating-gif" style="background-image: url('https://i.pinimg.com/originals/fc/bd/3f/fcbd3f388f902b19634e873a3a54fdea.gif'); top: 40%; right: 10%; width: 150px; height: 150px; animation: floatAround 50s infinite ease-in-out;"></div>
 
     <!-- Boutons flottants -->
     <button class="btn-flower" style="top: 30%; left: 30%;" onclick="moveButton(this)">🌸</button>
@@ -411,6 +557,11 @@
     <img src="https://media.tenor.com/Mng3HlhDFSUAAAAi/pusheen-laptop.gif" class="flying-cat" style="top: 15%; left: 5%; animation-delay: 8s;">
     <img src="https://media.tenor.com/V3kgz1qBslYAAAAi/cat-pixel.gif" class="flying-cat" style="top: 70%; left: 10%; animation-delay: 3s;">
     <img src="https://media.tenor.com/6rIyB7G3UQsAAAAi/cute-cat.gif" class="flying-cat" style="top: 25%; left: 15%; animation-delay: 15s;">
+    
+    <!-- Nouveaux chats animés ajoutés -->
+    <img src="https://media.tenor.com/OqGAZF-JNuUAAAAi/cat-pusheen.gif" class="flying-cat" style="top: 45%; left: 5%; animation-delay: 12s;">
+    <img src="https://media.tenor.com/8lL_cjtfUY8AAAAi/cat-pixel.gif" class="flying-cat" style="top: 20%; right: 10%; animation-delay: 7s;">
+    <img src="https://media.tenor.com/c9RkDmbc7FkAAAAi/cat-nyan-cat.gif" class="flying-cat" style="top: 60%; right: 15%; animation-delay: 9s; width: 80px; height: 80px;">
 
     <div class="video-container mb-8">
         <iframe id="lofiVideo" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -448,6 +599,35 @@
             player.setVolume(70);
         }
 
+        // Quotes for each theme
+        const lofiQuotes = {
+            chill: [
+                { text: "Lofi beats - where time slows down, and inspiration speeds up.", author: "Chill Vibes Collective" },
+                { text: "The best ideas come when your mind is lost in the chill.", author: "LoFi Enthusiast" },
+                { text: "We are made of star stuff, listening to star sounds.", author: "Cosmic Chill" }
+            ],
+            study: [
+                { text: "Study not to know more, but to know better.", author: "LoFi Study Group" },
+                { text: "Focus flows when the beats are slow.", author: "Academic Rhythms" },
+                { text: "In the silence between notes, knowledge finds its voice.", author: "Study Sessions" }
+            ],
+            sleep: [
+                { text: "The night wraps around these melodies like a blanket.", author: "Dreamwave Producer" },
+                { text: "Sleep is the best meditation, and lofi is its soundtrack.", author: "Nocturnal Notes" },
+                { text: "Stars whispering lullabies to the dreaming world.", author: "Night Sky Beats" }
+            ],
+            jazzy: [
+                { text: "Jazz is not just music, it's a feeling. Lofi is its modern whisper.", author: "Blue Note Beats" },
+                { text: "The saxophone dreams in lofi.", author: "Jazzy Chill Masters" },
+                { text: "Every note a story, every beat a memory.", author: "Jazz Heritage" }
+            ],
+            space: [
+                { text: "We are made of star stuff, listening to star sounds.", author: "Cosmic Chill" },
+                { text: "Space lofi - the sound of planets thinking.", author: "Orbital Frequencies" },
+                { text: "Floating through galaxies on waves of sound.", author: "Astral Producer" }
+            ]
+        };
+
         // Couleurs de fond pour chaque type
         const lofiThemes = {
             chill: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483)',
@@ -455,30 +635,6 @@
             sleep: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364, #12475f)',
             jazzy: 'linear-gradient(135deg, #4a2c40, #742c47, #9e3d55, #b91372)',
             space: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e, #16213e)'
-        };
-
-        // Quotes for each theme
-        const lofiQuotes = {
-            chill: [
-                { text: "Lofi beats - where time slows down, and inspiration speeds up.", author: "Chill Vibes Collective" },
-                { text: "The best ideas come when your mind is lost in the chill.", author: "LoFi Enthusiast" }
-            ],
-            study: [
-                { text: "Study not to know more, but to know better.", author: "LoFi Study Group" },
-                { text: "Focus flows when the beats are slow.", author: "Academic Rhythms" }
-            ],
-            sleep: [
-                { text: "The night wraps around these melodies like a blanket.", author: "Dreamwave Producer" },
-                { text: "Sleep is the best meditation, and lofi is its soundtrack.", author: "Nocturnal Notes" }
-            ],
-            jazzy: [
-                { text: "Jazz is not just music, it's a feeling. Lofi is its modern whisper.", author: "Blue Note Beats" },
-                { text: "The saxophone dreams in lofi.", author: "Jazzy Chill Masters" }
-            ],
-            space: [
-                { text: "We are made of star stuff, listening to star sounds.", author: "Cosmic Chill" },
-                { text: "Space lofi - the sound of planets thinking.", author: "Orbital Frequencies" }
-            ]
         };
 
         // Fonction pour mettre à jour l'horloge numérique
@@ -494,33 +650,62 @@
         setInterval(updateClock, 1000);
         updateClock(); // Initialiser immédiatement
 
-        // Show random quote based on theme with smooth fade transition
+        // Update vignette effect based on theme
+        function updateVignette(themeType) {
+            // Remove all vignette classes
+            document.body.classList.remove('vignette-chill', 'vignette-study', 'vignette-sleep', 'vignette-jazzy', 'vignette-space');
+            
+            // Add the appropriate vignette class
+            document.body.classList.add('vignette-' + themeType);
+            
+            // Update the after pseudo-element
+            const style = document.createElement('style');
+            let radialGradient;
+            
+            switch(themeType) {
+                case 'chill':
+                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(83, 52, 131, 0.7) 100%)';
+                    break;
+                case 'study':
+                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(52, 152, 219, 0.7) 100%)';
+                    break;
+                case 'sleep':
+                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(18, 71, 95, 0.7) 100%)';
+                    break;
+                case 'jazzy':
+                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(185, 19, 114, 0.7) 100%)';
+                    break;
+                case 'space':
+                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(15, 12, 41, 0.7) 100%)';
+                    break;
+                default:
+                    radialGradient = 'radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%)';
+            }
+            
+            style.textContent = `body:after { background: ${radialGradient}; }`;
+            document.head.appendChild(style);
+        }
+
+        // SIMPLIFIED: Show random quote based on theme
         function showRandomQuote(type) {
             const quotes = lofiQuotes[type];
             if (quotes && quotes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * quotes.length);
                 const quote = quotes[randomIndex];
                 
-                // Sélectionner les éléments
-                const quoteTextElement = document.querySelector('.quote-text');
-                const quoteAuthorElement = document.querySelector('.quote-author');
+                // Simple transition fade
+                const quoteContainer = document.querySelector('.quote-container');
+                quoteContainer.style.opacity = 0;
                 
-                // Effet de fondu sortant
-                quoteTextElement.classList.add('fade-out');
-                quoteAuthorElement.classList.add('fade-out');
-                
-                // Attendre la fin de l'animation de sortie
                 setTimeout(() => {
-                    // Mettre à jour le contenu
-                    quoteTextElement.textContent = `"${quote.text}"`;
-                    quoteAuthorElement.textContent = `- ${quote.author}`;
+                    const quoteText = document.querySelector('.quote-text');
+                    const quoteAuthor = document.querySelector('.quote-author');
                     
-                    // Déclencher l'animation d'entrée
-                    quoteTextElement.classList.remove('fade-out');
-                    quoteAuthorElement.classList.remove('fade-out');
-                    quoteTextElement.classList.add('fade-in');
-                    quoteAuthorElement.classList.add('fade-in');
-                }, 1000); // 1 seconde pour la transition de sortie
+                    quoteText.textContent = `"${quote.text}"`;
+                    quoteAuthor.textContent = `- ${quote.author}`;
+                    
+                    quoteContainer.style.opacity = 0.9;
+                }, 500);
             }
         }
 
@@ -532,14 +717,34 @@
                     const activeType = activeButton.getAttribute('data-type');
                     showRandomQuote(activeType);
                 }
-            }, 10000); // Change toutes les 10 secondes
+            }, 15000); // Change toutes les 15 secondes
         }
 
         // Changement de vidéo YouTube et couleur de fond selon le type de bouton
         document.querySelectorAll('.btn-lofi').forEach(button => {
             button.addEventListener('click', function() {
+                // Si le bouton est déjà actif, ne rien faire
+                if (this.classList.contains('active')) return;
+                
                 const type = this.getAttribute('data-type');
                 const videoId = this.getAttribute('data-video-id');
+                
+                // Background transition
+                const overlay = document.createElement('div');
+                overlay.className = 'bg-overlay';
+                overlay.style.background = lofiThemes[type];
+                document.body.appendChild(overlay);
+                
+                setTimeout(() => {
+                    overlay.style.opacity = '1';
+                    updateVignette(type);
+                }, 50);
+                
+                setTimeout(() => {
+                    document.body.style.background = lofiThemes[type];
+                    document.body.style.backgroundSize = '400% 400%';
+                    overlay.remove();
+                }, 2000);
                 
                 // Changer la vidéo YouTube
                 if (player && player.loadVideoById) {
@@ -548,10 +753,6 @@
                     const iframe = document.getElementById('lofiVideo');
                     iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&loop=1&enablejsapi=1`;
                 }
-                
-                // Changer la couleur de fond
-                document.body.style.background = lofiThemes[type];
-                document.body.style.backgroundSize = '400% 400%';
                 
                 // Marquer le bouton actif
                 document.querySelectorAll('.btn-lofi').forEach(btn => btn.classList.remove('active'));
@@ -883,13 +1084,20 @@
             };
         }
 
-        // Création d'étoiles scintillantes
-        function createStars(count, minX, maxX) {
-            for (let i = 0; i < count; i++) {
+        // Création et rotation collective des étoiles
+        function createStarField() {
+            // Conteneur pour les étoiles
+            const starsContainer = document.createElement('div');
+            starsContainer.className = 'stars-container';
+            document.body.appendChild(starsContainer);
+            
+            // Créer des étoiles dans le conteneur
+            for (let i = 0; i < 200; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 
-                const x = minX + Math.random() * (maxX - minX);
+                // Position aléatoire
+                const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 
                 star.style.left = `${x}vw`;
@@ -903,7 +1111,7 @@
                 // Variation de luminosité
                 star.style.opacity = Math.random() * 0.8 + 0.2;
                 
-                document.body.appendChild(star);
+                starsContainer.appendChild(star);
                 
                 // Animation de scintillement
                 star.animate([
@@ -917,6 +1125,16 @@
                     easing: 'ease-in-out'
                 });
             }
+            
+            // Animation de rotation collective du conteneur d'étoiles
+            starsContainer.animate([
+                { transform: 'rotate(0deg)' },
+                { transform: 'rotate(360deg)' }
+            ], {
+                duration: 240000, // 4 minutes pour une rotation complète
+                iterations: Infinity,
+                easing: 'linear'
+            });
         }
 
         // Création de nuages dérivants
@@ -962,10 +1180,8 @@
                 }, i * 1000);
             }
             
-            // Création d'étoiles dans différentes zones
-            createStars(20, 0, 33);   // Premier tiers de l'écran
-            createStars(20, 33, 66);  // Deuxième tiers de l'écran
-            createStars(20, 66, 100); // Troisième tiers de l'écran
+            // Création d'étoiles qui tournent collectivement
+            createStarField();
             
             // Création de nuages bien espacés
             for (let i = 0; i < 4; i++) {
@@ -984,9 +1200,6 @@
                 }, i * 1000 + 2000);
             }
             
-            // Initialize with Chill theme quote
-            showRandomQuote('chill');
-            
             // Start quote rotation
             startQuoteRotation();
             
@@ -999,6 +1212,12 @@
             
             // Create lofi elements
             createLofiElements();
+            
+            // Set the initial vignette effect
+            updateVignette('chill');
+            
+            // Ensure the quote is visible
+            showRandomQuote('chill');
         });
     </script>
 </body>
