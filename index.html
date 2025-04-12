@@ -156,15 +156,15 @@
             transition: opacity 2s ease;
         }
 
-        /* FIXED QUOTE STYLES - Simplified for better rendering */
+        /* MODIFIED QUOTE STYLES - Reduced width and added fade transition */
         .quote-container {
             position: fixed;
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
             width: auto;
-            max-width: 80%;
-            min-width: 60%;
+            max-width: 50%; /* Reduced from 80% */
+            min-width: 300px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             border-radius: 15px;
@@ -174,6 +174,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 100;
             opacity: 0.9;
+            transition: opacity 0.5s ease; /* Added smooth transition for opacity */
         }
 
         .quote-text {
@@ -470,7 +471,7 @@
             
             /* Responsive quote container */
             .quote-container {
-                max-width: 85%;
+                max-width: 70%;
                 padding: 12px 20px;
             }
             
@@ -505,7 +506,8 @@
             
             /* Smaller screen quote container */
             .quote-container {
-                max-width: 90%;
+                max-width: 80%;
+                min-width: 250px;
                 padding: 10px 15px;
                 top: 90px;
             }
@@ -527,7 +529,7 @@
     <!-- Horloge numérique -->
     <div class="digital-clock" id="digitalClock">00:00:00</div>
 
-    <!-- FIXED QUOTE CONTAINER - Simplified structure -->
+    <!-- MODIFIED QUOTE CONTAINER - Reduced width -->
     <div class="quote-container">
         <p class="quote-text">"Lofi beats - where time slows down, and inspiration speeds up."</p>
         <p class="quote-author">- Chill Vibes Collective</p>
@@ -686,25 +688,29 @@
             document.head.appendChild(style);
         }
 
-        // SIMPLIFIED: Show random quote based on theme
+        // SIMPLIFIED: Show random quote based on theme with simple fade transition
         function showRandomQuote(type) {
             const quotes = lofiQuotes[type];
             if (quotes && quotes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * quotes.length);
                 const quote = quotes[randomIndex];
                 
-                // Simple transition fade
+                // Get the quote container
                 const quoteContainer = document.querySelector('.quote-container');
-                quoteContainer.style.opacity = 0;
                 
+                // Fade out
+                quoteContainer.style.opacity = '0';
+                
+                // Wait for fade out to complete then update content
                 setTimeout(() => {
-                    const quoteText = document.querySelector('.quote-text');
-                    const quoteAuthor = document.querySelector('.quote-author');
+                    // Update content
+                    quoteContainer.innerHTML = `
+                        <p class="quote-text">"${quote.text}"</p>
+                        <p class="quote-author">- ${quote.author}</p>
+                    `;
                     
-                    quoteText.textContent = `"${quote.text}"`;
-                    quoteAuthor.textContent = `- ${quote.author}`;
-                    
-                    quoteContainer.style.opacity = 0.9;
+                    // Fade back in
+                    quoteContainer.style.opacity = '0.9';
                 }, 500);
             }
         }
